@@ -51,8 +51,12 @@
 		55FA436628BE26BD006AC2F8 /* uhub */ = {
 			isa = PBXGroup;
 			children = (
+				55FA437928BE2929006AC2F8 /* Services */,
+				55FA437828BE2924006AC2F8 /* ViewModels */,
+				55FA437728BE2916006AC2F8 /* Models */,
 				55FA436728BE26BD006AC2F8 /* uhubApp.swift */,
 				55FA436928BE26BD006AC2F8 /* ContentView.swift */,
+				55FA437528BE290A006AC2F8 /* Views */,
 				55FA436B28BE26C4006AC2F8 /* Assets.xcassets */,
 				55FA436D28BE26C4006AC2F8 /* Preview Content */,
 			);
@@ -65,6 +69,34 @@
 				55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		55FA437528BE290A006AC2F8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		55FA437728BE2916006AC2F8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		55FA437828BE2924006AC2F8 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		55FA437928BE2929006AC2F8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
