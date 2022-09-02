@@ -8,30 +8,21 @@
 import SwiftUI
 
 struct SplashView: View {
-    
+    @EnvironmentObject var pageVM: PageViewModel
     @State var isActive:Bool = false
     @State var isShowAnimation:Bool = false
     
     var body: some View {
         VStack {
-            if isActive {
-                TempHomeView()
-            } else {
-                Image("Logo").resizable().scaledToFit().frame(minWidth: 250, idealWidth: 280, maxWidth: 300).padding().offset(y: isShowAnimation ? 0 : 500).animation(Animation.linear(duration: 1.0), value: isShowAnimation).opacity(isShowAnimation ? 1.0 : 0.0).animation(Animation.linear(duration: 2.0), value: isShowAnimation)
-            }
+            Image("Logo").resizable().scaledToFit().frame(minWidth: 250, idealWidth: 280, maxWidth: 300).padding().offset(y: isShowAnimation ? 0 : 500).animation(Animation.linear(duration: 1.0), value: isShowAnimation).opacity(isShowAnimation ? 1.0 : 0.0).animation(Animation.linear(duration: 2.0), value: isShowAnimation)
         }.onAppear {
             
             // load necessary data here
             
             isShowAnimation = true
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
-                
-                withAnimation {
-                    self.isActive = true
-                }
+                pageVM.visit(page: .SignUp)
             }
-            
         }
     }
 }
