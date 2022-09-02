@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TempHomeView: View {
     var body: some View {
-        Text("Home View")
+
+        Text("Temp Home View")
+
     }
 }
 
