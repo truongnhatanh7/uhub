@@ -17,7 +17,7 @@ struct SplashView: View {
             if isActive {
                 TempHomeView()
             } else {
-                Image("logo").resizable().scaledToFit().frame(minWidth: 250, idealWidth: 280, maxWidth: 300).padding().offset(y: isShowAnimation ? 0 : 500).animation(Animation.linear(duration: 1.0), value: isShowAnimation).opacity(isShowAnimation ? 1.0 : 0.0).animation(Animation.linear(duration: 2.0), value: isShowAnimation)
+                Image("Logo").resizable().scaledToFit().frame(minWidth: 250, idealWidth: 280, maxWidth: 300).padding().offset(y: isShowAnimation ? 0 : 500).animation(Animation.linear(duration: 1.0), value: isShowAnimation).opacity(isShowAnimation ? 1.0 : 0.0).animation(Animation.linear(duration: 2.0), value: isShowAnimation)
             }
         }.onAppear {
             
