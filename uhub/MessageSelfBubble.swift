@@ -22,6 +22,7 @@ struct MessageSelfBubble: View {
         .frame(maxWidth: .infinity)
         .padding()
         .background(Color("pink_primary"))
+        .foregroundColor(Color(.white))
         .modifier(CornerRadiusStyle(radius: 18, corners: [.topLeft, .bottomLeft, .bottomRight]))
         .padding(.leading, 24)
         

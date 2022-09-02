@@ -27,7 +27,6 @@ struct ChatList: View {
                 }
             }
 
-                
             ScrollView {
                 ForEach(conversations, id: \.self) { conversation in
                         ChatListRow(conversation: conversation)
@@ -37,9 +36,6 @@ struct ChatList: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        
-
-        
     }
 }
 
