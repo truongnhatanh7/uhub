@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5578A34E28C1DFD4004EE2D3 /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5578A34D28C1DFD4004EE2D3 /* InboxView.swift */; };
+		5578A35228C1DFE8004EE2D3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5578A35128C1DFE8004EE2D3 /* Message.swift */; };
+		5578A35428C1EB88004EE2D3 /* MessageSelfBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5578A35328C1EB88004EE2D3 /* MessageSelfBubble.swift */; };
+		5578A35628C1EB97004EE2D3 /* MessageDefaultBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5578A35528C1EB97004EE2D3 /* MessageDefaultBubble.swift */; };
+		5578A35828C1EF50004EE2D3 /* CornerRadiusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5578A35728C1EF50004EE2D3 /* CornerRadiusStyle.swift */; };
 		55FA436828BE26BD006AC2F8 /* uhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA436728BE26BD006AC2F8 /* uhubApp.swift */; };
 		55FA436A28BE26BD006AC2F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA436928BE26BD006AC2F8 /* ContentView.swift */; };
 		55FA436C28BE26C4006AC2F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436B28BE26C4006AC2F8 /* Assets.xcassets */; };
@@ -25,6 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5578A34D28C1DFD4004EE2D3 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
+		5578A35128C1DFE8004EE2D3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		5578A35328C1EB88004EE2D3 /* MessageSelfBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSelfBubble.swift; sourceTree = "<group>"; };
+		5578A35528C1EB97004EE2D3 /* MessageDefaultBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDefaultBubble.swift; sourceTree = "<group>"; };
+		5578A35728C1EF50004EE2D3 /* CornerRadiusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusStyle.swift; sourceTree = "<group>"; };
 		55FA436428BE26BD006AC2F8 /* uhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = uhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FA436728BE26BD006AC2F8 /* uhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = uhubApp.swift; sourceTree = "<group>"; };
 		55FA436928BE26BD006AC2F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,6 +89,11 @@
 				D5BDC38328C057EB0001AE94 /* Helpers */,
 				8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */,
 				55FA436B28BE26C4006AC2F8 /* Assets.xcassets */,
+				5578A34D28C1DFD4004EE2D3 /* InboxView.swift */,
+				5578A35128C1DFE8004EE2D3 /* Message.swift */,
+				5578A35328C1EB88004EE2D3 /* MessageSelfBubble.swift */,
+				5578A35728C1EF50004EE2D3 /* CornerRadiusStyle.swift */,
+				5578A35528C1EB97004EE2D3 /* MessageDefaultBubble.swift */,
 				55FA436D28BE26C4006AC2F8 /* Preview Content */,
 			);
 			path = uhub;
@@ -194,6 +209,11 @@
 			files = (
 				D5BDC38528C0580D0001AE94 /* SplashScreenModifier.swift in Sources */,
 				55FA436A28BE26BD006AC2F8 /* ContentView.swift in Sources */,
+				5578A35428C1EB88004EE2D3 /* MessageSelfBubble.swift in Sources */,
+				5578A35228C1DFE8004EE2D3 /* Message.swift in Sources */,
+				5578A35628C1EB97004EE2D3 /* MessageDefaultBubble.swift in Sources */,
+				5578A35828C1EF50004EE2D3 /* CornerRadiusStyle.swift in Sources */,
+				5578A34E28C1DFD4004EE2D3 /* InboxView.swift in Sources */,
 				55FA436828BE26BD006AC2F8 /* uhubApp.swift in Sources */,
 				D5BDC38028C051110001AE94 /* SplashView.swift in Sources */,
 				D5BDC38228C052680001AE94 /* TempHomeView.swift in Sources */,
