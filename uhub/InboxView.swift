@@ -9,7 +9,6 @@ import SwiftUI
 
 var currentUserId = 1 // For view testing purpose, TODO: Delete this after implemented Firebase
 
-
 struct InboxView: View {
     var messages: [Message]
     @State var textBoxContent: String = ""
