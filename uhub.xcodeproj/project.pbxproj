@@ -31,10 +31,8 @@
 		C12BFA5628C25C4900150928 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA4F28C25C4900150928 /* SplashView.swift */; };
 		C12BFA5728C25C4900150928 /* CongratsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5028C25C4900150928 /* CongratsView.swift */; };
 		C12BFA5828C25C4900150928 /* SplashModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5128C25C4900150928 /* SplashModifer.swift */; };
-		C12BFA5928C25C4900150928 /* SpalshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5228C25C4900150928 /* SpalshView.swift */; };
 		C12BFA5A28C25C4900150928 /* TempHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5328C25C4900150928 /* TempHomeView.swift */; };
 		C12BFA5B28C25C4900150928 /* CongratsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5428C25C4900150928 /* CongratsModal.swift */; };
-		C12BFA5C28C25C4900150928 /* SplashScreenModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5528C25C4900150928 /* SplashScreenModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,10 +54,8 @@
 		C12BFA4F28C25C4900150928 /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		C12BFA5028C25C4900150928 /* CongratsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsView.swift; sourceTree = "<group>"; };
 		C12BFA5128C25C4900150928 /* SplashModifer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashModifer.swift; sourceTree = "<group>"; };
-		C12BFA5228C25C4900150928 /* SpalshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpalshView.swift; sourceTree = "<group>"; };
 		C12BFA5328C25C4900150928 /* TempHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempHomeView.swift; sourceTree = "<group>"; };
 		C12BFA5428C25C4900150928 /* CongratsModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsModal.swift; sourceTree = "<group>"; };
-		C12BFA5528C25C4900150928 /* SplashScreenModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,15 +95,14 @@
 		55FA436628BE26BD006AC2F8 /* uhub */ = {
 			isa = PBXGroup;
 			children = (
-				C12BFA5428C25C4900150928 /* CongratsModal.swift */,
-				C12BFA5028C25C4900150928 /* CongratsView.swift */,
-				C12BFA5228C25C4900150928 /* SpalshView.swift */,
-				C12BFA5128C25C4900150928 /* SplashModifer.swift */,
-				C12BFA5528C25C4900150928 /* SplashScreenModifier.swift */,
-				C12BFA4F28C25C4900150928 /* SplashView.swift */,
-				C12BFA5328C25C4900150928 /* TempHomeView.swift */,
 				55FA436728BE26BD006AC2F8 /* uhubApp.swift */,
 				55FA436928BE26BD006AC2F8 /* ContentView.swift */,
+				C12BFA4D28C2593500150928 /* NavigationViewModel.swift */,
+				C12BFA4F28C25C4900150928 /* SplashView.swift */,
+				C12BFA5128C25C4900150928 /* SplashModifer.swift */,
+				C12BFA5428C25C4900150928 /* CongratsModal.swift */,
+				C12BFA5028C25C4900150928 /* CongratsView.swift */,
+				C12BFA5328C25C4900150928 /* TempHomeView.swift */,
 				8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */,
 				55FA436B28BE26C4006AC2F8 /* Assets.xcassets */,
 				5578A34D28C1DFD4004EE2D3 /* InboxView.swift */,
@@ -118,7 +113,6 @@
 				55FA438328C0A089006AC2F8 /* ChatList.swift */,
 				55FA438528C0A246006AC2F8 /* ChatListRow.swift */,
 				55FA438728C0A26A006AC2F8 /* Conversation.swift */,
-				C12BFA4D28C2593500150928 /* NavigationViewModel.swift */,
 				55FA436D28BE26C4006AC2F8 /* Preview Content */,
 			);
 			path = uhub;
@@ -224,10 +218,8 @@
 				C12BFA5628C25C4900150928 /* SplashView.swift in Sources */,
 				C12BFA5A28C25C4900150928 /* TempHomeView.swift in Sources */,
 				5578A35628C1EB97004EE2D3 /* MessageDefaultBubble.swift in Sources */,
-				C12BFA5C28C25C4900150928 /* SplashScreenModifier.swift in Sources */,
 				5578A35828C1EF50004EE2D3 /* CornerRadiusStyle.swift in Sources */,
 				5578A34E28C1DFD4004EE2D3 /* InboxView.swift in Sources */,
-				C12BFA5928C25C4900150928 /* SpalshView.swift in Sources */,
 				55FA438428C0A08A006AC2F8 /* ChatList.swift in Sources */,
 				C12BFA5B28C25C4900150928 /* CongratsModal.swift in Sources */,
 				C12BFA5828C25C4900150928 /* SplashModifer.swift in Sources */,
