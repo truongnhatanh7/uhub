@@ -8,23 +8,19 @@
 import Foundation
 import SwiftUI
 
-struct Conversation {
-    var conversationId = UUID()
+struct Conversation : Hashable {
+    var conversationId : Int
     var imageURL: String
     var name: String
     var latestMessage: String
     var timestamp: Date
     var unread: Bool
-    var image: Image?
+//    private var imageName: String
+//    var image: Image {
+//        if imageName == "" {
+//
+//        }
+//        Image(imageName)
+//    }
     
-    init(imageURL: String, name: String, latestMessage: String, timestamp: Date, unread: Bool) {
-        self.imageURL = imageURL
-        self.name = name
-        self.latestMessage = latestMessage
-        self.timestamp = timestamp
-        self.unread = unread
-        if imageURL != "" {
-            image = Image(imageURL)
-        }
-    }
 }
