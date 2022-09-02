@@ -77,9 +77,10 @@
 				55FA437828BE2924006AC2F8 /* ViewModels */,
 				55FA437728BE2916006AC2F8 /* Models */,
 				55FA436728BE26BD006AC2F8 /* uhubApp.swift */,
-				D5BDC38928C05FFF0001AE94 /* Components */,
-				D5BDC38628C05ED70001AE94 /* Views */,
 				55FA436928BE26BD006AC2F8 /* ContentView.swift */,
+				D5BDC38A28C060130001AE94 /* CongratsModal.swift */,
+				D5BDC38728C05EE90001AE94 /* CongratsView.swift */,
+				D5BDC38C28C066350001AE94 /* TempHomeView.swift */,
 				8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */,
 				55FA436B28BE26C4006AC2F8 /* Assets.xcassets */,
 				55FA436D28BE26C4006AC2F8 /* Preview Content */,
@@ -114,23 +115,6 @@
 			children = (
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		D5BDC38628C05ED70001AE94 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				D5BDC38728C05EE90001AE94 /* CongratsView.swift */,
-				D5BDC38C28C066350001AE94 /* TempHomeView.swift */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		D5BDC38928C05FFF0001AE94 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				D5BDC38A28C060130001AE94 /* CongratsModal.swift */,
-			);
-			name = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
