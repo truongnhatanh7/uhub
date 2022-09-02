@@ -15,7 +15,7 @@ struct ChatList: View {
             ZStack {
                 TextField("Search", text: $searchText)
                     .padding()
-                    .background(.gray)
+                    .background(Color("neutral"))
                     .clipShape(RoundedRectangle(cornerRadius: 80))
                     .frame(maxHeight: 80)
                     .padding(.horizontal, 8)

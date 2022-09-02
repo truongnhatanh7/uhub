@@ -34,7 +34,7 @@ struct InboxView: View {
                     .padding()
             }
             .overlay(RoundedRectangle(cornerRadius: 18)
-                .stroke(lineWidth: 1)
+                .stroke(Color("neutral"), lineWidth: 2)
             )
             .padding(.horizontal)
             

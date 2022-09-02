@@ -22,7 +22,7 @@ struct MessageDefaultBubble: View {
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity)
         .padding()
-        .background(.gray)
+        .background(Color("neutral"))
         .modifier(CornerRadiusStyle(radius: 18, corners: [.topRight, .bottomLeft, .bottomRight]))
         .padding(.trailing, 24)
         

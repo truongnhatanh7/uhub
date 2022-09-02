@@ -17,7 +17,7 @@ struct ChatListRow: View {
                         // TODO: Load default img (no avatar)
                         Text("")
                             .frame(width: 50, height: 50)
-                            .background(.red)
+                            .background(Color("pink_primary"))
                             .clipShape(Circle())
                     } else {
                         // TODO: Load real img
@@ -48,7 +48,7 @@ struct ChatListRow: View {
                 Text("2")
                     .frame(width: 20, height: 20)
                     .foregroundColor(.white)
-                    .background(.red)
+                    .background(Color("pink_primary"))
                     .clipShape(Circle())
                 Spacer()
                 Text("20:00")
@@ -57,7 +57,7 @@ struct ChatListRow: View {
         .padding()
         .frame(maxHeight: 80)
         .overlay(RoundedRectangle(cornerRadius: 18)
-            .stroke(.gray, lineWidth: 1)
+            .stroke(Color("neutral"), lineWidth: 1)
         )
         
     }
