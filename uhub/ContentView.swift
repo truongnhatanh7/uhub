@@ -8,8 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var pageVM = PageViewModel()
+    
     var body: some View {
-        Text("Hello")
+        Group {
+            switch pageVM.currentPage {
+            case .Splash:
+                SplashView()
+            case .SignIn:
+                EmptyView()
+            case .SignUp:
+                EmptyView()
+            case .EditProfile:
+                EmptyView()
+            case .FilterProfile:
+                EmptyView()
+            case .Notification:
+                EmptyView()
+            case .Security:
+                EmptyView()
+            case .SetupComplete:
+                EmptyView()
+            case .Setting:
+                EmptyView()
+            case .Logout:
+                EmptyView()
+            case .Home:
+                EmptyView()
+            case .Detail:
+                EmptyView()
+            case .Matches:
+                EmptyView()
+            case .Chat:
+                EmptyView()
+            }
+        }
+        .environmentObject(pageVM)
     }
 }
 
