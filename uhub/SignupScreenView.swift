@@ -71,12 +71,13 @@ struct SignupScreenView: View {
                     
                     // sign up button
                     ButtonView(textContent: "Sign Up", onTap: {
-                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
-                            if userAuthManager.isLoggedin {
-                                pageVm.visit(page: .EditProfile)
-                                print("\(userAuthManager.response)")
-                            }
-                        })
+                        pageVm.visit(page: .EditProfile)
+//                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
+//                            if userAuthManager.isLoggedin {
+//                                pageVm.visit(page: .EditProfile)
+//                                print("\(userAuthManager.response)")
+//                            }
+//                        })
                     })
                     
                     // already have an account + navigate to Sign In button

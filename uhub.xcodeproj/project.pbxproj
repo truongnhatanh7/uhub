@@ -40,6 +40,7 @@
 		C12BFA6328C2F8B200150928 /* GlobalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6228C2F8B200150928 /* GlobalStyle.swift */; };
 		C12BFA6528C2F8F400150928 /* TextInputComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6428C2F8F400150928 /* TextInputComponent.swift */; };
 		C12BFA6B28C30F6700150928 /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6A28C30F6700150928 /* TextBox.swift */; };
+		C12BFA6D28C393A100150928 /* StandardHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6C28C393A100150928 /* StandardHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		C12BFA6228C2F8B200150928 /* GlobalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStyle.swift; sourceTree = "<group>"; };
 		C12BFA6428C2F8F400150928 /* TextInputComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputComponent.swift; sourceTree = "<group>"; };
 		C12BFA6A28C30F6700150928 /* TextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
+		C12BFA6C28C393A100150928 /* StandardHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		55FA435B28BE26BD006AC2F8 = {
 			isa = PBXGroup;
 			children = (
+				C12BFA6C28C393A100150928 /* StandardHeader.swift */,
 				55FA436628BE26BD006AC2F8 /* uhub */,
 				55FA436528BE26BD006AC2F8 /* Products */,
 			);
@@ -242,6 +245,7 @@
 				C12BFA5628C25C4900150928 /* SplashView.swift in Sources */,
 				5578A35628C1EB97004EE2D3 /* MessageDefaultBubble.swift in Sources */,
 				5578A35828C1EF50004EE2D3 /* CornerRadiusStyle.swift in Sources */,
+				C12BFA6D28C393A100150928 /* StandardHeader.swift in Sources */,
 				5578A34E28C1DFD4004EE2D3 /* InboxView.swift in Sources */,
 				C12BFA6528C2F8F400150928 /* TextInputComponent.swift in Sources */,
 				55FA438428C0A08A006AC2F8 /* ChatListView.swift in Sources */,
