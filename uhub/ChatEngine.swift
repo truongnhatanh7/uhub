@@ -14,7 +14,8 @@ class ChatEngine: ObservableObject {
     
     @Published var messages: [Message] = []
     @Published var conversations: [Conversation] = []
-    @Published var currentConversation: String = "1"
+    @Published var currentConversation: String = "-1"
+    @Published var lastMessageId: String = "-1"
     
     init() {
     }
@@ -38,13 +39,15 @@ class ChatEngine: ObservableObject {
                             let ownerId = data["ownerId"] as? String ?? ""
                             let conversationId = data["conversationId"] as? String ?? ""
                             let content = data["content"] as? String ?? ""
-                            let timestamp = data["timestamp"] as? Timestamp
-                            
-                            print(content)
-                            return Message(messageId: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
+                            let timestamp = data["timestamp"] as? Timestamp // Timestamp is a Firebase date datatype -> convert to Date for Swift
+                            return Message(id: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
                         }
-                        self.messages.sort { $0.timestamp < $1.timestamp }
-                        print(self.messages)
+                        self.messages.sort { $0.timestamp < $1.timestamp } // Sort by timestamp
+                        
+                        // For scolling to latest message
+                        if let lastId = self.messages.last?.id {
+                            self.lastMessageId = lastId
+                        }
                     }
 
                 }
@@ -85,11 +88,7 @@ class ChatEngine: ObservableObject {
             "content": content,
             "timestamp": Date()
         ]
-        do {
-            try db.collection("messages").document(UUID().uuidString).setData(docData)
-        } catch let error {
-            print("Error writing city to Firestore: \(error)")
-        }
+        db.collection("messages").document(UUID().uuidString).setData(docData)
     }
     
     func getConversations() -> [Conversation] {

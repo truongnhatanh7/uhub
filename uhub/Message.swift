@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Message: Hashable, Codable, Equatable {
-    var messageId: String
+struct Message: Identifiable, Hashable, Codable, Equatable {
+    var id: String
     var ownerId: String // To render message row
     var conversationId: String // To query DB -> Messages list
     var content: String

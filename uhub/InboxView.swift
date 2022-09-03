@@ -10,20 +10,32 @@ import Firebase
 
 struct InboxView: View {
     @EnvironmentObject var chatEngine: ChatEngine
+    @EnvironmentObject var pageVM: PageViewModel
     @State var textBoxContent: String = ""
     
     var body: some View {
         VStack {
-            ScrollView {
-                ForEach(chatEngine.messages, id: \.self) { message in
-                    if message.ownerId == (Auth.auth().currentUser?.uid ?? "-1") {
-                        MessageSelfBubble(message: message)
-                    } else {
-                        MessageDefaultBubble(message: message)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    ForEach(chatEngine.messages, id: \.self) { message in
+                        if message.ownerId == (Auth.auth().currentUser?.uid ?? "-1") {
+                            MessageSelfBubble(message: message)
+                                .id(message.id)
+                        } else {
+                            MessageDefaultBubble(message: message)
+                                .id(message.id)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                .onChange(of: chatEngine.lastMessageId) { id in
+                    print("trigger")
+                    withAnimation {
+                        proxy.scrollTo(id, anchor: .bottom)
                     }
                 }
-                .padding(.horizontal)
             }
+
             HStack {
                 TextField("Send message", text: $textBoxContent)
                     .lineLimit(3)
