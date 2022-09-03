@@ -33,6 +33,21 @@ struct ErrorMsgView: View {
     }
 }
 
+struct SideIcon: View {
+    private var iconName: String
+    private var iconColor: Color
+    
+    init(iconName: String, iconColor: Color) {
+        self.iconName = iconName
+        self.iconColor = iconColor
+    }
+    
+    var body: some View {
+        Image(systemName: iconName)
+            .foregroundColor(iconColor)
+    }
+}
+
 struct ErrorMsgView_Previews: PreviewProvider {
     static var previews: some View {
         ErrorMsgView(msg: "Invalid email")

@@ -10,6 +10,11 @@ import SwiftUI
 
 struct LabelStyle: ViewModifier {
     let isRequired: Bool
+    
+    init(isRequired: Bool = false) {
+        self.isRequired = isRequired
+    }
+    
     func body(content: Content) -> some View {
         content
             .padding(.horizontal, 20)

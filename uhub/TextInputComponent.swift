@@ -41,9 +41,13 @@ struct TextInputComponent: View {
                 HStack {
                     if isTextHidden {
                         SecureField(placeholder, text: $value)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
                             .modifier(InputStyle(isFocused: $isFocused, focusTracker: $focusTracker))
                     } else {
                         TextField(placeholder, text: $value)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
                             .modifier(InputStyle(isFocused: $isFocused, focusTracker: $focusTracker))
                     }
                     if isSecure {
@@ -52,7 +56,7 @@ struct TextInputComponent: View {
                     } else {
                         if let icon = icon {
                             Image(systemName: icon)
-                                .foregroundColor(.gray)
+                                .foregroundColor(focusTracker ? Color("pink_primary") : Color.gray.opacity(0.4))
                                 .padding(.trailing, 20)
                         }
                     }
