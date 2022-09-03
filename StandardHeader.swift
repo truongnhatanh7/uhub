@@ -10,10 +10,11 @@ import SwiftUI
 struct StandardHeader: View {
     @EnvironmentObject var pageMV: PageViewModel
     let title: String
+    let action: () -> Void
     
     var body: some View {
         HStack {
-            Button(action: {}) {
+            Button(action: action) {
                 Label("Back", systemImage: "arrow.left")
                     .labelStyle(.iconOnly)
                     .tint(Color("pink_primary"))
@@ -28,7 +29,7 @@ struct StandardHeader: View {
 
 struct StandardHeader_Previews: PreviewProvider {
     static var previews: some View {
-        StandardHeader(title: "Fill Your Profile")
+        StandardHeader(title: "Fill Your Profile", action: {})
             .environmentObject(PageViewModel())
             .previewLayout(.sizeThatFits)
     }
