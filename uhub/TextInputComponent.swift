@@ -52,7 +52,7 @@ struct TextInputComponent: View {
                     } else {
                         if let icon = icon {
                             Image(systemName: icon)
-                                .foregroundColor(.gray)
+                                .foregroundColor(focusTracker ? Color("pink_primary") : Color.gray.opacity(0.4))
                                 .padding(.trailing, 20)
                         }
                     }

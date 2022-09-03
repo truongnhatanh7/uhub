@@ -41,6 +41,7 @@
 		C12BFA5F28C2E3F700150928 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA436928BE26BD006AC2F8 /* ContentView.swift */; };
 		C12BFA6328C2F8B200150928 /* GlobalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6228C2F8B200150928 /* GlobalStyle.swift */; };
 		C12BFA6528C2F8F400150928 /* TextInputComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6428C2F8F400150928 /* TextInputComponent.swift */; };
+		C12BFA6B28C30F6700150928 /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6A28C30F6700150928 /* TextBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		C12BFA5D28C2DD2000150928 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		C12BFA6228C2F8B200150928 /* GlobalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStyle.swift; sourceTree = "<group>"; };
 		C12BFA6428C2F8F400150928 /* TextInputComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputComponent.swift; sourceTree = "<group>"; };
+		C12BFA6A28C30F6700150928 /* TextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				55FA436728BE26BD006AC2F8 /* uhubApp.swift */,
 				55FA436928BE26BD006AC2F8 /* ContentView.swift */,
 				C12BFA5D28C2DD2000150928 /* EditProfileView.swift */,
+				C12BFA6A28C30F6700150928 /* TextBox.swift */,
 				C12BFA4D28C2593500150928 /* NavigationViewModel.swift */,
 				C12BFA4F28C25C4900150928 /* SplashView.swift */,
 				C12BFA5128C25C4900150928 /* SplashModifer.swift */,
@@ -236,6 +239,7 @@
 				C12BFA5F28C2E3F700150928 /* ContentView.swift in Sources */,
 				C12BFA5728C25C4900150928 /* CongratsView.swift in Sources */,
 				55FA438628C0A246006AC2F8 /* ChatListRow.swift in Sources */,
+				C12BFA6B28C30F6700150928 /* TextBox.swift in Sources */,
 				5578A35428C1EB88004EE2D3 /* MessageSelfBubble.swift in Sources */,
 				C12BFA4E28C2593500150928 /* NavigationViewModel.swift in Sources */,
 				5578A35228C1DFE8004EE2D3 /* Message.swift in Sources */,
