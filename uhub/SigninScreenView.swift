@@ -10,6 +10,7 @@ import SwiftUI
 struct SigninScreenView: View {
     @EnvironmentObject var pageVM: PageViewModel
     @EnvironmentObject var userAuthManager: UserAuthManager
+    @EnvironmentObject var chatEngine: ChatEngine
     
     @State private var email = ""
     @State private var pwd = ""
@@ -71,7 +72,7 @@ struct SigninScreenView: View {
                     ButtonView(textContent: "Sign In", onTap: {
                         userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
                             if userAuthManager.isLoggedin {
-                                pageVM.visit(page: .Home)
+                                pageVM.visit(page: .Chat)
                                 print("\(userAuthManager.response)")
                             }
                         })

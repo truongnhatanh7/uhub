@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var pageVM = PageViewModel()
     @StateObject private var userAuthManager = UserAuthManager()
+    @StateObject private var chatEngine = ChatEngine()
     
     var body: some View {
         Group {
@@ -48,11 +49,15 @@ struct ContentView: View {
             case .Matches:
                 EmptyView()
             case .Chat:
-                EmptyView()
+                ChatListView()
+            case .Inbox:
+                InboxView()
             }
+        
         }
         .environmentObject(pageVM)
         .environmentObject(userAuthManager)
+        .environmentObject(chatEngine)
     }
 }
 

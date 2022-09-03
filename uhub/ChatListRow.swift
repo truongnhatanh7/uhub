@@ -13,7 +13,7 @@ struct ChatListRow: View {
         HStack {
             HStack {
                 ZStack {
-                    if conversation.imageURL == "" {
+                    if true {
                         // TODO: Load default img (no avatar)
                         Text("")
                             .frame(width: 50, height: 50)
@@ -34,8 +34,9 @@ struct ChatListRow: View {
                 }
 
                 VStack(alignment: .leading) {
-                    Text(conversation.name)
-                        .fontWeight(.medium)
+                    // TODO: update when database has name
+//                    Text(conversation.name)
+//                        .fontWeight(.medium)
                     Spacer()
                     Text(conversation.latestMessage)
 
@@ -51,7 +52,7 @@ struct ChatListRow: View {
                     .background(Color("pink_primary"))
                     .clipShape(Circle())
                 Spacer()
-                Text("20:00")
+                Text(conversation.timestamp.getFormattedDate())
             }
         }
         .padding()
@@ -63,8 +64,8 @@ struct ChatListRow: View {
     }
 }
 
-struct ChatListRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatListRow(conversation: Conversation(conversationId: 1, imageURL: "", name: "Credence Nguyen", latestMessage: "How are you doing lorem ipsum lorem rem", timestamp: Date(), unread: true))
-    }
-}
+//struct ChatListRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChatListRow(conversation: Conversation(conversationId: 1, imageURL: "", name: "Credence Nguyen", latestMessage: "How are you doing lorem ipsum lorem rem", timestamp: Date(), unread: true))
+//    }
+//}

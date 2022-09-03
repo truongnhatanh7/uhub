@@ -7,16 +7,14 @@
 
 import SwiftUI
 
-var currentUserId = 1 // For view testing purpose, TODO: Delete this after implemented Firebase
-
 struct InboxView: View {
-    var messages: [Message]
+    @EnvironmentObject var chatEngine: ChatEngine
     @State var textBoxContent: String = ""
     var body: some View {
         VStack {
             ScrollView {
-                ForEach(messages, id: \.self) { message in
-                    if message.ownerId == currentUserId {
+                ForEach(chatEngine.messages, id: \.self) { message in
+                    if message.ownerId == "1" {
                         MessageSelfBubble(message: message)
                     } else {
                         MessageDefaultBubble(message: message)
@@ -39,19 +37,22 @@ struct InboxView: View {
             .padding(.horizontal)
             
         }
+        .onAppear {
+            chatEngine.loadConversation()
+        }
         
     }
 }
 
-struct InboxView_Previews: PreviewProvider {
-    static var previews: some View {
-        InboxView(messages: [
-            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()),
-            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #1 text is from other user", timestamp: Date()),
-            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #2 text is from other user", timestamp: Date()),
-            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #3 text is from other user", timestamp: Date()),
-            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()),
-            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date())
-        ])
-    }
-}
+//struct InboxView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        InboxView(messages: [
+//            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()),
+//            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #1 text is from other user", timestamp: Date()),
+//            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #2 text is from other user", timestamp: Date()),
+//            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #3 text is from other user", timestamp: Date()),
+//            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()),
+//            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date())
+//        ])
+//    }
+//}

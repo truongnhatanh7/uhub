@@ -8,19 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct Conversation : Hashable {
-    var conversationId : Int
-    var imageURL: String
-    var name: String
+struct Conversation : Hashable, Codable {
+    var conversationId : String
     var latestMessage: String
     var timestamp: Date
     var unread: Bool
-//    private var imageName: String
-//    var image: Image {
-//        if imageName == "" {
-//
-//        }
-//        Image(imageName)
-//    }
-    
+    var userA: String
+    var userB: String
 }
