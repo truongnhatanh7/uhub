@@ -41,9 +41,13 @@ struct TextInputComponent: View {
                 HStack {
                     if isTextHidden {
                         SecureField(placeholder, text: $value)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
                             .modifier(InputStyle(isFocused: $isFocused, focusTracker: $focusTracker))
                     } else {
                         TextField(placeholder, text: $value)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
                             .modifier(InputStyle(isFocused: $isFocused, focusTracker: $focusTracker))
                     }
                     if isSecure {

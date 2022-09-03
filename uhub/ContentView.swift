@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var pageVM = PageViewModel()
+    @StateObject private var userAuthManager = UserAuthManager()
     
     var body: some View {
         Group {
@@ -51,6 +52,7 @@ struct ContentView: View {
             }
         }
         .environmentObject(pageVM)
+        .environmentObject(userAuthManager)
     }
 }
 

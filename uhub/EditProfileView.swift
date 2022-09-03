@@ -24,7 +24,7 @@ struct EditProfileView: View {
                 TextInputComponent(label: "Email", value: $email, placeholder: "Email", isRequired: true, icon: "envelope")
                 TextInputComponent(label: "School", value: $school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
                 TextInputComponent(label: "Major", value: $major, placeholder: "Learning Major", isRequired: true, icon: "graduationcap")
-                TextInput(label: "About", value: $about, placeholder: "Tell me about yourself", isRequired: true)
+                TextInputComponent(label: "About", value: $about, placeholder: "Tell me about yourself", isRequired: true)
             }
             .padding()
         }

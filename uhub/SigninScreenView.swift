@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SigninScreenView: View {
     @EnvironmentObject var pageVM: PageViewModel
+    @EnvironmentObject var userAuthManager: UserAuthManager
     
     @State private var email = ""
     @State private var pwd = ""
@@ -37,14 +38,14 @@ struct SigninScreenView: View {
                     
                     // 2 text input fields
                     VStack(spacing: 45) {
-                        TextInput(
+                        TextInputComponent(
                             label: "Email",
                             value: $email,
                             placeholder: "Email",
                             isRequired: true
                         )
                         
-                        TextInput(
+                        TextInputComponent(
                             label: "Password",
                             value: $pwd,
                             placeholder: "Password",
@@ -68,7 +69,12 @@ struct SigninScreenView: View {
                     
                     // sign in button
                     ButtonView(textContent: "Sign In", onTap: {
-                        pageVM.visit(page: .Home)
+                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
+                            if userAuthManager.isLoggedin {
+                                pageVM.visit(page: .Home)
+                                print("\(userAuthManager.response)")
+                            }
+                        })
                     })
                     
                     // forgot your password button
