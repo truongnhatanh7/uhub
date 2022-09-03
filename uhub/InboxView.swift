@@ -38,6 +38,7 @@ struct InboxView: View {
             
         }
         .onAppear {
+            print(chatEngine.currentConversation)
             chatEngine.loadConversation()
         }
         

@@ -13,15 +13,14 @@ struct ChatListRow: View {
         HStack {
             HStack {
                 ZStack {
-                    if true {
-                        // TODO: Load default img (no avatar)
-                        Text("")
-                            .frame(width: 50, height: 50)
-                            .background(Color("pink_primary"))
-                            .clipShape(Circle())
-                    } else {
+                    // TODO: Add condition for rendering images
+                    Text("")
+                        .frame(width: 50, height: 50)
+                        .background(Color("pink_primary"))
+                        .clipShape(Circle())
+                    
                         // TODO: Load real img
-                    }
+                    
                     
                     // TODO: Handle online -> Green light
                     Text("") // Active status

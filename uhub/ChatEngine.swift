@@ -23,6 +23,7 @@ class ChatEngine: ObservableObject {
     
     func loadConversation() {
         db.collection("messages")
+            .whereField("conversationId", isEqualTo: currentConversation)
             .addSnapshotListener
                 { (querySnapshot, error) in
                     guard let documents = querySnapshot?.documents else {

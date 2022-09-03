@@ -30,7 +30,13 @@ struct ChatListView: View {
 
             ScrollView {
                 ForEach(chatEngine.conversations, id: \.self) { conversation in
+                    Button {
+                        chatEngine.currentConversation = conversation.conversationId
+                        pageVM.visit(page: .Inbox)
+                    } label: {
                         ChatListRow(conversation: conversation)
+                    }
+                    .foregroundColor(.black)
                 }
                 .padding(.vertical, 2)
                 .padding(.horizontal, 8)
@@ -39,9 +45,6 @@ struct ChatListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {
             chatEngine.loadChatList()
-        }
-        .onTapGesture {
-            pageVM.visit(page: .Inbox)
         }
     }
 
