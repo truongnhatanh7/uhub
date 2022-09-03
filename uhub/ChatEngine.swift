@@ -38,10 +38,12 @@ class ChatEngine: ObservableObject {
                             let ownerId = data["ownerId"] as? String ?? ""
                             let conversationId = data["conversationId"] as? String ?? ""
                             let content = data["content"] as? String ?? ""
-                            let timestamp = data["timestamp"] as? Date ?? Date()
+                            let timestamp = data["timestamp"] as? Timestamp
+                            
                             print(content)
-                            return Message(messageId: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp)
+                            return Message(messageId: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
                         }
+                        self.messages.sort { $0.timestamp < $1.timestamp }
                         print(self.messages)
                     }
 
@@ -72,6 +74,22 @@ class ChatEngine: ObservableObject {
                 print("Done loading chat list")
                 print(self.conversations)
             }
+    }
+    
+    func sendMessage(content: String) {
+//        let data: Message = Message(messageId: UUID().uuidString, ownerId: Auth.auth().currentUser?.uid ?? "1", conversationId: currentConversation, content: content, timestamp: Date())
+        let docData: [String: Any] = [
+            "messageId": UUID().uuidString,
+            "ownerId": Auth.auth().currentUser?.uid ?? "-1",
+            "conversationId": currentConversation,
+            "content": content,
+            "timestamp": Date()
+        ]
+        do {
+            try db.collection("messages").document(UUID().uuidString).setData(docData)
+        } catch let error {
+            print("Error writing city to Firestore: \(error)")
+        }
     }
     
     func getConversations() -> [Conversation] {

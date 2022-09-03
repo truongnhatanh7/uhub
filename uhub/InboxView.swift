@@ -6,20 +6,21 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct InboxView: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @State var textBoxContent: String = ""
+    
     var body: some View {
         VStack {
             ScrollView {
                 ForEach(chatEngine.messages, id: \.self) { message in
-                    if message.ownerId == "1" {
+                    if message.ownerId == (Auth.auth().currentUser?.uid ?? "-1") {
                         MessageSelfBubble(message: message)
                     } else {
                         MessageDefaultBubble(message: message)
                     }
-                        
                 }
                 .padding(.horizontal)
             }
@@ -28,8 +29,12 @@ struct InboxView: View {
                     .lineLimit(3)
                     .padding()
                     Spacer()
+                Button {
+                    chatEngine.sendMessage(content: textBoxContent)
+                    textBoxContent = ""
+                } label: {
                     Image(systemName: "paperplane")
-                    .padding()
+                }
             }
             .overlay(RoundedRectangle(cornerRadius: 18)
                 .stroke(Color("neutral"), lineWidth: 2)
