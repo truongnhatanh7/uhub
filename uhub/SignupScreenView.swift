@@ -11,6 +11,7 @@ import SwiftUI
 
 struct SignupScreenView: View {
     @EnvironmentObject var pageVm: PageViewModel
+    @EnvironmentObject var userAuthManager: UserAuthManager
     
     @State private var email = ""
     @State private var pwd = ""
@@ -39,14 +40,14 @@ struct SignupScreenView: View {
                     
                     // 2 text input fields
                     VStack(spacing: 45) {
-                        TextInput(
+                        TextInputComponent(
                             label: "Email",
                             value: $email,
                             placeholder: "Email",
                             isRequired: true
                         )
                         
-                        TextInput(
+                        TextInputComponent(
                             label: "Password",
                             value: $pwd,
                             placeholder: "Password",
@@ -71,6 +72,12 @@ struct SignupScreenView: View {
                     // sign up button
                     ButtonView(textContent: "Sign Up", onTap: {
                         pageVm.visit(page: .EditProfile)
+//                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
+//                            if userAuthManager.isLoggedin {
+//                                pageVm.visit(page: .EditProfile)
+//                                print("\(userAuthManager.response)")
+//                            }
+//                        })
                     })
                     
                     // already have an account + navigate to Sign In button
@@ -98,8 +105,7 @@ struct SignupScreenView: View {
 
 struct SignupScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        SignupScreenView()
-            .previewInterfaceOrientation(.portrait)
+        Text("Sign Up Screen")
     }
 }
 
