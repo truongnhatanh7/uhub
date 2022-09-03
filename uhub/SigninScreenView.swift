@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SigninScreenView: View {
+    @EnvironmentObject var pageVM: PageViewModel
+    
     @State private var email = ""
     @State private var pwd = ""
     @State private var rememberedMe = false
@@ -65,7 +67,9 @@ struct SigninScreenView: View {
                     .padding(.leading, 20)
                     
                     // sign in button
-                    ButtonView(textContent: "Sign In", onTap: {})
+                    ButtonView(textContent: "Sign In", onTap: {
+                        pageVM.visit(page: .Home)
+                    })
                     
                     // forgot your password button
                     Button(action: {}) {
@@ -80,7 +84,9 @@ struct SigninScreenView: View {
                         Text("Don't have an account?")
                             .foregroundColor(.gray)
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            pageVM.visit(page: .SignUp)
+                        }) {
                             Text("Sign Up")
                                 .bold()
                         }

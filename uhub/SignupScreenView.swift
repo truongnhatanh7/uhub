@@ -10,6 +10,8 @@ import SwiftUI
 import SwiftUI
 
 struct SignupScreenView: View {
+    @EnvironmentObject var pageVm: PageViewModel
+    
     @State private var email = ""
     @State private var pwd = ""
     @State private var rememberedMe = false
@@ -67,14 +69,18 @@ struct SignupScreenView: View {
                     .padding(.leading, 20)
                     
                     // sign up button
-                    ButtonView(textContent: "Sign Up", onTap: {})
+                    ButtonView(textContent: "Sign Up", onTap: {
+                        pageVm.visit(page: .EditProfile)
+                    })
                     
                     // already have an account + navigate to Sign In button
                     HStack {
                         Text("Already have an account?")
                             .foregroundColor(.gray)
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            pageVm.visit(page: .SignIn)
+                        }) {
                             Text("Sign In")
                                 .bold()
                         }

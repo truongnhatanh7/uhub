@@ -15,12 +15,19 @@ struct ContentView: View {
             switch pageVM.currentPage {
             case .Splash:
                 SplashView()
-            case .SignIn:
-                EmptyView()
             case .SignUp:
-                EmptyView()
+                SignupScreenView()
+                    .transition(
+                        .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing))
+                    )
+            case .SignIn:
+                SigninScreenView()
+                    .transition(
+                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+                    )
             case .EditProfile:
-                EmptyView()
+                EditProfileView()
+                    .transition(.move(edge: .trailing))
             case .FilterProfile:
                 EmptyView()
             case .Notification:
