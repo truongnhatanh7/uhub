@@ -20,8 +20,6 @@ class ChatEngine: ObservableObject {
     init() {
     }
     
-
-    
     func loadConversation() {
         db.collection("messages")
             .whereField("conversationId", isEqualTo: currentConversation)
@@ -31,6 +29,7 @@ class ChatEngine: ObservableObject {
                         print("Error fetching documents: \(error!)")
                         return
                     }
+                    print("[loadConversation()] listener is working")
                     DispatchQueue.main.async {
                         self.messages = []
                         self.messages = documents.map { (queryDocumentSnapshot) -> Message in
@@ -43,21 +42,18 @@ class ChatEngine: ObservableObject {
                             return Message(id: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
                         }
                         self.messages.sort { $0.timestamp < $1.timestamp } // Sort by timestamp
-                        
+
                         // For scolling to latest message
                         if let lastId = self.messages.last?.id {
                             self.lastMessageId = lastId
                         }
                     }
-
                 }
-        
     }
     
     func loadChatList(){
-        
         print("Start to load chat list")
-            db.collection("conversations").getDocuments() { (querySnapshot, err) in
+            db.collection("conversations").addSnapshotListener { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else {
                     print("No documents")
                     return
@@ -80,7 +76,6 @@ class ChatEngine: ObservableObject {
     }
     
     func sendMessage(content: String) {
-//        let data: Message = Message(messageId: UUID().uuidString, ownerId: Auth.auth().currentUser?.uid ?? "1", conversationId: currentConversation, content: content, timestamp: Date())
         let docData: [String: Any] = [
             "messageId": UUID().uuidString,
             "ownerId": Auth.auth().currentUser?.uid ?? "-1",
@@ -89,9 +84,22 @@ class ChatEngine: ObservableObject {
             "timestamp": Date()
         ]
         db.collection("messages").document(UUID().uuidString).setData(docData)
+        
+        // Update chat list view
+        updateAfterSendMessage(content: content)
+    }
+    
+    private func updateAfterSendMessage(content: String) {
+        let toBeUpdatedConversationData: [String: Any] = [
+            "lastMessageSent": content,
+            "lastMessageTimestamp": Date()
+        ]
+        self.db.collection("conversations").document(self.currentConversation).updateData(toBeUpdatedConversationData)
     }
     
     func getConversations() -> [Conversation] {
         return self.conversations
     }
+    
+    
 }
