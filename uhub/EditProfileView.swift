@@ -20,10 +20,10 @@ struct EditProfileView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
-                TextInput(label: "Full Name", value: $fullName, placeholder: "Full Name", isRequired: true)
-                TextInput(label: "Email", value: $email, placeholder: "Email", isRequired: true)
-                TextInput(label: "School", value: $school, placeholder: "School Name", isRequired: true)
-                TextInput(label: "Major", value: $major, placeholder: "Learning Major", isRequired: true)
+                TextInputComponent(label: "Full Name", value: $fullName, placeholder: "Full Name", isSecure: false, isRequired: true, icon: "person")
+                TextInputComponent(label: "Email", value: $email, placeholder: "Email", isRequired: true, icon: "envelope")
+                TextInputComponent(label: "School", value: $school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
+                TextInputComponent(label: "Major", value: $major, placeholder: "Learning Major", isRequired: true, icon: "graduationcap")
                 TextInput(label: "About", value: $about, placeholder: "Tell me about yourself", isRequired: true)
             }
             .padding()

@@ -180,4 +180,3 @@ struct TextInput_Previews: PreviewProvider {
         TestSecureFieldSwitch()
     }
 }
-
