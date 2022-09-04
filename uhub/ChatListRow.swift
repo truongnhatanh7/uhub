@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ChatListRow: View {
+    @EnvironmentObject var chatEngine: ChatEngine
     var conversation: Conversation
     var body: some View {
         HStack {
@@ -37,7 +39,13 @@ struct ChatListRow: View {
 //                    Text(conversation.name)
 //                        .fontWeight(.medium)
                     Spacer()
-                    Text(conversation.latestMessage)
+                    if Auth.auth().currentUser?.uid != chatEngine.lastMessageSenderId && conversation.unread {
+                        Text(conversation.latestMessage)
+                            .fontWeight(.bold)
+                    } else {
+                        Text(conversation.latestMessage)
+                    }
+                    
 
                 }
                 .padding(.leading, 8)

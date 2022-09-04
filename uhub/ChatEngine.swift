@@ -16,8 +16,10 @@ class ChatEngine: ObservableObject {
     @Published var conversations: [Conversation] = []
     @Published var currentConversation: String = "-1"
     @Published var lastMessageId: String = "-1"
+    @Published var lastMessageSenderId: String = "-1"
     private var messagesListener: ListenerRegistration?
     private var conversationListener: ListenerRegistration?
+    @Published var currentUnread: Bool = false
 
     deinit {
         conversationListener?.remove()
@@ -49,6 +51,7 @@ class ChatEngine: ObservableObject {
                         // For scolling to latest message
                         if let latestMsg = self.messages.last {
                             self.lastMessageId = latestMsg.id
+                            self.lastMessageSenderId = latestMsg.ownerId
                             self.updateChatList(content: latestMsg.content) // Everytime current conversation has new update -> update conversation data
                         }
                     }
@@ -57,7 +60,6 @@ class ChatEngine: ObservableObject {
     
     func loadChatList(){
         print("Start to load chat list") // TODO: Load chat that belongs to that user (save in user db)
-        print("Current user: \(Auth.auth().currentUser?.uid)")
         conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "-1").addSnapshotListener { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else {
                     print("No documents")
@@ -71,12 +73,9 @@ class ChatEngine: ObservableObject {
                         let timestamp = data["timestamp"] as? Date ?? Date()
                         let unread = data["unread"] as? Bool ?? false
                         let users = data["users"] as? [String] ?? []
-//                        let userA = data["userA"] as? String ?? ""
-//                        let userB = data["userB"] as? String ?? ""
                         return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, users: users)
                     }
                 }
-                print(self.conversations)
             }
         
     }
@@ -90,14 +89,21 @@ class ChatEngine: ObservableObject {
             "timestamp": Date()
         ]
         db.collection("messages").document(UUID().uuidString).setData(docData)
-        updateChatList(content: content)
+        db.collection("conversations").document(currentConversation).updateData([ // Updatte latest message when sending new message from both sides
+            "latestMessage": content,
+            "timestamp": Date(),
+            "unread": true
+        ])
     }
     
     private func updateChatList(content: String) {
-        print("Start change conversation latest message")
-        db.collection("conversations").document(currentConversation).updateData([
-            "latestMessage": content,
-            "timestamp": Date()
-        ])
+        if Auth.auth().currentUser?.uid != lastMessageSenderId && currentUnread { // If unread == false, do not call this
+            db.collection("conversations").document(currentConversation).updateData([
+                "latestMessage": content,
+                "timestamp": Date(),
+                "unread": false
+            ])
+            currentUnread = false
+        }
     }
 }
