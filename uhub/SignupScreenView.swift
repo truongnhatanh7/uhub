@@ -40,20 +40,34 @@ struct SignupScreenView: View {
                     
                     // 2 text input fields
                     VStack(spacing: 45) {
-                        TextInputComponent(
-                            label: "Email",
-                            value: $email,
-                            placeholder: "Email",
-                            isRequired: true
-                        )
+                        VStack {
+                            TextInputComponent(
+                                label: "Email",
+                                value: $email,
+                                placeholder: "Email",
+                                isRequired: true
+                            )
+                            
+                            if userAuthManager.errorMsg != ""
+                                && !userAuthManager.errorMsg.lowercased().contains("password") {
+                                ErrorMsgView(msg: "Valid email: abc123@mail.provider.com")
+                            }
+                        }
                         
-                        TextInputComponent(
-                            label: "Password",
-                            value: $pwd,
-                            placeholder: "Password",
-                            isSecure: true,
-                            isRequired: true
-                        )
+                        VStack {
+                            TextInputComponent(
+                                label: "Password",
+                                value: $pwd,
+                                placeholder: "Password",
+                                isSecure: true,
+                                isRequired: true
+                            )
+                            
+                            if userAuthManager.errorMsg != ""
+                                && userAuthManager.errorMsg.lowercased().contains("password") {
+                                ErrorMsgView(msg: "Valid password: at least 6 characters")
+                            }
+                        }
                     }
                     
                     // remember me check box
@@ -71,13 +85,13 @@ struct SignupScreenView: View {
                     
                     // sign up button
                     ButtonView(textContent: "Sign Up", onTap: {
-                        pageVm.visit(page: .EditProfile)
-//                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
-//                            if userAuthManager.isLoggedin {
-//                                pageVm.visit(page: .EditProfile)
-//                                print("\(userAuthManager.response)")
-//                            }
-//                        })
+                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
+                            if userAuthManager.errorMsg == "" {
+                                pageVm.visit(page: .EditProfile)
+                            } else {
+                                print(userAuthManager.errorMsg)
+                            }
+                        })
                     })
                     
                     // already have an account + navigate to Sign In button

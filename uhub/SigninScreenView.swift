@@ -14,6 +14,7 @@ struct SigninScreenView: View {
     @State private var email = ""
     @State private var pwd = ""
     @State private var rememberedMe = false
+    @State private var errorMsg = ""
     
     var body: some View {
         ZStack {
@@ -38,20 +39,34 @@ struct SigninScreenView: View {
                     
                     // 2 text input fields
                     VStack(spacing: 45) {
-                        TextInputComponent(
-                            label: "Email",
-                            value: $email,
-                            placeholder: "Email",
-                            isRequired: true
-                        )
+                        VStack {
+                            TextInputComponent(
+                                label: "Email",
+                                value: $email,
+                                placeholder: "Email",
+                                isRequired: true
+                            )
+                            
+                            if userAuthManager.errorMsg != ""
+                                && !userAuthManager.errorMsg.lowercased().contains("password") {
+                                ErrorMsgView(msg: "Invalid email")
+                            }
+                        }
                         
-                        TextInputComponent(
-                            label: "Password",
-                            value: $pwd,
-                            placeholder: "Password",
-                            isSecure: true,
-                            isRequired: true
-                        )
+                        VStack {
+                            TextInputComponent(
+                                label: "Password",
+                                value: $pwd,
+                                placeholder: "Password",
+                                isSecure: true,
+                                isRequired: true
+                            )
+                            
+                            if userAuthManager.errorMsg != ""
+                                && userAuthManager.errorMsg.lowercased().contains("password") {
+                                ErrorMsgView(msg: "Invalid password")
+                            }
+                        }
                     }
                     
                     // remember me check box
@@ -70,9 +85,10 @@ struct SigninScreenView: View {
                     // sign in button
                     ButtonView(textContent: "Sign In", onTap: {
                         userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
-                            if userAuthManager.isLoggedin {
+                            if userAuthManager.errorMsg == "" {
                                 pageVM.visit(page: .Home)
-                                print("\(userAuthManager.response)")
+                            } else {
+                                print(userAuthManager.errorMsg)
                             }
                         })
                     })
