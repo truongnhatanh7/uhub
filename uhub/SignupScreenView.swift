@@ -16,6 +16,7 @@ struct SignupScreenView: View {
     @State private var email = ""
     @State private var pwd = ""
     @State private var rememberedMe = false
+    @State private var isButtonDisabled = true
     
     var body: some View {
         ZStack {
@@ -46,7 +47,17 @@ struct SignupScreenView: View {
                                 value: $email,
                                 placeholder: "Email",
                                 isRequired: true
-                            )
+                            ).onChange(of: email) { _ in
+                                if !email.isEmpty && !pwd.isEmpty {
+                                    if isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                } else {
+                                    if !isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                }
+                            }
                             
                             if userAuthManager.errorMsg != ""
                                 && !userAuthManager.errorMsg.lowercased().contains("password") {
@@ -61,7 +72,17 @@ struct SignupScreenView: View {
                                 placeholder: "Password",
                                 isSecure: true,
                                 isRequired: true
-                            )
+                            ).onChange(of: pwd) { _ in
+                                if !email.isEmpty && !pwd.isEmpty {
+                                    if isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                } else {
+                                    if !isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                }
+                            }
                             
                             if userAuthManager.errorMsg != ""
                                 && userAuthManager.errorMsg.lowercased().contains("password") {
@@ -84,16 +105,16 @@ struct SignupScreenView: View {
                     .padding(.leading, 20)
                     
                     // sign up button
-                    ButtonView(textContent: "Sign Up", onTap: {
+                    ButtonBindingView(textContent: "Sign Up", onTap: {
                         pageVm.visit(page: .EditProfile)
-//                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
-//                            if userAuthManager.errorMsg == "" {
-//                                pageVm.visit(page: .EditProfile)
-//                            } else {
-//                                print(userAuthManager.errorMsg)
-//                            }
-//                        })
-                    })
+                        //                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
+                        //                            if userAuthManager.errorMsg == "" {
+                        //                                pageVm.visit(page: .EditProfile)
+                        //                            } else {
+                        //                                print(userAuthManager.errorMsg)
+                        //                            }
+                        //                        })
+                    }, isDisabled: $isButtonDisabled)
                     
                     // already have an account + navigate to Sign In button
                     HStack {

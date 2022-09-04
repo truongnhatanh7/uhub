@@ -15,6 +15,7 @@ struct SigninScreenView: View {
     @State private var pwd = ""
     @State private var rememberedMe = false
     @State private var errorMsg = ""
+    @State private var isButtonDisabled = true
     
     var body: some View {
         ZStack {
@@ -45,7 +46,17 @@ struct SigninScreenView: View {
                                 value: $email,
                                 placeholder: "Email",
                                 isRequired: true
-                            )
+                            ).onChange(of: email) { _ in
+                                if !email.isEmpty && !pwd.isEmpty {
+                                    if isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                } else {
+                                    if !isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                }
+                            }
                             
                             if userAuthManager.errorMsg != ""
                                 && !userAuthManager.errorMsg.lowercased().contains("password") {
@@ -60,7 +71,17 @@ struct SigninScreenView: View {
                                 placeholder: "Password",
                                 isSecure: true,
                                 isRequired: true
-                            )
+                            ).onChange(of: pwd) { _ in
+                                if !email.isEmpty && !pwd.isEmpty {
+                                    if isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                } else {
+                                    if !isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                }
+                            }
                             
                             if userAuthManager.errorMsg != ""
                                 && userAuthManager.errorMsg.lowercased().contains("password") {
@@ -83,16 +104,16 @@ struct SigninScreenView: View {
                     .padding(.leading, 20)
                     
                     // sign in button
-                    ButtonView(textContent: "Sign In", onTap: {
+                    ButtonBindingView(textContent: "Sign In", onTap: {
                         pageVM.visit(page: .Home)
-//                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
-//                            if userAuthManager.errorMsg == "" {
-//                                pageVM.visit(page: .Home)
-//                            } else {
-//                                print(userAuthManager.errorMsg)
-//                            }
-//                        })
-                    })
+                        //                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
+                        //                            if userAuthManager.errorMsg == "" {
+                        //                                pageVM.visit(page: .Home)
+                        //                            } else {
+                        //                                print(userAuthManager.errorMsg)
+                        //                            }
+                        //                        })
+                    }, isDisabled: $isButtonDisabled)
                     
                     // forgot your password button
                     Button(action: {}) {
