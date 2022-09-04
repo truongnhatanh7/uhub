@@ -84,13 +84,14 @@ struct SigninScreenView: View {
                     
                     // sign in button
                     ButtonView(textContent: "Sign In", onTap: {
-                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
-                            if userAuthManager.errorMsg == "" {
-                                pageVM.visit(page: .Home)
-                            } else {
-                                print(userAuthManager.errorMsg)
-                            }
-                        })
+                        pageVM.visit(page: .Home)
+//                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
+//                            if userAuthManager.errorMsg == "" {
+//                                pageVM.visit(page: .Home)
+//                            } else {
+//                                print(userAuthManager.errorMsg)
+//                            }
+//                        })
                     })
                     
                     // forgot your password button
