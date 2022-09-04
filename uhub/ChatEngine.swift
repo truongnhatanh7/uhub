@@ -29,7 +29,7 @@ class ChatEngine: ObservableObject {
     func loadConversation() { // LOad messages in that particular conversation
         print("[Load Conversation] invoked")
         messagesListener = db.collection("messages")
-            .whereField("conversationId", isEqualTo: currentConversation)
+            .whereField("conversationId", isEqualTo: currentConversation).limit(to: 14)
             .addSnapshotListener
                 { (querySnapshot, error) in
                     guard let documents = querySnapshot?.documents else {

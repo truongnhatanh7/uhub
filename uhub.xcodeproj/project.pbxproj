@@ -134,7 +134,6 @@
 				5578A35928C3417C004EE2D3 /* ChatEngine.swift */,
 				55FA438528C0A246006AC2F8 /* ChatListRow.swift */,
 				55FA438728C0A26A006AC2F8 /* Conversation.swift */,
-				55FA436D28BE26C4006AC2F8 /* Preview Content */,
 				8FF183F028C19FA0000184B3 /* ButtonView.swift */,
 				C12BFA6428C2F8F400150928 /* TextInputComponent.swift */,
 				8FF183F228C19FAA000184B3 /* ErrorMsgView.swift */,
@@ -142,6 +141,7 @@
 				C12BFA6228C2F8B200150928 /* GlobalStyle.swift */,
 				8FF183F628C1FA60000184B3 /* SigninScreenView.swift */,
 				8F70561028C2F64500A0B18B /* UserAuthManager.swift */,
+				55FA436D28BE26C4006AC2F8 /* Preview Content */,
 			);
 			path = uhub;
 			sourceTree = "<group>";

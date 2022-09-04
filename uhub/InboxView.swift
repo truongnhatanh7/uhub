@@ -32,10 +32,12 @@ struct InboxView: View {
                     .padding(.horizontal)
                 }
                 .onChange(of: chatEngine.lastMessageId) { id in
-                    print("trigger")
                     withAnimation {
                         proxy.scrollTo(id, anchor: .bottom)
                     }
+                }
+                .onAppear {
+                    proxy.scrollTo(chatEngine.lastMessageId, anchor: .bottom)
                 }
             }
 
