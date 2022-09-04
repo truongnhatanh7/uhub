@@ -13,6 +13,7 @@ struct Conversation : Hashable, Codable {
     var latestMessage: String
     var timestamp: Date
     var unread: Bool
-    var userA: String
-    var userB: String
+//    var userA: String
+//    var userB: String
+    var users: [String]
 }

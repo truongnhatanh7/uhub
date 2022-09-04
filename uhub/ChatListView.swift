@@ -31,6 +31,7 @@ struct ChatListView: View {
             ScrollView {
                 ForEach(chatEngine.conversations, id: \.self) { conversation in
                     Button {
+                        print("Tapped conversation: \(conversation.conversationId)  \(conversation.latestMessage)")
                         chatEngine.currentConversation = conversation.conversationId
                         pageVM.visit(page: .Inbox)
                     } label: {

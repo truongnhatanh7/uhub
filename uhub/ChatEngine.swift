@@ -16,12 +16,17 @@ class ChatEngine: ObservableObject {
     @Published var conversations: [Conversation] = []
     @Published var currentConversation: String = "-1"
     @Published var lastMessageId: String = "-1"
-    
-    init() {
+    private var messagesListener: ListenerRegistration?
+    private var conversationListener: ListenerRegistration?
+
+    deinit {
+        conversationListener?.remove()
+        messagesListener?.remove()
     }
-    
-    func loadConversation() {
-        db.collection("messages")
+
+    func loadConversation() { // LOad messages in that particular conversation
+        print("[Load Conversation] invoked")
+        messagesListener = db.collection("messages")
             .whereField("conversationId", isEqualTo: currentConversation)
             .addSnapshotListener
                 { (querySnapshot, error) in
@@ -29,9 +34,7 @@ class ChatEngine: ObservableObject {
                         print("Error fetching documents: \(error!)")
                         return
                     }
-                    print("[loadConversation()] listener is working")
                     DispatchQueue.main.async {
-                        self.messages = []
                         self.messages = documents.map { (queryDocumentSnapshot) -> Message in
                             let data = queryDocumentSnapshot.data()
                             let messageId = queryDocumentSnapshot.documentID
@@ -42,18 +45,20 @@ class ChatEngine: ObservableObject {
                             return Message(id: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
                         }
                         self.messages.sort { $0.timestamp < $1.timestamp } // Sort by timestamp
-
+                        
                         // For scolling to latest message
-                        if let lastId = self.messages.last?.id {
-                            self.lastMessageId = lastId
+                        if let latestMsg = self.messages.last {
+                            self.lastMessageId = latestMsg.id
+                            self.updateChatList(content: latestMsg.content) // Everytime current conversation has new update -> update conversation data
                         }
                     }
                 }
     }
     
     func loadChatList(){
-        print("Start to load chat list")
-            db.collection("conversations").addSnapshotListener { (querySnapshot, err) in
+        print("Start to load chat list") // TODO: Load chat that belongs to that user (save in user db)
+        print("Current user: \(Auth.auth().currentUser?.uid)")
+        conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "-1").addSnapshotListener { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else {
                     print("No documents")
                     return
@@ -62,17 +67,18 @@ class ChatEngine: ObservableObject {
                     self.conversations = documents.map { (queryDocumentSnapshot) -> Conversation in
                         let data = queryDocumentSnapshot.data()
                         let conversationId = queryDocumentSnapshot.documentID
-                        let latestMessage = data["lastMessageSent"] as? String ?? ""
-                        let timestamp = data["lastMessageTimestamp"] as? Date ?? Date()
+                        let latestMessage = data["latestMessage"] as? String ?? ""
+                        let timestamp = data["timestamp"] as? Date ?? Date()
                         let unread = data["unread"] as? Bool ?? false
-                        let userA = data["userA"] as? String ?? ""
-                        let userB = data["userB"] as? String ?? ""
-                        return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, userA: userA, userB: userB)
+                        let users = data["users"] as? [String] ?? []
+//                        let userA = data["userA"] as? String ?? ""
+//                        let userB = data["userB"] as? String ?? ""
+                        return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, users: users)
                     }
                 }
-                print("Done loading chat list")
                 print(self.conversations)
             }
+        
     }
     
     func sendMessage(content: String) {
@@ -84,22 +90,14 @@ class ChatEngine: ObservableObject {
             "timestamp": Date()
         ]
         db.collection("messages").document(UUID().uuidString).setData(docData)
-        
-        // Update chat list view
-        updateAfterSendMessage(content: content)
+        updateChatList(content: content)
     }
     
-    private func updateAfterSendMessage(content: String) {
-        let toBeUpdatedConversationData: [String: Any] = [
-            "lastMessageSent": content,
-            "lastMessageTimestamp": Date()
-        ]
-        self.db.collection("conversations").document(self.currentConversation).updateData(toBeUpdatedConversationData)
+    private func updateChatList(content: String) {
+        print("Start change conversation latest message")
+        db.collection("conversations").document(currentConversation).updateData([
+            "latestMessage": content,
+            "timestamp": Date()
+        ])
     }
-    
-    func getConversations() -> [Conversation] {
-        return self.conversations
-    }
-    
-    
 }

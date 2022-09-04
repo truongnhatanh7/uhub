@@ -15,6 +15,9 @@ struct InboxView: View {
     
     var body: some View {
         VStack {
+            StandardHeader(title: "Inbox") {
+                pageVM.visit(page: .Chat)
+            }
             ScrollViewReader { proxy in
                 ScrollView {
                     ForEach(chatEngine.messages, id: \.self) { message in
