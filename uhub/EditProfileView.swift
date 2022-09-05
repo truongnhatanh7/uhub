@@ -6,64 +6,36 @@
 //
 
 import SwiftUI
+import Combine
 
 struct EditProfileView: View {
     @EnvironmentObject var pageVM: PageViewModel
-    
-    @State private var fullName = ""
-    @ObservedObject private var age = NumbersOnly()
-    @State private var email = ""
-    @State private var school = ""
-    @State private var major = ""
-    @ObservedObject private var gpa = NumbersOnly()
-    @ObservedObject private var semesterLearned = NumbersOnly()
-    @State private var about = ""
-    
-    private enum Field: Int {
-        case FullName, Age, Email, School, Major, GPA, SemeterLearned, About
-    }
-    @FocusState private var isFocusKeyboard: Field?
+    @StateObject var editProfileVM = EditProfileViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 30) {
-                TextInputComponent(label: "Full Name", value: $fullName, placeholder: "Full Name", isSecure: false, isRequired: true, icon: "person")
-                    .focused($isFocusKeyboard, equals: .FullName)
-                
-                TextInputComponent(label: "Age", value: $age.value, placeholder: "Your age", isRequired: true, icon: "calendar")
-                    .keyboardType(.numberPad)
-                    .focused($isFocusKeyboard, equals: .Age)
-                
-                TextInputComponent(label: "Email", value: $email, placeholder: "Email", isRequired: true, icon: "envelope")
-                    .focused($isFocusKeyboard, equals: .Email)
-                
-                TextInputComponent(label: "School", value: $school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
-                    .focused($isFocusKeyboard, equals: .School)
-                
-                TextInputComponent(label: "Major", value: $major, placeholder: "Learning Major", isRequired: true, icon: "graduationcap")
-                    .focused($isFocusKeyboard, equals: .Major)
-                
-                TextInputComponent(label: "GPA", value: $gpa.value, placeholder: "Your GPA", isRequired: true, icon: "number")
-                    .keyboardType(.numberPad)
-                    .focused($isFocusKeyboard, equals: .GPA)
-                
-                TextInputComponent(label: "Semester Learned", value: $semesterLearned.value, placeholder: "Number of semester", isRequired: true, icon: "clock")
-                    .keyboardType(.numberPad)
-                    .focused($isFocusKeyboard, equals: .SemeterLearned)
-                
-                TextBox(label: "About", value: $about, placeholder: "Tell me about yourself")
-                    .focused($isFocusKeyboard, equals: .About)
-                
-                ButtonView(textContent: "Next", onTap: {
-                    pageVM.visit(page: .FilterProfile)
-                }, isDisabled: false)
-            }
-            .padding()
-            .onTapGesture {
-                if isFocusKeyboard != nil {
-                    isFocusKeyboard = nil
+        ZStack(alignment: .bottom) {
+            ZStack(alignment: .top) {
+                ScrollView {
+                    AvatarInput(image: editProfileVM.image) {
+                        editProfileVM.showImagePicker.toggle()
+                    }
+                    .padding(.top, 60)
+                    
+                    TextInputSubView()
                 }
+                StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
             }
+            PickerInputModal(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)
+            PickerInputModal(label: "Your GPA", showPicker: $editProfileVM.showGPAPicker, value: $editProfileVM.gpa, items: editProfileVM.GPARange)
+            PickerInputModal(label: "Semester learned", showPicker: $editProfileVM.showSemesterLearned, value: $editProfileVM.semesterLearned, items: editProfileVM.semesterLearnedRange)
+
+        }
+        .environmentObject(editProfileVM)
+        .sheet(isPresented: $editProfileVM.showImagePicker) {
+            ImagePicker(image: $editProfileVM.inputImage)
+        }
+        .onChange(of: editProfileVM.inputImage) { _ in
+            editProfileVM.loadImage()
         }
     }
 }
@@ -74,13 +46,42 @@ struct EditProfileView_Previews: PreviewProvider {
     }
 }
 
-class NumbersOnly: ObservableObject {
-    @Published var value = "" {
-        didSet {
-            let filtered = value.filter { $0.isNumber }
+struct TextInputSubView: View {
+    @EnvironmentObject var pageVM: PageViewModel
+    @EnvironmentObject var editProfileVM: EditProfileViewModel
+    @FocusState private var isFocusKeyboard: Field?
+    
+    var body: some View {
+        VStack(spacing: 30) {
+            TextInputComponent(label: "Full Name", value: $editProfileVM.fullname, placeholder: "Full Name", isSecure: false, isRequired: true, icon: "person")
+                .focused($isFocusKeyboard, equals: .FullName)
             
-            if value != filtered {
-                value = filtered
+            PickerInputComponent(label: "Age", value: $editProfileVM.age, placeholder: "Select your age", isRequired: true, items: editProfileVM.ageRange, showPicker: $editProfileVM.showAgePicker)
+            
+            TextInputComponent(label: "Email", value: $editProfileVM.email, placeholder: "Email", isRequired: true, icon: "envelope")
+                .focused($isFocusKeyboard, equals: .Email)
+            
+            TextInputComponent(label: "School", value: $editProfileVM.school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
+                .focused($isFocusKeyboard, equals: .School)
+            
+            TextInputComponent(label: "Major", value: $editProfileVM.major, placeholder: "Learning Major", isRequired: true, icon: "graduationcap")
+                .focused($isFocusKeyboard, equals: .Major)
+            
+            PickerInputComponent(label: "GPA", value: $editProfileVM.gpa, placeholder: "Select your GPA", isRequired: true, items: editProfileVM.GPARange, showPicker: $editProfileVM.showGPAPicker)
+            
+            PickerInputComponent(label: "Semester Learned", value: $editProfileVM.semesterLearned, placeholder: "Select number of learned semester", isRequired: true, items: editProfileVM.semesterLearnedRange, showPicker: $editProfileVM.showSemesterLearned)
+            
+            TextBox(label: "About", value: $editProfileVM.about, placeholder: "Tell me about yourself")
+                .focused($isFocusKeyboard, equals: .About)
+            
+            ButtonView(textContent: "Next", onTap: {
+                pageVM.visit(page: .FilterProfile)
+            }, isDisabled: editProfileVM.isDisabled)
+        }
+        .padding()
+        .onTapGesture {
+            if isFocusKeyboard != nil {
+                isFocusKeyboard = nil
             }
         }
     }

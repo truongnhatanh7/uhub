@@ -17,7 +17,6 @@ struct TextInputComponent: View {
     
     @FocusState private var isFocused: Bool
     @State private var isTextHidden: Bool = true
-    @State private var focusTracker: Bool = false
     
     init(label: String? = nil, value: Binding<String>, placeholder: String = "", isSecure: Bool = false, isRequired: Bool = false, icon: String? = nil) {
         _label = State(initialValue: label)
@@ -36,19 +35,19 @@ struct TextInputComponent: View {
             }
             ZStack {
                 RoundedRectangle(cornerRadius: 25)
-                    .stroke(focusTracker ? Color("pink_primary") : Color.gray.opacity(0.4), lineWidth: 2)
+                    .stroke(isFocused ? Color("pink_primary") : Color.gray.opacity(0.4), lineWidth: 2)
                     .frame(height: 50)
                 HStack {
                     if isTextHidden {
                         SecureField(placeholder, text: $value)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
-                            .modifier(InputStyle(isFocused: $isFocused, focusTracker: $focusTracker))
+                            .modifier(InputStyle(isFocused: $isFocused))
                     } else {
                         TextField(placeholder, text: $value)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
-                            .modifier(InputStyle(isFocused: $isFocused, focusTracker: $focusTracker))
+                            .modifier(InputStyle(isFocused: $isFocused))
                     }
                     if isSecure {
                         Button(action: { self.isTextHidden.toggle() }, label: { Image(systemName: isTextHidden ? "eye.fill" : "eye.slash.fill").foregroundColor(.gray) })
@@ -56,7 +55,7 @@ struct TextInputComponent: View {
                     } else {
                         if let icon = icon {
                             Image(systemName: icon)
-                                .foregroundColor(focusTracker ? Color("pink_primary") : Color.gray.opacity(0.4))
+                                .foregroundColor(isFocused ? Color("pink_primary") : Color.gray.opacity(0.4))
                                 .padding(.trailing, 20)
                         }
                     }

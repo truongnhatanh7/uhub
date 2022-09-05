@@ -30,12 +30,10 @@ struct LabelStyle: ViewModifier {
 
 struct InputStyle: ViewModifier {
     @FocusState<Bool>.Binding var isFocused: Bool
-    @Binding var focusTracker: Bool
     
     func body(content: Content) -> some View {
         content
             .focused($isFocused)
-            .onChange(of: isFocused) { focusTracker = $0 }
             .lineLimit(1)
             .multilineTextAlignment(.leading)
             .padding(.leading, 20)

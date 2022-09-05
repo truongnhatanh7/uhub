@@ -10,14 +10,17 @@ import SwiftUI
 struct StandardHeader: View {
     @EnvironmentObject var pageMV: PageViewModel
     let title: String
+    var showReturn: Bool = true
     let action: () -> Void
     
     var body: some View {
         HStack {
-            Button(action: action) {
-                Label("Back", systemImage: "arrow.left")
-                    .labelStyle(.iconOnly)
-                    .tint(Color("pink_primary"))
+            if showReturn {
+                Button(action: action) {
+                    Label("Back", systemImage: "arrow.left")
+                        .labelStyle(.iconOnly)
+                        .tint(Color("pink_primary"))
+                }
             }
             Text(title).font(.headline)
             Spacer()
