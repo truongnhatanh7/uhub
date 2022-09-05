@@ -23,6 +23,14 @@ import SwiftUI
     @Published var inputImage: UIImage? = nil
     @Published var image: Image?
     
+    @Published var showAgePicker = false
+    @Published var showGPAPicker = false
+    @Published var showSemesterLearned = false
+    
+    let ageRange = (6...100).compactMap { "\($0)" }
+    let GPARange = ["Less than 50%", "50% - 59%", "60% - 69%", "70% - 79%", "80% - 100%"]
+    let semesterLearnedRange = (0...20).compactMap { "\($0)" }
+    
     var isDisabled: Bool {
         image == nil || fullname.isEmpty || age.isEmpty || email.isEmpty || school.isEmpty || major.isEmpty || gpa.isEmpty || semesterLearned.isEmpty
     }
