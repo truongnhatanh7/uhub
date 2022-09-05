@@ -6,64 +6,63 @@
 //
 
 import SwiftUI
+import Combine
 
 struct EditProfileView: View {
     @EnvironmentObject var pageVM: PageViewModel
+    @StateObject var editProfileVM = EditProfileViewModel()
     
-    @State private var fullName = ""
-    @ObservedObject private var age = NumbersOnly()
-    @State private var email = ""
-    @State private var school = ""
-    @State private var major = ""
-    @ObservedObject private var gpa = NumbersOnly()
-    @ObservedObject private var semesterLearned = NumbersOnly()
-    @State private var about = ""
-    
-    private enum Field: Int {
-        case FullName, Age, Email, School, Major, GPA, SemeterLearned, About
-    }
     @FocusState private var isFocusKeyboard: Field?
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 30) {
-                TextInputComponent(label: "Full Name", value: $fullName, placeholder: "Full Name", isSecure: false, isRequired: true, icon: "person")
-                    .focused($isFocusKeyboard, equals: .FullName)
-                
-                TextInputComponent(label: "Age", value: $age.value, placeholder: "Your age", isRequired: true, icon: "calendar")
-                    .keyboardType(.numberPad)
-                    .focused($isFocusKeyboard, equals: .Age)
-                
-                TextInputComponent(label: "Email", value: $email, placeholder: "Email", isRequired: true, icon: "envelope")
-                    .focused($isFocusKeyboard, equals: .Email)
-                
-                TextInputComponent(label: "School", value: $school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
-                    .focused($isFocusKeyboard, equals: .School)
-                
-                TextInputComponent(label: "Major", value: $major, placeholder: "Learning Major", isRequired: true, icon: "graduationcap")
-                    .focused($isFocusKeyboard, equals: .Major)
-                
-                TextInputComponent(label: "GPA", value: $gpa.value, placeholder: "Your GPA", isRequired: true, icon: "number")
-                    .keyboardType(.numberPad)
-                    .focused($isFocusKeyboard, equals: .GPA)
-                
-                TextInputComponent(label: "Semester Learned", value: $semesterLearned.value, placeholder: "Number of semester", isRequired: true, icon: "clock")
-                    .keyboardType(.numberPad)
-                    .focused($isFocusKeyboard, equals: .SemeterLearned)
-                
-                TextBox(label: "About", value: $about, placeholder: "Tell me about yourself")
-                    .focused($isFocusKeyboard, equals: .About)
-                
-                ButtonView(textContent: "Next", onTap: {
-                    pageVM.visit(page: .FilterProfile)
-                }, isDisabled: false)
-            }
-            .padding()
-            .onTapGesture {
-                if isFocusKeyboard != nil {
-                    isFocusKeyboard = nil
+        ZStack(alignment: .top) {
+            ScrollView {
+                VStack(spacing: 30) {
+                    TextInputComponent(label: "Full Name", value: $editProfileVM.fullname, placeholder: "Full Name", isSecure: false, isRequired: true, icon: "person")
+                        .focused($isFocusKeyboard, equals: .FullName)
+                    TextInputComponent(label: "Age", value: $editProfileVM.age, placeholder: "Your age", isRequired: true, icon: "calendar")
+                        .keyboardType(.numberPad)
+                        .focused($isFocusKeyboard, equals: .Age)
+                        .onReceive(Just(editProfileVM.age)) {
+                            editProfileVM.updateField(.Age, $0)
+                        }
+                    TextInputComponent(label: "Email", value: $editProfileVM.email, placeholder: "Email", isRequired: true, icon: "envelope")
+                        .focused($isFocusKeyboard, equals: .Email)
+                    TextInputComponent(label: "School", value: $editProfileVM.school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
+                        .focused($isFocusKeyboard, equals: .School)
+                    TextInputComponent(label: "Major", value: $editProfileVM.major, placeholder: "Learning Major", isRequired: true, icon: "graduationcap")
+                        .focused($isFocusKeyboard, equals: .Major)
+                    TextInputComponent(label: "GPA", value: $editProfileVM.gpa, placeholder: "Your GPA", isRequired: true, icon: "number")
+                        .keyboardType(.numberPad)
+                        .focused($isFocusKeyboard, equals: .GPA)
+                        .onReceive(Just(editProfileVM.gpa)) {
+                            editProfileVM.updateField(.GPA, $0)
+                        }
+                    TextInputComponent(label: "Semester Learned", value: $editProfileVM.semesterLearned, placeholder: "Number of semester", isRequired: true, icon: "clock")
+                        .keyboardType(.numberPad)
+                        .focused($isFocusKeyboard, equals: .SemeterLearned)
+                        .onReceive(Just(editProfileVM.semesterLearned)) {
+                            editProfileVM.updateField(.SemeterLearned, $0)
+                        }
+                    TextBox(label: "About", value: $editProfileVM.about, placeholder: "Tell me about yourself")
+                        .focused($isFocusKeyboard, equals: .About)
+                    
+                    ButtonView(textContent: "Next", onTap: {
+                        pageVM.visit(page: .FilterProfile)
+                    }, isDisabled: false)
+                }
+                .padding(.top, 60)
+                .padding()
+                .onTapGesture {
+                    if isFocusKeyboard != nil {
+                        isFocusKeyboard = nil
+                    }
                 }
             }
+            StandardHeader(title: "Edit Profile", action: {})
+        }
+        .sheet(isPresented: $editProfileVM.showImagePicker) {
+            ImagePicker(image: $editProfileVM.inputImage)
         }
     }
 }
@@ -71,17 +70,5 @@ struct EditProfileView: View {
 struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
         EditProfileView()
-    }
-}
-
-class NumbersOnly: ObservableObject {
-    @Published var value = "" {
-        didSet {
-            let filtered = value.filter { $0.isNumber }
-            
-            if value != filtered {
-                value = filtered
-            }
-        }
     }
 }

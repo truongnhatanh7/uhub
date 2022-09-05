@@ -42,6 +42,9 @@
 		C12BFA6528C2F8F400150928 /* TextInputComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6428C2F8F400150928 /* TextInputComponent.swift */; };
 		C12BFA6B28C30F6700150928 /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6A28C30F6700150928 /* TextBox.swift */; };
 		C12BFA6D28C393A100150928 /* StandardHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6C28C393A100150928 /* StandardHeader.swift */; };
+		C12BFA6F28C5C25400150928 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6E28C5C25400150928 /* EditProfileViewModel.swift */; };
+		C133E33028C5CBAB002FFA9E /* AvatarInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E32F28C5CBAB002FFA9E /* AvatarInput.swift */; };
+		C133E33228C5DB2D002FFA9E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E33128C5DB2D002FFA9E /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +81,9 @@
 		C12BFA6428C2F8F400150928 /* TextInputComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputComponent.swift; sourceTree = "<group>"; };
 		C12BFA6A28C30F6700150928 /* TextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		C12BFA6C28C393A100150928 /* StandardHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StandardHeader.swift; path = ../StandardHeader.swift; sourceTree = "<group>"; };
+		C12BFA6E28C5C25400150928 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		C133E32F28C5CBAB002FFA9E /* AvatarInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarInput.swift; sourceTree = "<group>"; };
+		C133E33128C5DB2D002FFA9E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +173,8 @@
 				8FF183F028C19FA0000184B3 /* ButtonView.swift */,
 				8F70561428C4DD6500A0B18B /* ButtonBindingView.swift */,
 				C12BFA6A28C30F6700150928 /* TextBox.swift */,
+				C133E32F28C5CBAB002FFA9E /* AvatarInput.swift */,
+				C133E33128C5DB2D002FFA9E /* ImagePicker.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -200,6 +208,7 @@
 			children = (
 				5578A35928C3417C004EE2D3 /* ChatEngine.swift */,
 				C12BFA4D28C2593500150928 /* NavigationViewModel.swift */,
+				C12BFA6E28C5C25400150928 /* EditProfileViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -312,6 +321,8 @@
 				C12BFA5628C25C4900150928 /* SplashView.swift in Sources */,
 				5578A35628C1EB97004EE2D3 /* MessageDefaultBubble.swift in Sources */,
 				5578A35828C1EF50004EE2D3 /* CornerRadiusStyle.swift in Sources */,
+				C12BFA6F28C5C25400150928 /* EditProfileViewModel.swift in Sources */,
+				C133E33228C5DB2D002FFA9E /* ImagePicker.swift in Sources */,
 				C12BFA6D28C393A100150928 /* StandardHeader.swift in Sources */,
 				5578A34E28C1DFD4004EE2D3 /* InboxView.swift in Sources */,
 				C12BFA6528C2F8F400150928 /* TextInputComponent.swift in Sources */,
@@ -329,6 +340,7 @@
 				5545354928C373EF003864C2 /* DateHelper.swift in Sources */,
 				55FA436828BE26BD006AC2F8 /* uhubApp.swift in Sources */,
 				8FF183F128C19FA0000184B3 /* ButtonView.swift in Sources */,
+				C133E33028C5CBAB002FFA9E /* AvatarInput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
