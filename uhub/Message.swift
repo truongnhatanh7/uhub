@@ -7,18 +7,14 @@
 
 import Foundation
 
-struct Message: Hashable, Codable, Equatable {
-    var messageId: Int
-    var ownerId: Int // To render message row
-    var conversationId: Int // To query DB -> Messages list
+struct Message: Identifiable, Hashable, Codable, Equatable {
+    var id: String
+    var ownerId: String // To render message row
+    var conversationId: String // To query DB -> Messages list
     var content: String
     var timestamp: Date
-    
-    func getFormattedDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm"
-        return dateFormatter.string(from: self.timestamp)
-    }
 }
+
+
 
 
