@@ -16,7 +16,7 @@ struct uhubApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
         }
     }
 }

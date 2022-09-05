@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject private var notificationSettings:NotificationSettings
+    
     var body: some View {
-        NotificationView()
+        NotificationView().environmentObject(notificationSettings)
     }
 }
 
