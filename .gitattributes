@@ -2,3 +2,4 @@
 # meaning it’ll keep both sides (theirs and ours) during a merge. 
 # This is almost always what you want in the case of a *.pbxproj merge conflict
 *.pbxproj merge=union
+*.pbxproj merge=kintsugi
