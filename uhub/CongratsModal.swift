@@ -21,12 +21,12 @@ struct CongratsModal: View {
                 Image("CongratsIcon").resizable().scaledToFit().frame(minWidth: 170, idealWidth: 180, maxWidth: 190, minHeight: 180, idealHeight: 186, maxHeight: 190)
                 
                 
-                Text("Great \n Your account has been \n created successfully").fontWeight(.semibold).multilineTextAlignment(.center).lineLimit(3).font(.system(size: 24)).foregroundColor(Color("Primary")).lineSpacing(10)
+                Text("Great \n Your account has been \n created successfully").fontWeight(.semibold).multilineTextAlignment(.center).lineLimit(3).font(.system(size: 24)).foregroundColor(Color("pink_primary")).lineSpacing(10)
                 
                 Button(action: { isGoToHome = true }) {
                     VStack {
                         Text("Go to Home").fontWeight(.semibold).font(.system(size: 20))
-                    }.frame(minWidth: 285, idealWidth: 292, maxWidth: 300, minHeight: 50, idealHeight: 55, maxHeight: 60).background(LinearGradient(gradient: Gradient(colors: [Color("Secondary"), Color("Primary")]), startPoint: .topLeading, endPoint: .bottomTrailing)).foregroundColor(.white).cornerRadius(32)
+                    }.frame(minWidth: 285, idealWidth: 292, maxWidth: 300, minHeight: 50, idealHeight: 55, maxHeight: 60).background(LinearGradient(gradient: Gradient(colors: [Color("pink_disabled"), Color("pink_primary")]), startPoint: .topLeading, endPoint: .bottomTrailing)).foregroundColor(.white).cornerRadius(32)
                 }
                 
             }.frame(minWidth: 320, idealWidth: 350, maxWidth: 360, minHeight: 450, idealHeight: 460, maxHeight: 480).background(.white).cornerRadius(24).padding()
