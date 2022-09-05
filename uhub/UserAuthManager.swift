@@ -37,19 +37,19 @@ class UserAuthManager: ObservableObject {
                     self.errorMsg = "[FAILURE - Get User Id By Email]: \(error!.localizedDescription)"
                     
                 } else {
-                    // update error msg
-                    self.errorMsg = ""
-                    
-                    // success msg
-                    print("[SUCCESS - Get User Id By Email]: Retrieved User ID = \(querySnapshot!.documents[0].documentID)")
-                    
-                    // update current user info
-                    self.currentUser = CurrentUser(
-                          id: querySnapshot!.documents[0].documentID,
-                          email: email,
-                          password: password
-                    )
-                    print("[LOGS - Current User]: \(self.currentUser!)")
+//                    // update error msg
+//                    self.errorMsg = ""
+//
+////                     success msg
+//                    print("[SUCCESS - Get User Id By Email]: Retrieved User ID = \(querySnapshot!.documents[0].documentID)")
+//
+////                     update current user info
+//                    self.currentUser = CurrentUser(
+//                          id: querySnapshot!.documents[0].documentID,
+//                          email: email,
+//                          password: password
+//                    )
+//                    print("[LOGS - Current User]: \(self.currentUser!)")
                 }
             }
     }

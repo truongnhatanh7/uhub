@@ -46,6 +46,7 @@ struct ChatListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {
             chatEngine.loadChatList()
+            print(chatEngine.conversations)
         }
     }
 
