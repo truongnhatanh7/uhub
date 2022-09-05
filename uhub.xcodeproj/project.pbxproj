@@ -42,6 +42,7 @@
 		C12BFA6528C2F8F400150928 /* TextInputComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6428C2F8F400150928 /* TextInputComponent.swift */; };
 		C12BFA6B28C30F6700150928 /* TextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6A28C30F6700150928 /* TextBox.swift */; };
 		C12BFA6D28C393A100150928 /* StandardHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA6C28C393A100150928 /* StandardHeader.swift */; };
+		D540918D28C61BE300D8C821 /* CongratsModalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D540918C28C61BE300D8C821 /* CongratsModalStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		C12BFA6428C2F8F400150928 /* TextInputComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputComponent.swift; sourceTree = "<group>"; };
 		C12BFA6A28C30F6700150928 /* TextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBox.swift; sourceTree = "<group>"; };
 		C12BFA6C28C393A100150928 /* StandardHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StandardHeader.swift; path = ../StandardHeader.swift; sourceTree = "<group>"; };
+		D540918C28C61BE300D8C821 /* CongratsModalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratsModalStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 				5578A35728C1EF50004EE2D3 /* CornerRadiusStyle.swift */,
 				C12BFA6228C2F8B200150928 /* GlobalStyle.swift */,
 				C12BFA5128C25C4900150928 /* SplashStyle.swift */,
+				D540918C28C61BE300D8C821 /* CongratsModalStyle.swift */,
 			);
 			name = Modifiers;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				C12BFA6B28C30F6700150928 /* TextBox.swift in Sources */,
 				5578A35428C1EB88004EE2D3 /* MessageSelfBubble.swift in Sources */,
 				C12BFA4E28C2593500150928 /* NavigationViewModel.swift in Sources */,
+				D540918D28C61BE300D8C821 /* CongratsModalStyle.swift in Sources */,
 				5578A35228C1DFE8004EE2D3 /* Message.swift in Sources */,
 				5578A35A28C3417C004EE2D3 /* ChatEngine.swift in Sources */,
 				C12BFA6328C2F8B200150928 /* GlobalStyle.swift in Sources */,
