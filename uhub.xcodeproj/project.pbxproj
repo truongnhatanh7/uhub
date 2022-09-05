@@ -32,7 +32,7 @@
 		C12BFA4E28C2593500150928 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA4D28C2593500150928 /* NavigationViewModel.swift */; };
 		C12BFA5628C25C4900150928 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA4F28C25C4900150928 /* SplashView.swift */; };
 		C12BFA5728C25C4900150928 /* CongratsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5028C25C4900150928 /* CongratsView.swift */; };
-		C12BFA5828C25C4900150928 /* SplashModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5128C25C4900150928 /* SplashModifer.swift */; };
+		C12BFA5828C25C4900150928 /* SplashStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5128C25C4900150928 /* SplashStyle.swift */; };
 		C12BFA5B28C25C4900150928 /* CongratsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5428C25C4900150928 /* CongratsModal.swift */; };
 		C12BFA5E28C2DD2000150928 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12BFA5D28C2DD2000150928 /* EditProfileView.swift */; };
 		C12BFA5F28C2E3F700150928 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA436928BE26BD006AC2F8 /* ContentView.swift */; };
@@ -67,7 +67,7 @@
 		C12BFA4D28C2593500150928 /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		C12BFA4F28C25C4900150928 /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		C12BFA5028C25C4900150928 /* CongratsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsView.swift; sourceTree = "<group>"; };
-		C12BFA5128C25C4900150928 /* SplashModifer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashModifer.swift; sourceTree = "<group>"; };
+		C12BFA5128C25C4900150928 /* SplashStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashStyle.swift; sourceTree = "<group>"; };
 		C12BFA5428C25C4900150928 /* CongratsModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsModal.swift; sourceTree = "<group>"; };
 		C12BFA5D28C2DD2000150928 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		C12BFA6228C2F8B200150928 /* GlobalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStyle.swift; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 			children = (
 				5578A35728C1EF50004EE2D3 /* CornerRadiusStyle.swift */,
 				C12BFA6228C2F8B200150928 /* GlobalStyle.swift */,
-				C12BFA5128C25C4900150928 /* SplashModifer.swift */,
+				C12BFA5128C25C4900150928 /* SplashStyle.swift */,
 			);
 			name = Modifiers;
 			sourceTree = "<group>";
@@ -295,7 +295,7 @@
 				55FA438428C0A08A006AC2F8 /* ChatList.swift in Sources */,
 				C12BFA5B28C25C4900150928 /* CongratsModal.swift in Sources */,
 				8F70561528C4DD6500A0B18B /* ButtonBindingView.swift in Sources */,
-				C12BFA5828C25C4900150928 /* SplashModifer.swift in Sources */,
+				C12BFA5828C25C4900150928 /* SplashStyle.swift in Sources */,
 				55FA438828C0A26A006AC2F8 /* Conversation.swift in Sources */,
 				8FF183F728C1FA60000184B3 /* SigninScreenView.swift in Sources */,
 				8FF183F528C19FC1000184B3 /* CheckboxView.swift in Sources */,

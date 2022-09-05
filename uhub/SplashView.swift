@@ -11,15 +11,18 @@ struct SplashView: View {
     @EnvironmentObject var pageVM: PageViewModel
     @State var isActive:Bool = false
     @State var isShowAnimation:Bool = false
+    @State var scaleValue = CGFloat(0.75)
     
     var body: some View {
         VStack {
-            Image("Logo").resizable().scaledToFit().frame(minWidth: 250, idealWidth: 280, maxWidth: 300).padding().offset(y: isShowAnimation ? 0 : 500).animation(Animation.linear(duration: 1.0), value: isShowAnimation).opacity(isShowAnimation ? 1.0 : 0.0).animation(Animation.linear(duration: 2.0), value: isShowAnimation)
+            Image("Logo").resizable().modifier(LogoSplashScreenModifier()).opacity(isShowAnimation ? 1.0 : 0.0).scaleEffect(scaleValue).animation(Animation.linear(duration: 2.0), value: isShowAnimation)
+            
         }.onAppear {
             
             // load necessary data here
             
             isShowAnimation = true
+            scaleValue = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
                 pageVM.visit(page: .SignUp)
             }
