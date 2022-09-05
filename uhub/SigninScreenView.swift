@@ -14,6 +14,8 @@ struct SigninScreenView: View {
     @State private var email = ""
     @State private var pwd = ""
     @State private var rememberedMe = false
+    @State private var errorMsg = ""
+    @State private var isButtonDisabled = true
     
     var body: some View {
         ZStack {
@@ -38,20 +40,54 @@ struct SigninScreenView: View {
                     
                     // 2 text input fields
                     VStack(spacing: 45) {
-                        TextInputComponent(
-                            label: "Email",
-                            value: $email,
-                            placeholder: "Email",
-                            isRequired: true
-                        )
+                        VStack {
+                            TextInputComponent(
+                                label: "Email",
+                                value: $email,
+                                placeholder: "Email",
+                                isRequired: true
+                            ).onChange(of: email) { _ in
+                                if !email.isEmpty && !pwd.isEmpty {
+                                    if isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                } else {
+                                    if !isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                }
+                            }
+                            
+                            if userAuthManager.errorMsg != ""
+                                && !userAuthManager.errorMsg.lowercased().contains("password") {
+                                ErrorMsgView(msg: "Invalid email")
+                            }
+                        }
                         
-                        TextInputComponent(
-                            label: "Password",
-                            value: $pwd,
-                            placeholder: "Password",
-                            isSecure: true,
-                            isRequired: true
-                        )
+                        VStack {
+                            TextInputComponent(
+                                label: "Password",
+                                value: $pwd,
+                                placeholder: "Password",
+                                isSecure: true,
+                                isRequired: true
+                            ).onChange(of: pwd) { _ in
+                                if !email.isEmpty && !pwd.isEmpty {
+                                    if isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                } else {
+                                    if !isButtonDisabled {
+                                        isButtonDisabled.toggle()
+                                    }
+                                }
+                            }
+                            
+                            if userAuthManager.errorMsg != ""
+                                && userAuthManager.errorMsg.lowercased().contains("password") {
+                                ErrorMsgView(msg: "Invalid password")
+                            }
+                        }
                     }
                     
                     // remember me check box
@@ -68,14 +104,16 @@ struct SigninScreenView: View {
                     .padding(.leading, 20)
                     
                     // sign in button
-                    ButtonView(textContent: "Sign In", onTap: {
-                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
-                            if userAuthManager.isLoggedin {
-                                pageVM.visit(page: .Home)
-                                print("\(userAuthManager.response)")
-                            }
-                        })
-                    })
+                    ButtonBindingView(textContent: "Sign In", onTap: {
+                        pageVM.visit(page: .Home)
+                        //                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
+                        //                            if userAuthManager.errorMsg == "" {
+                        //                                pageVM.visit(page: .Home)
+                        //                            } else {
+                        //                                print(userAuthManager.errorMsg)
+                        //                            }
+                        //                        })
+                    }, isDisabled: $isButtonDisabled)
                     
                     // forgot your password button
                     Button(action: {}) {
