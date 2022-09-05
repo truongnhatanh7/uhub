@@ -12,6 +12,8 @@ struct InboxView: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @EnvironmentObject var pageVM: PageViewModel
     @State var textBoxContent: String = ""
+    @State var currentLoadLimit: Int = 2;
+    var newMessagesToBeLoaded: Int = 2
     
     var body: some View {
         VStack {
@@ -19,18 +21,22 @@ struct InboxView: View {
                 pageVM.visit(page: .Chat)
             }
             ScrollViewReader { proxy in
-                ScrollView {
+                List {
                     ForEach(chatEngine.messages, id: \.self) { message in
                         if message.ownerId == (Auth.auth().currentUser?.uid ?? "-1") {
                             MessageSelfBubble(message: message)
                                 .id(message.id)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
                         } else {
                             MessageDefaultBubble(message: message)
                                 .id(message.id)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4 , trailing: 16))
                         }
                     }
-                    .padding(.horizontal)
                 }
+                .listStyle(PlainListStyle())
                 .onChange(of: chatEngine.lastMessageId) { id in
                     withAnimation {
                         proxy.scrollTo(id, anchor: .bottom)
@@ -38,6 +44,11 @@ struct InboxView: View {
                 }
                 .onAppear {
                     proxy.scrollTo(chatEngine.lastMessageId, anchor: .bottom)
+                }
+                .refreshable {
+                    print("Refreshing...")
+                    currentLoadLimit += newMessagesToBeLoaded
+                    chatEngine.loadMessages(limit: currentLoadLimit)
                 }
             }
 
@@ -61,7 +72,7 @@ struct InboxView: View {
         }
         .onAppear {
             print(chatEngine.currentConversation)
-            chatEngine.loadConversation()
+            chatEngine.loadConversation(limit: currentLoadLimit)
         }
         
     }

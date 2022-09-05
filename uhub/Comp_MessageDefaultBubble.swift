@@ -25,7 +25,6 @@ struct MessageDefaultBubble: View {
         .background(Color("neutral"))
         .modifier(CornerRadiusStyle(radius: 18, corners: [.topRight, .bottomLeft, .bottomRight]))
         .padding(.trailing, 24)
-        
     }
 }
 

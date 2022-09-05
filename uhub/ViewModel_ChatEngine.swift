@@ -20,42 +20,56 @@ class ChatEngine: ObservableObject {
     private var messagesListener: ListenerRegistration?
     private var conversationListener: ListenerRegistration?
     @Published var currentUnread: Bool = false
-
+    
     deinit {
+        print("Deinit listeners")
         conversationListener?.remove()
         messagesListener?.remove()
     }
 
-    func loadConversation() { // LOad messages in that particular conversation
+    func loadConversation(limit: Int) {
         print("[Load Conversation] invoked")
         messagesListener = db.collection("messages")
-            .whereField("conversationId", isEqualTo: currentConversation).limit(to: 14)
+            .whereField("conversationId", isEqualTo: currentConversation)
             .addSnapshotListener
                 { (querySnapshot, error) in
-                    guard let documents = querySnapshot?.documents else {
+                    guard (querySnapshot?.documents) != nil else {
                         print("Error fetching documents: \(error!)")
                         return
                     }
-                    DispatchQueue.main.async {
-                        self.messages = documents.map { (queryDocumentSnapshot) -> Message in
-                            let data = queryDocumentSnapshot.data()
-                            let messageId = queryDocumentSnapshot.documentID
-                            let ownerId = data["ownerId"] as? String ?? ""
-                            let conversationId = data["conversationId"] as? String ?? ""
-                            let content = data["content"] as? String ?? ""
-                            let timestamp = data["timestamp"] as? Timestamp // Timestamp is a Firebase date datatype -> convert to Date for Swift
-                            return Message(id: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
-                        }
-                        self.messages.sort { $0.timestamp < $1.timestamp } // Sort by timestamp
-                        
-                        // For scolling to latest message
-                        if let latestMsg = self.messages.last {
-                            self.lastMessageId = latestMsg.id
-                            self.lastMessageSenderId = latestMsg.ownerId
-                            self.updateChatList(content: latestMsg.content) // Everytime current conversation has new update -> update conversation data
-                        }
-                    }
+                    
+                    self.loadMessages(limit: limit)
                 }
+    }
+    
+     func loadMessages(limit: Int) {
+         db.collection("messages").whereField("conversationId", isEqualTo: currentConversation).order(by: "timestamp", descending: true).limit(to: limit).getDocuments() { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.messages = documents.map { (queryDocumentSnapshot) -> Message in
+                    let data = queryDocumentSnapshot.data()
+                    let messageId = queryDocumentSnapshot.documentID
+                    let ownerId = data["ownerId"] as? String ?? ""
+                    let conversationId = data["conversationId"] as? String ?? ""
+                    let content = data["content"] as? String ?? ""
+                    let timestamp = data["timestamp"] as? Timestamp // Timestamp is a Firebase date datatype -> convert to Date for Swift
+                    return Message(id: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
+                }
+
+                self.messages = self.messages.reversed()
+                
+                // For scolling to latest message
+                if let latestMsg = self.messages.last {
+                    self.lastMessageId = latestMsg.id
+                    self.lastMessageSenderId = latestMsg.ownerId
+                    self.updateChatList(content: latestMsg.content) // Everytime current conversation has new update -> update conversation data
+                }
+            }
+        }
     }
     
     func loadChatList(){
@@ -92,7 +106,8 @@ class ChatEngine: ObservableObject {
         db.collection("conversations").document(currentConversation).updateData([ // Updatte latest message when sending new message from both sides
             "latestMessage": content,
             "timestamp": Date(),
-            "unread": true
+            "unread": true,
+//            "latestMessageSender": Auth.auth().currentUser?.uid ?? ""
         ])
     }
     
