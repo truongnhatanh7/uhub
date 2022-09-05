@@ -16,7 +16,7 @@ struct MessageDefaultBubble: View {
             Spacer()
             VStack {
                 Spacer()
-                Text(message.getFormattedDate())
+                Text(message.timestamp.getFormattedDate())
             }
         }
         .fixedSize(horizontal: false, vertical: true)
@@ -29,8 +29,8 @@ struct MessageDefaultBubble: View {
     }
 }
 
-struct MessageDefaultBubble_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageDefaultBubble(message: Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()))
-    }
-}
+//struct MessageDefaultBubble_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MessageDefaultBubble(message: Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()))
+//    }
+//}

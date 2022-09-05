@@ -105,6 +105,7 @@ struct SignupScreenView: View {
                     .padding(.leading, 20)
                     
                     // sign up button
+
                     ButtonBindingView(textContent: "Sign Up", onTap: {
                         pageVm.visit(page: .EditProfile)
                         //                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
