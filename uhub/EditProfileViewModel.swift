@@ -7,8 +7,9 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
-class EditProfileViewModel: ObservableObject {
+@MainActor class EditProfileViewModel: ObservableObject {
     @Published var fullname: String
     @Published var age: String
     @Published var email: String
@@ -20,6 +21,11 @@ class EditProfileViewModel: ObservableObject {
     
     @Published var showImagePicker = false
     @Published var inputImage: UIImage? = nil
+    @Published var image: Image?
+    
+    var isDisabled: Bool {
+        image == nil || fullname.isEmpty || age.isEmpty || email.isEmpty || school.isEmpty || major.isEmpty || gpa.isEmpty || semesterLearned.isEmpty
+    }
     
     init(fullname: String = "", age: String = "", email: String = "", school: String = "", major: String = "", gpa: String = "", semesterLearned: String = "", about: String = "") {
         self.fullname = fullname
@@ -54,6 +60,12 @@ class EditProfileViewModel: ObservableObject {
                 return
             }
         }
+    }
+    
+    /// This function is to get the input image and add to the render view
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        image = Image(uiImage: inputImage)
     }
 }
 

@@ -9,9 +9,11 @@ import SwiftUI
 
 struct AvatarInput: View {
     let image: Image?
+    let action: () -> Void
     
-    init(image: Image? = nil) {
+    init(image: Image? = nil, action: @escaping () -> Void) {
         self.image = image
+        self.action = action
     }
     
     var body: some View {
@@ -33,9 +35,7 @@ struct AvatarInput: View {
         .frame(width: 100, height: 100)
         .padding(8)
         .overlay(alignment: .bottomTrailing) {
-            Button {
-                
-            } label: {
+            Button(action: action) {
                 Image(systemName: "pencil")
                     .font(.title)
                     .foregroundColor(.white)
@@ -49,7 +49,7 @@ struct AvatarInput: View {
 
 struct AvatarInput_Previews: PreviewProvider {
     static var previews: some View {
-        AvatarInput()
-        AvatarInput(image: Image("user"))
+        AvatarInput(action: {})
+        AvatarInput(image: Image("user"), action: {})
     }
 }

@@ -10,10 +10,10 @@ import SwiftUI
 struct ButtonView: View {
     @State var textContent: String
     @State var onTap: () -> ()
-    @State var isDisabled: Bool?
+    var isDisabled: Bool = false
     
     var body: some View {
-        if isDisabled ?? false {
+        if isDisabled {
             Button(action: {
                 // action
                 onTap()
