@@ -28,8 +28,44 @@ class UserAuthManager: ObservableObject {
     
     private let db = Firestore.firestore()
     private var ref: DocumentReference? = nil
+    private var initialUserData: [String: Any] = [
+        "email": "",
+        "password": "",
+        "fullname": "",
+        "age": "",
+        "school": "",
+        "major": "",
+        "gpa": "",
+        "semester_learned": "",
+        "about": "",
+        "friends_filter": [
+            "friends_age": "",
+            "freinds_gpa": "",
+            "friends_semester_learned": ""
+        ]
+    ]
     
-    func updateCurrentUser(email: String, password: String) {
+    func updateProfileInfo(updatedData: [String: Any], callback: @escaping () -> ()) {
+        initialUserData = initialUserData.merging(updatedData) { (_, new) in new }
+        db.collection("users").document(self.currentUser!.id)
+            .updateData(initialUserData) { error in
+                if error != nil {
+                    // update error msg
+                    self.errorMsg = "[FAILURE - Update Profile Info]: \(error!.localizedDescription)"
+                } else {
+                    // update error msg
+                    self.errorMsg = ""
+                    
+                    // success msg
+                    print("[SUCCESS - Update Profile Info]: Updated User ID = \(self.currentUser!.id)")
+                    
+                    // execute callback function
+                    callback()
+                }
+            }
+    }
+    
+    func initCurrentUser(email: String, password: String) {
         db.collection("users").whereField("email", isEqualTo: email)
             .getDocuments() { (querySnapshot, error) in
                 if error != nil {
@@ -37,25 +73,26 @@ class UserAuthManager: ObservableObject {
                     self.errorMsg = "[FAILURE - Get User Id By Email]: \(error!.localizedDescription)"
                     
                 } else {
-//                    // update error msg
-//                    self.errorMsg = ""
-//
-////                     success msg
-//                    print("[SUCCESS - Get User Id By Email]: Retrieved User ID = \(querySnapshot!.documents[0].documentID)")
-//
-////                     update current user info
-//                    self.currentUser = CurrentUser(
-//                          id: querySnapshot!.documents[0].documentID,
-//                          email: email,
-//                          password: password
-//                    )
-//                    print("[LOGS - Current User]: \(self.currentUser!)")
+                    // update error msg
+                    self.errorMsg = ""
+                    
+                    // success msg
+                    print("[SUCCESS - Get User Id By Email]: Retrieved User ID = \(querySnapshot!.documents[0].documentID)")
+                    
+                    // update current user info
+                    self.currentUser = CurrentUser(
+                        id: querySnapshot!.documents[0].documentID,
+                        email: email,
+                        password: password
+                    )
+                    print("[LOGS - Current User]: \(self.currentUser!)")
                 }
             }
     }
     
     func createUser(inputData: [String: Any]) {
-        ref = db.collection("users").addDocument(data: inputData) { error in
+        initialUserData = initialUserData.merging(inputData) { (_, new) in new }
+        ref = db.collection("users").addDocument(data: initialUserData) { error in
             if error != nil {
                 // update error msg
                 self.errorMsg = "[FAILURE - Create User]: \(error!.localizedDescription)"
@@ -69,9 +106,9 @@ class UserAuthManager: ObservableObject {
                 
                 // update current user info
                 self.currentUser = CurrentUser(
-                      id: self.ref!.documentID,
-                      email: String(describing: inputData["email"]!),
-                      password: String(describing: inputData["password"]!)
+                    id: self.ref!.documentID,
+                    email: String(describing: inputData["email"]!),
+                    password: String(describing: inputData["password"]!)
                 )
                 print("[LOGS - Current User]: \(self.currentUser!)")
             }
@@ -124,7 +161,7 @@ class UserAuthManager: ObservableObject {
                 self.isLoggedin = true
                 
                 // update current user
-                self.updateCurrentUser(email: inputEmail, password: inputPwd)
+                self.initCurrentUser(email: inputEmail, password: inputPwd)
             }
             
             // execute callback function
@@ -155,7 +192,11 @@ class UserAuthManager: ObservableObject {
                 self.signIn(inputEmail: inputEmail, inputPwd: inputPwd, callback: callback)
                 
                 // create new user document in Firebase Firestore
-                self.createUser(inputData: ["email": inputEmail, "password": inputPwd])
+                let newlyCreatedData: [String : Any] = [
+                    "email": inputEmail,
+                    "password": inputPwd,
+                ]
+                self.createUser(inputData: newlyCreatedData)
             }
         }
     }

@@ -16,11 +16,11 @@ struct uhubApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-            EditProfileView()
-                .environmentObject(PageViewModel())
-                .environmentObject(EditProfileViewModel())
-                .environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
+            ContentView()
+//            EditProfileView()
+//                .environmentObject(PageViewModel())
+//                .environmentObject(EditProfileViewModel())
+//                .environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
         }
     }
 }

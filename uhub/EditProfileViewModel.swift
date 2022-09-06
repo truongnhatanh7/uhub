@@ -32,7 +32,7 @@ import SwiftUI
     let semesterLearnedRange = (0...20).compactMap { "\($0)" }
     
     var isDisabled: Bool {
-        image == nil || fullname.isEmpty || age.isEmpty || email.isEmpty || school.isEmpty || major.isEmpty || gpa.isEmpty || semesterLearned.isEmpty
+        image == nil || fullname.isEmpty || age.isEmpty || school.isEmpty || major.isEmpty || gpa.isEmpty || semesterLearned.isEmpty
     }
     
     init(fullname: String = "", age: String = "", email: String = "", school: String = "", major: String = "", gpa: String = "", semesterLearned: String = "", about: String = "") {

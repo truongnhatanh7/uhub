@@ -105,16 +105,15 @@ struct SignupScreenView: View {
                     .padding(.leading, 20)
                     
                     // sign up button
-
+                    
                     ButtonBindingView(textContent: "Sign Up", onTap: {
-                        pageVm.visit(page: .EditProfile)
-//                                                userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
-//                                                    if userAuthManager.errorMsg == "" {
-//                                                        pageVm.visit(page: .Chat)
-//                                                    } else {
-//                                                        print(userAuthManager.errorMsg)
-//                                                    }
-//                                                })
+                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
+                            if userAuthManager.errorMsg == "" {
+                                pageVm.visit(page: .EditProfile)
+                            } else {
+                                print(userAuthManager.errorMsg)
+                            }
+                        })
                     }, isDisabled: $isButtonDisabled)
                     
                     // already have an account + navigate to Sign In button

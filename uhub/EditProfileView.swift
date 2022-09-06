@@ -10,6 +10,8 @@ import Combine
 
 struct EditProfileView: View {
     @EnvironmentObject var pageVM: PageViewModel
+    @EnvironmentObject var userAuthManager: UserAuthManager
+    
     @StateObject var editProfileVM = EditProfileViewModel()
     
     var body: some View {
@@ -23,12 +25,12 @@ struct EditProfileView: View {
                     
                     TextInputSubView()
                 }
-//                StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
+                StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
             }
             PickerInputModal(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)
             PickerInputModal(label: "Your GPA", showPicker: $editProfileVM.showGPAPicker, value: $editProfileVM.gpa, items: editProfileVM.GPARange)
             PickerInputModal(label: "Semester learned", showPicker: $editProfileVM.showSemesterLearned, value: $editProfileVM.semesterLearned, items: editProfileVM.semesterLearnedRange)
-
+            
         }
         .environmentObject(editProfileVM)
         .sheet(isPresented: $editProfileVM.showImagePicker) {
@@ -40,13 +42,8 @@ struct EditProfileView: View {
     }
 }
 
-struct EditProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfileView()
-    }
-}
-
 struct TextInputSubView: View {
+    @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var pageVM: PageViewModel
     @EnvironmentObject var editProfileVM: EditProfileViewModel
     @FocusState private var isFocusKeyboard: Field?
@@ -57,9 +54,6 @@ struct TextInputSubView: View {
                 .focused($isFocusKeyboard, equals: .FullName)
             
             PickerInputComponent(label: "Age", value: $editProfileVM.age, placeholder: "Select your age", isRequired: true, items: editProfileVM.ageRange, showPicker: $editProfileVM.showAgePicker)
-            
-            TextInputComponent(label: "Email", value: $editProfileVM.email, placeholder: "Email", isRequired: true, icon: "envelope")
-                .focused($isFocusKeyboard, equals: .Email)
             
             TextInputComponent(label: "School", value: $editProfileVM.school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
                 .focused($isFocusKeyboard, equals: .School)
@@ -75,7 +69,18 @@ struct TextInputSubView: View {
                 .focused($isFocusKeyboard, equals: .About)
             
             ButtonView(textContent: "Next", onTap: {
-                pageVM.visit(page: .FilterProfile)
+                userAuthManager.updateProfileInfo(updatedData: [
+                    "fullname": editProfileVM.fullname,
+                    "age": editProfileVM.age,
+                    "school": editProfileVM.school,
+                    "major": editProfileVM.major,
+                    "gpa": editProfileVM.gpa,
+                    "semester_learned": editProfileVM.semesterLearned,
+                    "about": editProfileVM.about
+                ], callback: {
+                    pageVM.visit(page: .FilterProfile)
+                })
+                
             }, isDisabled: editProfileVM.isDisabled)
         }
         .padding()
