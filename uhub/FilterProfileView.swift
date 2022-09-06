@@ -16,11 +16,11 @@ struct FilterProfileView: View {
             ZStack(alignment: .top) {
                 ScrollView {
                     VStack(spacing: 30) {
-                        PickerInputComponent(label: "Age", value: $filterProfileVM.filterAge, placeholder: "Select the age range", items: filterProfileVM.ageRange, showPicker: $filterProfileVM.showAgePicker)
+                        PickerInputComponent(label: "Age", value: $filterProfileVM.filterAge, items: filterProfileVM.ageRange, showPicker: $filterProfileVM.showAgePicker)
                         
-                        PickerInputComponent(label: "GPA", value: $filterProfileVM.filterGPA, placeholder: "Select the GPA range", items: filterProfileVM.GPARange, showPicker: $filterProfileVM.showGPAPicker)
+                        PickerInputComponent(label: "GPA", value: $filterProfileVM.filterGPA, items: filterProfileVM.GPARange, showPicker: $filterProfileVM.showGPAPicker)
                         
-                        PickerInputComponent(label: "Semester Learned", value: $filterProfileVM.filterSemester, placeholder: "Select the semester range", items: filterProfileVM.semesterLearnedRange, showPicker: $filterProfileVM.showSemesterLearned)
+                        PickerInputComponent(label: "Semester Learned", value: $filterProfileVM.filterSemester, items: filterProfileVM.semesterLearnedRange, showPicker: $filterProfileVM.showSemesterLearned)
                     }
                     .padding()
                     .padding(.top, 60)
@@ -29,10 +29,11 @@ struct FilterProfileView: View {
                     pageVM.visit(page: .EditProfile)
                 }
             }
-            ButtonView(textContent: "Next", onTap: {
-                pageVM.visit(page: .FilterProfile)
-            }, isDisabled: false)
-            .padding()
+            BottomBar {
+                ButtonView(textContent: "Next", onTap: {
+                    pageVM.visit(page: .FilterProfile)
+                }, isDisabled: false)
+            }
             
             PickerInputModal(label: "Filter age", showPicker: $filterProfileVM.showAgePicker, value: $filterProfileVM.filterAge, items: filterProfileVM.ageRange)
             
@@ -40,5 +41,6 @@ struct FilterProfileView: View {
             
             PickerInputModal(label: "Filter semester learned", showPicker: $filterProfileVM.showSemesterLearned, value: $filterProfileVM.filterSemester, items: filterProfileVM.semesterLearnedRange)
         }
+        .edgesIgnoringSafeArea(.bottom)
     }
 }

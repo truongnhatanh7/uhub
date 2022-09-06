@@ -51,6 +51,8 @@
 		C133E33828C65300002FFA9E /* PickerInputModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E33728C65300002FFA9E /* PickerInputModal.swift */; };
 		C133E33A28C6CB3E002FFA9E /* FilterProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E33928C6CB3E002FFA9E /* FilterProfileView.swift */; };
 		C133E33C28C6D637002FFA9E /* FilterProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E33B28C6D637002FFA9E /* FilterProfileViewModel.swift */; };
+		C133E41528C73157002FFA9E /* OneThirdModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E41428C73157002FFA9E /* OneThirdModal.swift */; };
+		C133E41728C73908002FFA9E /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E41628C73908002FFA9E /* BottomBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +98,8 @@
 		C133E33728C65300002FFA9E /* PickerInputModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerInputModal.swift; sourceTree = "<group>"; };
 		C133E33928C6CB3E002FFA9E /* FilterProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterProfileView.swift; sourceTree = "<group>"; };
 		C133E33B28C6D637002FFA9E /* FilterProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterProfileViewModel.swift; sourceTree = "<group>"; };
+		C133E41428C73157002FFA9E /* OneThirdModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneThirdModal.swift; sourceTree = "<group>"; };
+		C133E41628C73908002FFA9E /* BottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +194,8 @@
 				C133E33528C64165002FFA9E /* AdaptiveSheet.swift */,
 				C133E33328C61EB1002FFA9E /* PickerInputComponent.swift */,
 				C133E33728C65300002FFA9E /* PickerInputModal.swift */,
+				C133E41428C73157002FFA9E /* OneThirdModal.swift */,
+				C133E41628C73908002FFA9E /* BottomBar.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -360,8 +366,10 @@
 				C12BFA5E28C2DD2000150928 /* EditProfileView.swift in Sources */,
 				8FF183F328C19FAA000184B3 /* ErrorMsgView.swift in Sources */,
 				8F70561128C2F64500A0B18B /* UserAuthManager.swift in Sources */,
+				C133E41528C73157002FFA9E /* OneThirdModal.swift in Sources */,
 				5545354928C373EF003864C2 /* DateHelper.swift in Sources */,
 				55FA436828BE26BD006AC2F8 /* uhubApp.swift in Sources */,
+				C133E41728C73908002FFA9E /* BottomBar.swift in Sources */,
 				8FF183F128C19FA0000184B3 /* ButtonView.swift in Sources */,
 				C133E33028C5CBAB002FFA9E /* AvatarInput.swift in Sources */,
 				7254AC7B96B029347054A80A /* CongratsModalStyle.swift in Sources */,

@@ -12,7 +12,6 @@ import SwiftUI
 @MainActor class EditProfileViewModel: ObservableObject {
     @Published var fullname: String
     @Published var age: String
-    @Published var email: String
     @Published var school: String
     @Published var major: String
     @Published var gpa: String
@@ -27,18 +26,17 @@ import SwiftUI
     @Published var showGPAPicker = false
     @Published var showSemesterLearned = false
     
-    let ageRange = (6...100).compactMap { "\($0)" }
+    let ageRange = (18...100).compactMap { "\($0)" }
     let GPARange = ["Less than 50%", "50% - 59%", "60% - 69%", "70% - 79%", "80% - 100%"]
     let semesterLearnedRange = (0...20).compactMap { "\($0)" }
     
     var isDisabled: Bool {
-        image == nil || fullname.isEmpty || age.isEmpty || email.isEmpty || school.isEmpty || major.isEmpty || gpa.isEmpty || semesterLearned.isEmpty
+        image == nil || fullname.isEmpty || age.isEmpty || school.isEmpty || major.isEmpty || gpa.isEmpty || semesterLearned.isEmpty
     }
     
-    init(fullname: String = "", age: String = "", email: String = "", school: String = "", major: String = "", gpa: String = "", semesterLearned: String = "", about: String = "") {
+    init(fullname: String = "", age: String = "18", school: String = "", major: String = "", gpa: String = "Less than 50%", semesterLearned: String = "0", about: String = "") {
         self.fullname = fullname
         self.age = age
-        self.email = email
         self.school = school
         self.major = major
         self.gpa = gpa
@@ -54,8 +52,6 @@ import SwiftUI
                 return
             case .Age:
                 self.age = filtered
-            case .Email:
-                return
             case .School:
                 return
             case .Major:
@@ -78,5 +74,5 @@ import SwiftUI
 }
 
 enum Field: Int {
-    case FullName, Age, Email, School, Major, GPA, SemeterLearned, About
+    case FullName, Age, School, Major, GPA, SemeterLearned, About
 }

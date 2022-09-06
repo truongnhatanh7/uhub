@@ -39,3 +39,14 @@ struct InputStyle: ViewModifier {
             .padding(.leading, 20)
     }
 }
+
+struct OneThirdModalStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .padding(.bottom, 10)
+            .background(.background)
+            .cornerRadius(20)
+            .transition(.move(edge: .bottom))
+    }
+}
