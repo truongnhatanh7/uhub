@@ -31,7 +31,8 @@ struct ContentView: View {
                 EditProfileView()
                     .transition(.move(edge: .trailing))
             case .FilterProfile:
-                EmptyView()
+                FilterProfileView()
+                    .transition(.move(edge: .trailing))
             case .Notification:
                 EmptyView()
             case .Security:

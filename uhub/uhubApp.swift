@@ -16,10 +16,10 @@ struct uhubApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-            EditProfileView()
-                .environmentObject(PageViewModel())
-                .environmentObject(EditProfileViewModel())
+            ContentView()
+            
+//            FilterProfileView()
+//                .environmentObject(PageViewModel())
         }
     }
 }

@@ -40,12 +40,6 @@ struct EditProfileView: View {
     }
 }
 
-struct EditProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfileView()
-    }
-}
-
 struct TextInputSubView: View {
     @EnvironmentObject var pageVM: PageViewModel
     @EnvironmentObject var editProfileVM: EditProfileViewModel
