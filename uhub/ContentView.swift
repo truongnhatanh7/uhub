@@ -29,10 +29,10 @@ struct ContentView: View {
                     )
             case .EditProfile:
                 EditProfileView()
-                    .transition(.move(edge: .trailing))
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .FilterProfile:
                 FilterProfileView()
-                    .transition(.move(edge: .trailing))
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Notification:
                 EmptyView()
             case .Security:

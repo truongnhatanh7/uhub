@@ -25,6 +25,10 @@ struct EditProfileView: View {
                 }
                 StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
             }
+            ButtonView(textContent: "Next", onTap: {
+                pageVM.visit(page: .FilterProfile)
+            }, isDisabled: editProfileVM.isDisabled)
+            
             PickerInputModal(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)
             PickerInputModal(label: "Your GPA", showPicker: $editProfileVM.showGPAPicker, value: $editProfileVM.gpa, items: editProfileVM.GPARange)
             PickerInputModal(label: "Semester learned", showPicker: $editProfileVM.showSemesterLearned, value: $editProfileVM.semesterLearned, items: editProfileVM.semesterLearnedRange)
@@ -67,10 +71,6 @@ struct TextInputSubView: View {
             
             TextBox(label: "About", value: $editProfileVM.about, placeholder: "Tell me about yourself")
                 .focused($isFocusKeyboard, equals: .About)
-            
-            ButtonView(textContent: "Next", onTap: {
-                pageVM.visit(page: .FilterProfile)
-            }, isDisabled: editProfileVM.isDisabled)
         }
         .padding()
         .onTapGesture {

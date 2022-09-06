@@ -57,7 +57,6 @@ struct PickerInputModal: View {
                 .background(.background)
                 .cornerRadius(20)
                 .transition(.move(edge: .bottom))
-
             }
         }
         .ignoresSafeArea()
