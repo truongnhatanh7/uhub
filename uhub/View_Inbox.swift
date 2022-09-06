@@ -12,45 +12,56 @@ struct InboxView: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @EnvironmentObject var pageVM: PageViewModel
     @State var textBoxContent: String = ""
-    @State var currentLoadLimit: Int = 2;
-    var newMessagesToBeLoaded: Int = 2
+    @State var currentLoadLimit: Int = 14;
+    var newMessagesToBeLoaded: Int = 14
     
     var body: some View {
         VStack {
             StandardHeader(title: "Inbox") {
                 pageVM.visit(page: .Chat)
             }
-            ScrollViewReader { proxy in
-                List {
-                    ForEach(chatEngine.messages, id: \.self) { message in
-                        if message.ownerId == (Auth.auth().currentUser?.uid ?? "-1") {
-                            MessageSelfBubble(message: message)
-                                .id(message.id)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-                        } else {
-                            MessageDefaultBubble(message: message)
-                                .id(message.id)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4 , trailing: 16))
+            
+            if !chatEngine.isProcessing {
+                ScrollViewReader { proxy in
+                    List {
+                        ForEach(chatEngine.messages, id: \.self) { message in
+                            if message.ownerId == (Auth.auth().currentUser?.uid ?? "-1") {
+                                MessageSelfBubble(message: message)
+                                    .id(message.id)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+                            } else {
+                                MessageDefaultBubble(message: message)
+                                    .id(message.id)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4 , trailing: 16))
+                            }
                         }
                     }
-                }
-                .listStyle(PlainListStyle())
-                .onChange(of: chatEngine.lastMessageId) { id in
-                    withAnimation {
-                        proxy.scrollTo(id, anchor: .bottom)
+                    .listStyle(PlainListStyle())
+                    .onChange(of: chatEngine.lastMessageId) { id in
+                        withAnimation {
+                            proxy.scrollTo(id, anchor: .bottom)
+                        }
+                    }
+                    .onAppear {
+                        proxy.scrollTo(chatEngine.lastMessageId, anchor: .bottom)
+                    }
+                    .refreshable {
+                        print("Refreshing...")
+
+                            currentLoadLimit += newMessagesToBeLoaded
+                            chatEngine.setCurrentLimit(limit: currentLoadLimit)
+                            chatEngine.loadMessages()
+
                     }
                 }
-                .onAppear {
-                    proxy.scrollTo(chatEngine.lastMessageId, anchor: .bottom)
-                }
-                .refreshable {
-                    print("Refreshing...")
-                    currentLoadLimit += newMessagesToBeLoaded
-                    chatEngine.loadMessages(limit: currentLoadLimit)
+            } else {
+                VStack {
+                    
                 }
             }
+            
 
             HStack {
                 TextField("Send message", text: $textBoxContent)
@@ -72,7 +83,9 @@ struct InboxView: View {
         }
         .onAppear {
             print(chatEngine.currentConversation)
-            chatEngine.loadConversation(limit: currentLoadLimit)
+
+                chatEngine.loadConversation()
+            
         }
         
     }

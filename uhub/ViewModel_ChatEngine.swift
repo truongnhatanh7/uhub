@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Firebase
 import FirebaseFirestore
 
@@ -20,6 +21,8 @@ class ChatEngine: ObservableObject {
     private var messagesListener: ListenerRegistration?
     private var conversationListener: ListenerRegistration?
     @Published var currentUnread: Bool = false
+    private var currentLimit = 14
+    @Published var isProcessing: Bool = false
     
     deinit {
         print("Deinit listeners")
@@ -27,23 +30,31 @@ class ChatEngine: ObservableObject {
         messagesListener?.remove()
     }
 
-    func loadConversation(limit: Int) {
-        print("[Load Conversation] invoked")
+    func loadConversation() {
+        self.isProcessing = true
         messagesListener = db.collection("messages")
             .whereField("conversationId", isEqualTo: currentConversation)
             .addSnapshotListener
                 { (querySnapshot, error) in
                     guard (querySnapshot?.documents) != nil else {
                         print("Error fetching documents: \(error!)")
+                        self.isProcessing = false
                         return
                     }
                     
-                    self.loadMessages(limit: limit)
+                    self.loadMessages()
+                    withAnimation {
+                        self.isProcessing = false
+                    }
                 }
     }
     
-     func loadMessages(limit: Int) {
-         db.collection("messages").whereField("conversationId", isEqualTo: currentConversation).order(by: "timestamp", descending: true).limit(to: limit).getDocuments() { (querySnapshot, error) in
+    func setCurrentLimit(limit: Int) {
+        self.currentLimit = limit
+    }
+    
+     func loadMessages() {
+         db.collection("messages").whereField("conversationId", isEqualTo: currentConversation).order(by: "timestamp", descending: true).limit(to: self.currentLimit).getDocuments() { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(error!)")
                 return
