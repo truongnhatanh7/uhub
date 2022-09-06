@@ -30,7 +30,17 @@ struct EditProfileView: View {
             }
             BottomBar {
                 ButtonView(textContent: "Next", onTap: {
-                    pageVM.visit(page: .FilterProfile)
+                    userAuthManager.updateProfileInfo(updatedData: [
+                        "fullname": editProfileVM.fullname,
+                        "age": editProfileVM.age,
+                        "school": editProfileVM.school,
+                        "major": editProfileVM.major,
+                        "gpa": editProfileVM.gpa,
+                        "semester_learned": editProfileVM.semesterLearned,
+                        "about": editProfileVM.about
+                    ], callback: {
+                        pageVM.visit(page: .FilterProfile)
+                    })
                 }, isDisabled: editProfileVM.isDisabled)
             }
             
@@ -75,21 +85,6 @@ struct TextInputSubView: View {
             
             TextBox(label: "About", value: $editProfileVM.about, placeholder: "Tell me about yourself")
                 .focused($isFocusKeyboard, equals: .About)
-            
-            ButtonView(textContent: "Next", onTap: {
-                userAuthManager.updateProfileInfo(updatedData: [
-                    "fullname": editProfileVM.fullname,
-                    "age": editProfileVM.age,
-                    "school": editProfileVM.school,
-                    "major": editProfileVM.major,
-                    "gpa": editProfileVM.gpa,
-                    "semester_learned": editProfileVM.semesterLearned,
-                    "about": editProfileVM.about
-                ], callback: {
-                    pageVM.visit(page: .FilterProfile)
-                })
-                
-            }, isDisabled: editProfileVM.isDisabled)
         }
         .padding()
         .onTapGesture {

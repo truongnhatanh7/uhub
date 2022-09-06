@@ -10,6 +10,7 @@ import SwiftUI
 struct FilterProfileView: View {
     @EnvironmentObject var pageVM: PageViewModel
     @StateObject var filterProfileVM = FilterProfileViewModel()
+    @EnvironmentObject var userAuthManager: UserAuthManager
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -31,7 +32,15 @@ struct FilterProfileView: View {
             }
             BottomBar {
                 ButtonView(textContent: "Next", onTap: {
-                    pageVM.visit(page: .FilterProfile)
+                    userAuthManager.updateProfileInfo(updatedData: [
+                        "friends_filter": [
+                            "friends_age": filterProfileVM.filterAge,
+                            "freinds_gpa": filterProfileVM.filterGPA,
+                            "friends_semester_learned": filterProfileVM.filterSemester
+                        ]
+                    ], callback: {
+                        pageVM.visit(page: .Notification)
+                    })
                 }, isDisabled: false)
             }
             
