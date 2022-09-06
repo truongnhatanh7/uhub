@@ -16,12 +16,8 @@ struct NotificationOption: View {
     
     var body: some View {
         VStack {
-            Toggle(isOn: $toogle, label: {
-                Text(label.capitalized).fontWeight(.semibold).font(.system(size: 16))
-            }).padding(.horizontal, 24).padding(.vertical, 16).toggleStyle(SwitchToggleStyle(tint: Color("Primary"))).onChange(of: toogle) { value in
-                
-                handler(value)
-            }
+            
+            Toogle(label: label, toogle: $toogle, handler: handler)
             
             if !isLast {
                 Rectangle().frame(height: 1)

@@ -20,6 +20,7 @@
 		8FDB54B528BF2AA10013816E /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8FDB54B428BF2AA10013816E /* FirebaseStorage */; };
 		8FDB54B728BF2B4A0013816E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */; };
 		D540919028C6290C00D8C821 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D540918F28C6290C00D8C821 /* NotificationModel.swift */; };
+		D54091AE28C6E55E00D8C821 /* Toogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54091AD28C6E55E00D8C821 /* Toogle.swift */; };
 		D5BDC39028C07AA30001AE94 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BDC38F28C07AA30001AE94 /* NotificationView.swift */; };
 		D5BDC39328C07B400001AE94 /* NotificationOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BDC39228C07B3F0001AE94 /* NotificationOption.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D540918F28C6290C00D8C821 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
+		D54091AD28C6E55E00D8C821 /* Toogle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toogle.swift; sourceTree = "<group>"; };
 		D5BDC38F28C07AA30001AE94 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		D5BDC39228C07B3F0001AE94 /* NotificationOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationOption.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				D5BDC39228C07B3F0001AE94 /* NotificationOption.swift */,
+				D54091AD28C6E55E00D8C821 /* Toogle.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55FA436A28BE26BD006AC2F8 /* ContentView.swift in Sources */,
+				D54091AE28C6E55E00D8C821 /* Toogle.swift in Sources */,
 				55FA436828BE26BD006AC2F8 /* uhubApp.swift in Sources */,
 				D5BDC39028C07AA30001AE94 /* NotificationView.swift in Sources */,
 				D540919028C6290C00D8C821 /* NotificationModel.swift in Sources */,
