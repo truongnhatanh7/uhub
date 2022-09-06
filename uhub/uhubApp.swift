@@ -21,6 +21,9 @@ struct uhubApp: App {
 //                .environmentObject(PageViewModel())
 //                .environmentObject(EditProfileViewModel())
 //                .environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
+            
+//            FilterProfileView()
+//                .environmentObject(PageViewModel())
         }
     }
 }

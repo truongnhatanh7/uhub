@@ -10,17 +10,15 @@ import SwiftUI
 struct PickerInputComponent: View {
     @State var label: String?
     @Binding var value: String
-    var placeholder: String
     @State var isRequired: Bool
     let items: [String]
     
     @Binding var showPicker: Bool
     @FocusState var isFocused
     
-    init(label: String? = nil, value: Binding<String>, placeholder: String = "", isRequired: Bool = false, items: [String] = [String](), showPicker: Binding<Bool>) {
+    init(label: String? = nil, value: Binding<String>, isRequired: Bool = false, items: [String] = [String](), showPicker: Binding<Bool>) {
         _label = State(initialValue: label)
         _value = value
-        self.placeholder = placeholder
         _isRequired = State(initialValue: isRequired)
         self.items = items
         _showPicker = showPicker
@@ -40,7 +38,7 @@ struct PickerInputComponent: View {
                         .stroke(showPicker ? Color("pink_primary") : Color.gray.opacity(0.4), lineWidth: 2)
                         .frame(height: 50)
                     HStack {
-                        Text("\(value.isEmpty ? placeholder : value)")
+                        Text(value)
                             .modifier(InputStyle(isFocused: $isFocused))
                         Spacer()
                         Image(systemName: showPicker ? "chevron.compact.up" : "chevron.compact.down")

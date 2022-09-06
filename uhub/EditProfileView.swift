@@ -24,14 +24,22 @@ struct EditProfileView: View {
                     .padding(.top, 60)
                     
                     TextInputSubView()
+                        .padding(.bottom, 100)
                 }
                 StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
             }
+            BottomBar {
+                ButtonView(textContent: "Next", onTap: {
+                    pageVM.visit(page: .FilterProfile)
+                }, isDisabled: editProfileVM.isDisabled)
+            }
+            
             PickerInputModal(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)
             PickerInputModal(label: "Your GPA", showPicker: $editProfileVM.showGPAPicker, value: $editProfileVM.gpa, items: editProfileVM.GPARange)
             PickerInputModal(label: "Semester learned", showPicker: $editProfileVM.showSemesterLearned, value: $editProfileVM.semesterLearned, items: editProfileVM.semesterLearnedRange)
             
         }
+        .edgesIgnoringSafeArea(.bottom)
         .environmentObject(editProfileVM)
         .sheet(isPresented: $editProfileVM.showImagePicker) {
             ImagePicker(image: $editProfileVM.inputImage)
@@ -53,7 +61,7 @@ struct TextInputSubView: View {
             TextInputComponent(label: "Full Name", value: $editProfileVM.fullname, placeholder: "Full Name", isSecure: false, isRequired: true, icon: "person")
                 .focused($isFocusKeyboard, equals: .FullName)
             
-            PickerInputComponent(label: "Age", value: $editProfileVM.age, placeholder: "Select your age", isRequired: true, items: editProfileVM.ageRange, showPicker: $editProfileVM.showAgePicker)
+            PickerInputComponent(label: "Age", value: $editProfileVM.age, isRequired: true, items: editProfileVM.ageRange, showPicker: $editProfileVM.showAgePicker)
             
             TextInputComponent(label: "School", value: $editProfileVM.school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
                 .focused($isFocusKeyboard, equals: .School)
@@ -61,9 +69,9 @@ struct TextInputSubView: View {
             TextInputComponent(label: "Major", value: $editProfileVM.major, placeholder: "Learning Major", isRequired: true, icon: "graduationcap")
                 .focused($isFocusKeyboard, equals: .Major)
             
-            PickerInputComponent(label: "GPA", value: $editProfileVM.gpa, placeholder: "Select your GPA", isRequired: true, items: editProfileVM.GPARange, showPicker: $editProfileVM.showGPAPicker)
+            PickerInputComponent(label: "GPA", value: $editProfileVM.gpa, isRequired: true, items: editProfileVM.GPARange, showPicker: $editProfileVM.showGPAPicker)
             
-            PickerInputComponent(label: "Semester Learned", value: $editProfileVM.semesterLearned, placeholder: "Select number of learned semester", isRequired: true, items: editProfileVM.semesterLearnedRange, showPicker: $editProfileVM.showSemesterLearned)
+            PickerInputComponent(label: "Semester Learned", value: $editProfileVM.semesterLearned, isRequired: true, items: editProfileVM.semesterLearnedRange, showPicker: $editProfileVM.showSemesterLearned)
             
             TextBox(label: "About", value: $editProfileVM.about, placeholder: "Tell me about yourself")
                 .focused($isFocusKeyboard, equals: .About)
