@@ -23,7 +23,7 @@ struct EditProfileView: View {
                     
                     TextInputSubView()
                 }
-                StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
+//                StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
             }
             PickerInputModal(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)
             PickerInputModal(label: "Your GPA", showPicker: $editProfileVM.showGPAPicker, value: $editProfileVM.gpa, items: editProfileVM.GPARange)
