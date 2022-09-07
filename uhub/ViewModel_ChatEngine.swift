@@ -85,26 +85,31 @@ class ChatEngine: ObservableObject {
          
     }
     
-    func loadChatList(){
+    func loadChatList() {
         print("Start to load chat list") // TODO: Load chat that belongs to that user (save in user db)
-        conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "-1").addSnapshotListener { (querySnapshot, err) in
+        conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else {
                     print("No documents")
                     return
                 }
-                DispatchQueue.main.async {
-                    self.conversations = documents.map { (queryDocumentSnapshot) -> Conversation in
-                        let data = queryDocumentSnapshot.data()
-                        let conversationId = queryDocumentSnapshot.documentID
-                        let latestMessage = data["latestMessage"] as? String ?? ""
-                        let timestamp = data["timestamp"] as? Date ?? Date()
-                        let unread = data["unread"] as? Bool ?? false
-                        let users = data["users"] as? [String] ?? []
-                        let latestMessageSender = data["latestMessageSender"] as? String ?? ""
-                        return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, users: users, latestMessageSender: latestMessageSender, name: "")
-                    }
+            
+            DispatchQueue.main.async {
+                self.conversations = documents.map { (queryDocumentSnapshot) -> Conversation in
+                    let data = queryDocumentSnapshot.data()
+                    let conversationId = queryDocumentSnapshot.documentID
+                    let latestMessage = data["latestMessage"] as? String ?? ""
+                    let timestamp = data["timestamp"] as? Date ?? Date()
+                    let unread = data["unread"] as? Bool ?? false
+                    let users = data["users"] as? [String] ?? []
+                    let latestMessageSender = data["latestMessageSender"] as? String ?? ""
+                    let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+                    let userNames = data["userNames"] as? [String: String] ?? [:]
+                    let name = userNames[notThisUserId ?? ""]
+                    
+                    return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
                 }
             }
+        }
     }
     
     func sendMessage(content: String) {
@@ -143,6 +148,15 @@ class ChatEngine: ObservableObject {
                     ])
                 }
             }
+        }
+    }
+    
+    func createConversation(recipientId: String) {
+        if let currentUser = Auth.auth().currentUser {
+            let docData: [String: Any] = [
+                "users": [currentUser.uid, recipientId],
+            ]
+            self.db.collection("conversations").addDocument(data: docData)
         }
     }
 }

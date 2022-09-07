@@ -11,6 +11,7 @@ import Firebase
 struct ChatListRow: View {
     @EnvironmentObject var chatEngine: ChatEngine
     var conversation: Conversation
+    @State var conversationName = ""
     var body: some View {
         HStack {
             HStack {
@@ -53,11 +54,13 @@ struct ChatListRow: View {
             }
             Spacer()
             VStack {
-                Text("2")
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(.white)
-                    .background(Color("pink_primary"))
-                    .clipShape(Circle())
+                if Auth.auth().currentUser?.uid != conversation.latestMessageSender && conversation.unread {
+                    Text("")
+                        .frame(width: 16, height: 16)
+                        .foregroundColor(.white)
+                        .background(Color("pink_primary"))
+                        .clipShape(Circle())
+                }
                 Spacer()
                 Text(conversation.timestamp.getFormattedDate())
             }

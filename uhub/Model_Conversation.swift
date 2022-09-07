@@ -14,6 +14,7 @@ struct Conversation : Hashable, Codable {
     var timestamp: Date
     var unread: Bool
     var users: [String]
+    var userNames: [String : String]
     var latestMessageSender: String
     var name: String
 }
