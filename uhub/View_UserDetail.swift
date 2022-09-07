@@ -35,7 +35,7 @@ struct View_UserDetail: View {
                     
                     Spacer()
                     
-                    // icon
+                    // MARK: BUTTON GROUP
                     HStack {
                         if (isFromMatchPage) {
                             Button(action: {
