@@ -31,8 +31,8 @@ struct ChatListView: View {
             ScrollView {
                 ForEach(chatEngine.conversations, id: \.self) { conversation in
                     Button {
-                        chatEngine.currentConversation = conversation.conversationId
-                        chatEngine.currentUnread = conversation.unread
+                        chatEngine.currentConversation = conversation
+                        chatEngine.setRead()
                         pageVM.visit(page: .Inbox)
                     } label: {
                         ChatListRow(conversation: conversation)

@@ -15,14 +15,13 @@ class ChatEngine: ObservableObject {
     
     @Published var messages: [Message] = []
     @Published var conversations: [Conversation] = []
-    @Published var currentConversation: String = "-1"
-    @Published var lastMessageId: String = "-1"
-    @Published var lastMessageSenderId: String = "-1"
+    @Published var currentConversation: Conversation?
+    @Published var isProcessing: Bool = false
+    @Published var lastMessageId: String = ""
+    
     private var messagesListener: ListenerRegistration?
     private var conversationListener: ListenerRegistration?
-    @Published var currentUnread: Bool = false
     private var currentLimit = 14
-    @Published var isProcessing: Bool = false
     
     deinit {
         print("Deinit listeners")
@@ -31,22 +30,24 @@ class ChatEngine: ObservableObject {
     }
 
     func loadConversation() {
-        self.isProcessing = true
-        messagesListener = db.collection("messages")
-            .whereField("conversationId", isEqualTo: currentConversation)
-            .addSnapshotListener
-                { (querySnapshot, error) in
-                    guard (querySnapshot?.documents) != nil else {
-                        print("Error fetching documents: \(error!)")
-                        self.isProcessing = false
-                        return
+        if let currentConversation = currentConversation {
+            self.isProcessing = true
+            messagesListener = db.collection("messages")
+                .whereField("conversationId", isEqualTo: currentConversation.conversationId)
+                .addSnapshotListener
+                    { (querySnapshot, error) in
+                        guard (querySnapshot?.documents) != nil else {
+                            print("Error fetching documents: \(error!)")
+                            self.isProcessing = false
+                            return
+                        }
+                        
+                        self.loadMessages()
+                        withAnimation {
+                            self.isProcessing = false
+                        }
                     }
-                    
-                    self.loadMessages()
-                    withAnimation {
-                        self.isProcessing = false
-                    }
-                }
+        }
     }
     
     func setCurrentLimit(limit: Int) {
@@ -54,33 +55,34 @@ class ChatEngine: ObservableObject {
     }
     
      func loadMessages() {
-         db.collection("messages").whereField("conversationId", isEqualTo: currentConversation).order(by: "timestamp", descending: true).limit(to: self.currentLimit).getDocuments() { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(error!)")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.messages = documents.map { (queryDocumentSnapshot) -> Message in
-                    let data = queryDocumentSnapshot.data()
-                    let messageId = queryDocumentSnapshot.documentID
-                    let ownerId = data["ownerId"] as? String ?? ""
-                    let conversationId = data["conversationId"] as? String ?? ""
-                    let content = data["content"] as? String ?? ""
-                    let timestamp = data["timestamp"] as? Timestamp // Timestamp is a Firebase date datatype -> convert to Date for Swift
-                    return Message(id: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
+         if let currentConversation = currentConversation {
+             db.collection("messages").whereField("conversationId", isEqualTo: currentConversation.conversationId).order(by: "timestamp", descending: true).limit(to: self.currentLimit).getDocuments() { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching documents: \(error!)")
+                    return
                 }
-
-                self.messages = self.messages.reversed()
                 
-                // For scolling to latest message
-                if let latestMsg = self.messages.last {
-                    self.lastMessageId = latestMsg.id
-                    self.lastMessageSenderId = latestMsg.ownerId
-                    self.updateChatList(content: latestMsg.content) // Everytime current conversation has new update -> update conversation data
+                DispatchQueue.main.async {
+                    self.messages = documents.map { (queryDocumentSnapshot) -> Message in
+                        let data = queryDocumentSnapshot.data()
+                        let messageId = queryDocumentSnapshot.documentID
+                        let ownerId = data["ownerId"] as? String ?? ""
+                        let conversationId = data["conversationId"] as? String ?? ""
+                        let content = data["content"] as? String ?? ""
+                        let timestamp = data["timestamp"] as? Timestamp // Timestamp is a Firebase date datatype -> convert to Date for Swift
+                        return Message(id: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
+                    }
+
+                    self.messages = self.messages.reversed()
+                    
+                    // For scolling to latest message
+                    if let latestMsg = self.messages.last {
+                        self.lastMessageId = latestMsg.id
+                    }
                 }
             }
-        }
+         }
+         
     }
     
     func loadChatList(){
@@ -98,38 +100,49 @@ class ChatEngine: ObservableObject {
                         let timestamp = data["timestamp"] as? Date ?? Date()
                         let unread = data["unread"] as? Bool ?? false
                         let users = data["users"] as? [String] ?? []
-                        return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, users: users)
+                        let latestMessageSender = data["latestMessageSender"] as? String ?? ""
+                        return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, users: users, latestMessageSender: latestMessageSender, name: "")
                     }
                 }
             }
-        
     }
     
     func sendMessage(content: String) {
-        let docData: [String: Any] = [
-            "messageId": UUID().uuidString,
-            "ownerId": Auth.auth().currentUser?.uid ?? "-1",
-            "conversationId": currentConversation,
-            "content": content,
-            "timestamp": Date()
-        ]
-        db.collection("messages").document(UUID().uuidString).setData(docData)
-        db.collection("conversations").document(currentConversation).updateData([ // Updatte latest message when sending new message from both sides
-            "latestMessage": content,
-            "timestamp": Date(),
-            "unread": true,
-//            "latestMessageSender": Auth.auth().currentUser?.uid ?? ""
-        ])
+        if let currentConversation = currentConversation {
+            let docData: [String: Any] = [
+                "messageId": UUID().uuidString,
+                "ownerId": Auth.auth().currentUser?.uid ?? "-1",
+                "conversationId": currentConversation.conversationId,
+                "content": content,
+                "timestamp": Date()
+            ]
+            db.collection("messages").document(UUID().uuidString).setData(docData)
+            
+            if let currentUser = Auth.auth().currentUser {
+                db.collection("conversations").document(currentConversation.conversationId).updateData([ // Updatte latest message when sending new message from both sides
+                    "latestMessage": content,
+                    "timestamp": Date(),
+                    "unread": true,
+                    "latestMessageSender": currentUser.uid
+                ])
+            }
+
+            
+        }
+
+
     }
     
-    private func updateChatList(content: String) {
-        if Auth.auth().currentUser?.uid != lastMessageSenderId && currentUnread { // If unread == false, do not call this
-            db.collection("conversations").document(currentConversation).updateData([
-                "latestMessage": content,
-                "timestamp": Date(),
-                "unread": false
-            ])
-            currentUnread = false
+    func setRead() {
+        if let currentConversation = currentConversation {
+            if Auth.auth().currentUser?.uid != currentConversation.latestMessageSender { // If unread == false, do not call this
+                if currentConversation.unread {
+                    db.collection("conversations").document(currentConversation.conversationId).updateData([
+                        "timestamp": Date(),
+                        "unread": false
+                    ])
+                }
+            }
         }
     }
 }

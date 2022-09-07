@@ -36,10 +36,10 @@ struct ChatListRow: View {
 
                 VStack(alignment: .leading) {
                     // TODO: update when database has name
-//                    Text(conversation.name)
-//                        .fontWeight(.medium)
+                    Text(conversation.name)
+                        .fontWeight(.medium)
                     Spacer()
-                    if Auth.auth().currentUser?.uid != chatEngine.lastMessageSenderId && conversation.unread {
+                    if Auth.auth().currentUser?.uid != conversation.latestMessageSender && conversation.unread {
                         Text(conversation.latestMessage)
                             .fontWeight(.bold)
                     } else {

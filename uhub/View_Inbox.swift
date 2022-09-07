@@ -49,25 +49,24 @@ struct InboxView: View {
                     }
                     .refreshable {
                         print("Refreshing...")
-
-                            currentLoadLimit += newMessagesToBeLoaded
-                            chatEngine.setCurrentLimit(limit: currentLoadLimit)
-                            chatEngine.loadMessages()
-
+                        currentLoadLimit += newMessagesToBeLoaded
+                        chatEngine.setCurrentLimit(limit: currentLoadLimit)
+                        chatEngine.loadMessages()
+                        
                     }
                 }
             } else {
                 VStack {
-                    
+                    // Render blank space
                 }
             }
             
-
+            
             HStack {
                 TextField("Send message", text: $textBoxContent)
                     .lineLimit(3)
                     .padding()
-                    Spacer()
+                Spacer()
                 Button {
                     chatEngine.sendMessage(content: textBoxContent)
                     textBoxContent = ""
@@ -82,10 +81,7 @@ struct InboxView: View {
             
         }
         .onAppear {
-            print(chatEngine.currentConversation)
-
-                chatEngine.loadConversation()
-            
+            chatEngine.loadConversation()
         }
         
     }
