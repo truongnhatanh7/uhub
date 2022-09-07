@@ -108,6 +108,7 @@ class ChatEngine: ObservableObject {
                     
                     return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
                 }
+               
             }
         }
     }
@@ -140,13 +141,11 @@ class ChatEngine: ObservableObject {
     
     func setRead() {
         if let currentConversation = currentConversation {
-            if Auth.auth().currentUser?.uid != currentConversation.latestMessageSender { // If unread == false, do not call this
-                if currentConversation.unread {
-                    db.collection("conversations").document(currentConversation.conversationId).updateData([
-                        "timestamp": Date(),
-                        "unread": false
-                    ])
-                }
+            if Auth.auth().currentUser?.uid != currentConversation.latestMessageSender && currentConversation.unread { // If unread == false, do not call this
+                db.collection("conversations").document(currentConversation.conversationId).updateData([
+                    "timestamp": Date(),
+                    "unread": false
+                ])
             }
         }
     }
