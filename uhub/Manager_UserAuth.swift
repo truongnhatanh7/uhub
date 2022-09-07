@@ -29,6 +29,7 @@ class UserAuthManager: ObservableObject {
     private let db = Firestore.firestore()
     private var ref: DocumentReference? = nil
     private var initialUserData: [String: Any] = [
+        "id": "",
         "email": "",
         "password": "",
         "fullname": "",
@@ -65,7 +66,7 @@ class UserAuthManager: ObservableObject {
             }
     }
     
-    func initCurrentUser(email: String, password: String) {
+    func initCurrentUser(id: String, email: String, password: String) {
         db.collection("users").whereField("email", isEqualTo: email)
             .getDocuments() { (querySnapshot, error) in
                 if error != nil {
@@ -76,43 +77,46 @@ class UserAuthManager: ObservableObject {
                     // update error msg
                     self.errorMsg = ""
                     
-                    // success msg
-                    print("[SUCCESS - Get User Id By Email]: Retrieved User ID = \(querySnapshot!.documents[0].documentID)")
-                    
-                    // update current user info
-                    self.currentUser = CurrentUser(
-                        id: querySnapshot!.documents[0].documentID,
-                        email: email,
-                        password: password
-                    )
-                    print("[LOGS - Current User]: \(self.currentUser!)")
+                    if (querySnapshot!.documents.count > 0 && querySnapshot!.documents[0].exists) {
+                        // success msg
+                        print("[SUCCESS - Get User Id By Email]: Retrieved User ID = \(querySnapshot!.documents[0].documentID)")
+                        
+                        // update current user info
+                        self.currentUser = CurrentUser(
+                            id: id,
+                            email: email,
+                            password: password
+                        )
+                        print("[LOGS - Current User]: \(self.currentUser!)")
+                    }
                 }
             }
     }
     
     func createUser(inputData: [String: Any]) {
         initialUserData = initialUserData.merging(inputData) { (_, new) in new }
-        ref = db.collection("users").addDocument(data: initialUserData) { error in
-            if error != nil {
-                // update error msg
-                self.errorMsg = "[FAILURE - Create User]: \(error!.localizedDescription)"
-                
-            } else {
-                // update error msg
-                self.errorMsg = ""
-                
-                // success msg
-                print("[SUCCESS - Create User]: User created - User ID = \(self.ref!.documentID)")
-                
-                // update current user info
-                self.currentUser = CurrentUser(
-                    id: self.ref!.documentID,
-                    email: String(describing: inputData["email"]!),
-                    password: String(describing: inputData["password"]!)
-                )
-                print("[LOGS - Current User]: \(self.currentUser!)")
+        db.collection("users")
+            .document("\(inputData["id"]!)")
+            .setData(initialUserData) { error in
+                if error != nil {
+                    // update error msg
+                    self.errorMsg = "[FAILURE - Create User]: \(error!.localizedDescription)"
+                    
+                } else {
+                    // update error msg
+                    self.errorMsg = ""
+                    
+                    // success msg
+                    print("[SUCCESS - Create User]: User created - User ID = \(String(describing: inputData["id"]!))")
+                    
+                    // update current user info
+                    self.initCurrentUser(
+                        id: String(describing: inputData["id"]!),
+                        email: String(describing: inputData["email"]!),
+                        password: String(describing: inputData["password"]!)
+                    )
+                }
             }
-        }
     }
     
     func signOut() {
@@ -141,7 +145,7 @@ class UserAuthManager: ObservableObject {
         }
     }
     
-    func signIn(inputEmail: String, inputPwd: String, callback: @escaping () -> ()) {
+    func signIn(inputEmail: String, inputPwd: String, callback: @escaping () -> (), firstTime: Bool) {
         Auth.auth().signIn(withEmail: inputEmail, password: inputPwd) { result, error in
             if error != nil {
                 // update error msg
@@ -152,6 +156,8 @@ class UserAuthManager: ObservableObject {
                 
             } else {
                 // success msg
+                let userId = Auth.auth().currentUser?.uid
+                
                 print("[SUCCESS - SIGN IN]: Signed in \(inputEmail)")
                 
                 // update error msg
@@ -160,8 +166,20 @@ class UserAuthManager: ObservableObject {
                 // update login status msg
                 self.isLoggedin = true
                 
-                // update current user
-                self.initCurrentUser(email: inputEmail, password: inputPwd)
+                if let userId = userId {
+                    if firstTime {
+                        // create new user document in Firebase Firestore
+                        let newlyCreatedData: [String : Any] = [
+                            "id": userId,
+                            "email": inputEmail,
+                            "password": inputPwd,
+                        ]
+                        self.createUser(inputData: newlyCreatedData)
+                    } else {
+                        // update current user
+                        self.initCurrentUser(id: userId, email: inputEmail, password: inputPwd)
+                    }
+                }
             }
             
             // execute callback function
@@ -189,14 +207,7 @@ class UserAuthManager: ObservableObject {
                 print("[SUCCESS - SIGN UP]: Signed up \(inputEmail)")
                 
                 // sign in Firebase Auth
-                self.signIn(inputEmail: inputEmail, inputPwd: inputPwd, callback: callback)
-                
-                // create new user document in Firebase Firestore
-                let newlyCreatedData: [String : Any] = [
-                    "email": inputEmail,
-                    "password": inputPwd,
-                ]
-                self.createUser(inputData: newlyCreatedData)
+                self.signIn(inputEmail: inputEmail, inputPwd: inputPwd, callback: callback, firstTime: true)
             }
         }
     }

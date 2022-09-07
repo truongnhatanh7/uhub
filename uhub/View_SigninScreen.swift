@@ -105,16 +105,14 @@ struct SigninScreenView: View {
                     .padding(.leading, 20)
                     
                     // sign in button
-
                     ButtonBindingView(textContent: "Sign In", onTap: {
-//                        pageVM.visit(page: .Home)
-                                                userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
-                                                    if userAuthManager.errorMsg == "" {
-                                                        pageVM.visit(page: .Chat)
-                                                    } else {
-                                                        print(userAuthManager.errorMsg)
-                                                    }
-                                                })
+                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
+                            if userAuthManager.errorMsg == "" {
+                                pageVM.visit(page: .Chat)
+                            } else {
+                                print(userAuthManager.errorMsg)
+                            }
+                        }, firstTime: false)
                     }, isDisabled: $isButtonDisabled)
                     
                     // forgot your password button
