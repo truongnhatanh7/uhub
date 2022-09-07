@@ -11,12 +11,13 @@ struct View_UserDetail: View {
     
     @State var isShowSheet:Bool = true
     var isFromMatchPage:Bool
+    var user:User
     
     var body: some View {
         ZStack {
             // MARK: Image
             VStack {
-                Image("user").resizable().modifier(DetailImage())
+                Image(user.image).resizable().modifier(DetailImage())
                 
                 Spacer()
             }.edgesIgnoringSafeArea(.all)
@@ -27,9 +28,9 @@ struct View_UserDetail: View {
                 // MARK: Name, major, gpa, chat button
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Adam Smith").modifier(TextTitle())
-                        Text("Software Engineer").font(Font.system(size: 16))
-                        Text("GPA: 3.86").font(Font.system(size: 16))
+                        Text(user.name).modifier(TextTitle())
+                        Text(user.major).font(Font.system(size: 16))
+                        Text("GPA: \(user.getFormattedGpa())").font(Font.system(size: 16))
                     }.padding()
                     
                     Spacer()
@@ -58,7 +59,7 @@ struct View_UserDetail: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
                         Text("About").modifier(TextTitle())
-                        Text("I am a senior student at RMIT. My strengths are machine learning and data visualization. I know a bit about web development and finding a team for my capstone. ").font(Font.system(size: 16))
+                        Text(user.about).font(Font.system(size: 16))
                     }.padding()
                     
                     Spacer()
@@ -71,12 +72,16 @@ struct View_UserDetail: View {
                         
                         HStack {
                             VStack(alignment: .leading) {
+                                
+                                ForEach(user.courseStudying, id: \.self) { courseName in
+                                    Comp_Course(name: courseName)
+                                }
                               
-                                Comp_Course(name: "iOS Development")
-                                
-                                Comp_Course(name: "Software Engineering Design")
-                                
-                                Comp_Course(name: "Engineering Computing 1")
+//                                Comp_Course(name: "iOS Development")
+//
+//                                Comp_Course(name: "Software Engineering Design")
+//
+//                                Comp_Course(name: "Engineering Computing 1")
                         
                             }
                             
@@ -97,6 +102,6 @@ struct View_UserDetail: View {
 
 struct View_UserDetail_Previews: PreviewProvider {
     static var previews: some View {
-        View_UserDetail(isFromMatchPage: true)
+        View_UserDetail(isFromMatchPage: true, user: User(name: "Michiael Ho", gpa: 3.9, major: "Software Enginner", about: "I am a senior student at RMIT. My strengths are machine learning and data visualization. I know a bit about web development and finding a team for my capstone.", courseStudying: ["iOS Development", "Software Engineering Design", "Engineering Computing 1"], image: "user"))
     }
 }
