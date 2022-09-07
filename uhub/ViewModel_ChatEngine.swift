@@ -13,6 +13,7 @@ import FirebaseFirestore
 class ChatEngine: ObservableObject {
     private let db = Firestore.firestore()
     
+    @StateObject var userAuthManager = UserAuthManager()
     @Published var messages: [Message] = []
     @Published var conversations: [Conversation] = []
     @Published var currentConversation: Conversation?
@@ -57,6 +58,7 @@ class ChatEngine: ObservableObject {
      func loadMessages() {
          if let currentConversation = currentConversation {
              db.collection("messages").whereField("conversationId", isEqualTo: currentConversation.conversationId).order(by: "timestamp", descending: true).limit(to: self.currentLimit).getDocuments() { (querySnapshot, error) in
+                 print("[Firebase triggers new messages]")
                 guard let documents = querySnapshot?.documents else {
                     print("Error fetching documents: \(error!)")
                     return
@@ -114,6 +116,8 @@ class ChatEngine: ObservableObject {
     }
     
     func sendMessage(content: String) {
+        if content == "" { return }
+        
         if let currentConversation = currentConversation {
             let docData: [String: Any] = [
                 "messageId": UUID().uuidString,
@@ -132,11 +136,7 @@ class ChatEngine: ObservableObject {
                     "latestMessageSender": currentUser.uid
                 ])
             }
-
-            
         }
-
-
     }
     
     func setRead() {
@@ -150,12 +150,29 @@ class ChatEngine: ObservableObject {
         }
     }
     
-    func createConversation(recipientId: String) {
-        if let currentUser = Auth.auth().currentUser {
-            let docData: [String: Any] = [
-                "users": [currentUser.uid, recipientId],
-            ]
-            self.db.collection("conversations").addDocument(data: docData)
+    func createConversation(recipientId: String, callback: @escaping () -> ()) {
+        // lay current user + fetch user recipient -> conversation
+        db.collection("users").document(recipientId).getDocument { (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                let fullname = data?["fullname"] as? String ?? ""
+                // TODO: take avatar
+                if let currentUser = Auth.auth().currentUser {
+                    let docData: [String: Any] = [
+                        "users": [currentUser.uid, recipientId],
+                        "userNames": [currentUser.uid: self.userAuthManager.currentUserData["fullname"],
+                                          recipientId: fullname
+                                     ]
+                    ]
+                    
+                    self.db.collection("conversations").addDocument(data: docData)
+                    callback()
+                }
+            } else {
+                print("Document does not exist")
+            }
+
         }
+
     }
 }

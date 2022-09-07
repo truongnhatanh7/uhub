@@ -73,6 +73,8 @@ struct InboxView: View {
                     textBoxContent = ""
                 } label: {
                     Image(systemName: "paperplane")
+                        .padding()
+                        .tint(Color("pink_primary"))
                 }
             }
             .overlay(RoundedRectangle(cornerRadius: 18)
