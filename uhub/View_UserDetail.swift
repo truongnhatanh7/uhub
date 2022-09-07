@@ -76,12 +76,6 @@ struct View_UserDetail: View {
                                 ForEach(user.courseStudying, id: \.self) { courseName in
                                     Comp_Course(name: courseName)
                                 }
-                              
-//                                Comp_Course(name: "iOS Development")
-//
-//                                Comp_Course(name: "Software Engineering Design")
-//
-//                                Comp_Course(name: "Engineering Computing 1")
                         
                             }
                             
