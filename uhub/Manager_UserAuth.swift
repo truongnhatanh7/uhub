@@ -9,26 +9,9 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-struct CurrentUser: Codable, Identifiable {
-    var id: String
-    var email: String
-    var password: String
-    
-    init (id: String, email: String, password: String) {
-        self.id = id
-        self.email = email
-        self.password = password
-    }
-}
-
 class UserAuthManager: ObservableObject {
-    @Published var isLoggedin: Bool = false
     @Published var errorMsg: String = ""
-    @Published var currentUser: CurrentUser? = nil
-    
-    private let db = Firestore.firestore()
-    private var ref: DocumentReference? = nil
-    private var initialUserData: [String: Any] = [
+    @Published var currentUserData: [String: Any] = [
         "id": "",
         "email": "",
         "password": "",
@@ -43,13 +26,21 @@ class UserAuthManager: ObservableObject {
             "friends_age": "",
             "freinds_gpa": "",
             "friends_semester_learned": ""
-        ]
+        ],
+        "isActive": "false"
     ]
     
+    private let db = Firestore.firestore()
+    private var ref: DocumentReference? = nil
+    
     func updateProfileInfo(updatedData: [String: Any], callback: @escaping () -> ()) {
-        initialUserData = initialUserData.merging(updatedData) { (_, new) in new }
-        db.collection("users").document(self.currentUser!.id)
-            .updateData(initialUserData) { error in
+        // update local user data
+        self.currentUserData = self.currentUserData.merging(updatedData) { (_, new) in new }
+        
+        // find user document by user id
+        db.collection("users")
+            .document("\(self.currentUserData["id"]!)")
+            .updateData(self.currentUserData) { error in
                 if error != nil {
                     // update error msg
                     self.errorMsg = "[FAILURE - Update Profile Info]: \(error!.localizedDescription)"
@@ -58,46 +49,52 @@ class UserAuthManager: ObservableObject {
                     self.errorMsg = ""
                     
                     // success msg
-                    print("[SUCCESS - Update Profile Info]: Updated User ID = \(self.currentUser!.id)")
-                    
-                    // execute callback function
-                    callback()
+                    print("[SUCCESS - Update Profile Info]: Updated User ID = \(self.currentUserData["id"]!)")
                 }
+                
+                // execute callback function
+                callback()
             }
     }
     
-    func initCurrentUser(id: String, email: String, password: String) {
-        db.collection("users").whereField("email", isEqualTo: email)
-            .getDocuments() { (querySnapshot, error) in
-                if error != nil {
-                    // update error msg
-                    self.errorMsg = "[FAILURE - Get User Id By Email]: \(error!.localizedDescription)"
-                    
-                } else {
+    func getUserById(id: String, callback: @escaping () -> ()) {
+        db.collection("users").document("\(id)")
+            .getDocument() { (document, error) in
+                if let document = document, document.exists {
                     // update error msg
                     self.errorMsg = ""
                     
-                    if (querySnapshot!.documents.count > 0 && querySnapshot!.documents[0].exists) {
-                        // success msg
-                        print("[SUCCESS - Get User Id By Email]: Retrieved User ID = \(querySnapshot!.documents[0].documentID)")
-                        
-                        // update current user info
-                        self.currentUser = CurrentUser(
-                            id: id,
-                            email: email,
-                            password: password
-                        )
-                        print("[LOGS - Current User]: \(self.currentUser!)")
-                    }
+                    // data and its description
+                    let data = document.data();
+                    let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                    
+                    // overwrting local user data
+                    self.currentUserData = self.currentUserData.merging(data!) { (_, new) in new }
+                    
+                    // update active status
+                    self.updateProfileInfo(updatedData: ["isActive": "true"], callback: {})
+                    
+                    // logs
+                    print("[SUCCESS - Get User By Id]: Retrieved User Data = \(dataDescription)")
+                    print("[LOGS - Current User]: \(self.currentUserData)")
+                } else {
+                    // update error msg
+                    self.errorMsg = "[FAILURE - Get User By Id]: Cannot find User with id = \(id)"
                 }
+                
+                // execute callback function
+                callback()
             }
     }
     
-    func createUser(inputData: [String: Any]) {
-        initialUserData = initialUserData.merging(inputData) { (_, new) in new }
+    func createUser(inputData: [String: Any], callback: @escaping () -> ()) {
+        // overwriting user data
+        self.currentUserData = self.currentUserData.merging(inputData) { (_, new) in new }
+        
+        // set new document data as updated user data
         db.collection("users")
             .document("\(inputData["id"]!)")
-            .setData(initialUserData) { error in
+            .setData(self.currentUserData) { error in
                 if error != nil {
                     // update error msg
                     self.errorMsg = "[FAILURE - Create User]: \(error!.localizedDescription)"
@@ -107,42 +104,12 @@ class UserAuthManager: ObservableObject {
                     self.errorMsg = ""
                     
                     // success msg
-                    print("[SUCCESS - Create User]: User created - User ID = \(String(describing: inputData["id"]!))")
-                    
-                    // update current user info
-                    self.initCurrentUser(
-                        id: String(describing: inputData["id"]!),
-                        email: String(describing: inputData["email"]!),
-                        password: String(describing: inputData["password"]!)
-                    )
+                    print("[SUCCESS - Create User]: User created with ID = \(String(describing: inputData["id"]!))")
                 }
+                
+                // execute callback function
+                callback()
             }
-    }
-    
-    func signOut() {
-        do {
-            // sign out from Firebase Auth
-            try Auth.auth().signOut()
-            
-            // success msg
-            print("[SUCCESS - SIGN OUT]: Signed out")
-            
-            // update error msg
-            self.errorMsg = ""
-            
-            // update login status msg, just to be sure
-            self.isLoggedin = false
-            
-            // reset current user info
-            self.currentUser = nil
-            
-        } catch {
-            // update error msg
-            self.errorMsg = "[FAILURE - SIGN OUT]: \(error.localizedDescription)"
-            
-            // update login status msg, just to be sure
-            self.isLoggedin = true
-        }
     }
     
     func signIn(inputEmail: String, inputPwd: String, callback: @escaping () -> (), firstTime: Bool) {
@@ -151,39 +118,37 @@ class UserAuthManager: ObservableObject {
                 // update error msg
                 self.errorMsg = "[FAILURE - SIGN IN]: \(error!.localizedDescription)"
                 
-                // update login status msg
-                self.isLoggedin = false
-                
+                // execute callback function
+                callback()
             } else {
-                // success msg
-                let userId = Auth.auth().currentUser?.uid
-                
-                print("[SUCCESS - SIGN IN]: Signed in \(inputEmail)")
-                
                 // update error msg
                 self.errorMsg = ""
                 
-                // update login status msg
-                self.isLoggedin = true
+                // get logged in user id
+                let userId = Auth.auth().currentUser?.uid
+                
+                // success msg
+                print("[SUCCESS - SIGN IN]: Signed in \(inputEmail)")
                 
                 if let userId = userId {
+                    // if first time log in, create new user on Firestore
+                    // else, fetch user by signed in Auth id
                     if firstTime {
-                        // create new user document in Firebase Firestore
+                        // create new user document
                         let newlyCreatedData: [String : Any] = [
                             "id": userId,
                             "email": inputEmail,
                             "password": inputPwd,
+                            "isActive": "true"
                         ]
-                        self.createUser(inputData: newlyCreatedData)
+                        // create new user instance
+                        self.createUser(inputData: newlyCreatedData, callback: callback)
                     } else {
-                        // update current user
-                        self.initCurrentUser(id: userId, email: inputEmail, password: inputPwd)
+                        // get exsisted user
+                        self.getUserById(id: userId, callback: callback)
                     }
                 }
             }
-            
-            // execute callback function
-            callback()
         }
     }
     
@@ -193,13 +158,9 @@ class UserAuthManager: ObservableObject {
                 // update error msg
                 self.errorMsg = "[FAILURE - SIGN UP]: \(error!.localizedDescription)"
                 
-                // update login status msg, just to be sure
-                self.isLoggedin = false
-                
                 // execute callback function here, since callback will be passed to sign in if sign up succeeds
                 callback()
             } else {
-                
                 // update error msg
                 self.errorMsg = ""
                 
@@ -209,6 +170,45 @@ class UserAuthManager: ObservableObject {
                 // sign in Firebase Auth
                 self.signIn(inputEmail: inputEmail, inputPwd: inputPwd, callback: callback, firstTime: true)
             }
+        }
+    }
+    
+    func signOut() {
+        do {
+            // sign out from Firebase Auth
+            try Auth.auth().signOut()
+            
+            // update error msg
+            self.errorMsg = ""
+            
+            // success msg
+            print("[SUCCESS - SIGN OUT]: Signed out")
+            
+            // update active status
+            self.updateProfileInfo(updatedData: ["isActive": "false"], callback: {})
+            
+            // reset currentUserData
+            self.currentUserData = [
+                "id": "",
+                "email": "",
+                "password": "",
+                "fullname": "",
+                "age": "",
+                "school": "",
+                "major": "",
+                "gpa": "",
+                "semester_learned": "",
+                "about": "",
+                "friends_filter": [
+                    "friends_age": "",
+                    "freinds_gpa": "",
+                    "friends_semester_learned": ""
+                ],
+                "isActive": "false"
+            ]
+        } catch {
+            // update error msg
+            self.errorMsg = "[FAILURE - SIGN OUT]: \(error.localizedDescription)"
         }
     }
 }
