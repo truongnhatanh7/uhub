@@ -55,6 +55,8 @@
 		8FDB54B128BF2AA10013816E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8FDB54B028BF2AA10013816E /* FirebaseFirestore */; };
 		8FDB54B328BF2AA10013816E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8FDB54B228BF2AA10013816E /* FirebaseMessaging */; };
 		8FDB54B728BF2B4A0013816E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */; };
+		D5AAA9B228C8933D007603DD /* View_UserDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA9B128C8933D007603DD /* View_UserDetail.swift */; };
+		D5AAA9B428C89E50007603DD /* Comp_Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA9B328C89E50007603DD /* Comp_Course.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +107,8 @@
 		8F932B7928C751EE00FAC04B /* View_ChatList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View_ChatList.swift; sourceTree = "<group>"; };
 		8F932B7A28C751EE00FAC04B /* Manager_UserAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager_UserAuth.swift; sourceTree = "<group>"; };
 		8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D5AAA9B128C8933D007603DD /* View_UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_UserDetail.swift; sourceTree = "<group>"; };
+		D5AAA9B328C89E50007603DD /* Comp_Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_Course.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +163,7 @@
 				8F932B6928C751ED00FAC04B /* Comp_PickerInput.swift */,
 				8F932B5128C751EC00FAC04B /* Comp_PickerInputModal.swift */,
 				8F932B7328C751EE00FAC04B /* Comp_StandardHeader.swift */,
+				D5AAA9B328C89E50007603DD /* Comp_Course.swift */,
 				8F932B6A28C751ED00FAC04B /* Comp_TextBox.swift */,
 				8F932B5A28C751ED00FAC04B /* Comp_TextInput.swift */,
 				8F932B5B28C751ED00FAC04B /* Comp_Toogle.swift */,
@@ -172,6 +177,7 @@
 				8F932B6728C751ED00FAC04B /* Util_DateHelper.swift */,
 				8F932B7928C751EE00FAC04B /* View_ChatList.swift */,
 				8F932B4F28C751EC00FAC04B /* View_Congrats.swift */,
+				D5AAA9B128C8933D007603DD /* View_UserDetail.swift */,
 				8F932B6E28C751EE00FAC04B /* View_Content.swift */,
 				8F932B7628C751EE00FAC04B /* View_EditProfile.swift */,
 				8F932B6C28C751EE00FAC04B /* View_FilterProfile.swift */,
@@ -298,6 +304,7 @@
 				8F932BA028C751EE00FAC04B /* Comp_Button.swift in Sources */,
 				8F932B9F28C751EE00FAC04B /* Comp_StandardHeader.swift in Sources */,
 				8F932B9028C751EE00FAC04B /* Comp_BottomBar.swift in Sources */,
+				D5AAA9B228C8933D007603DD /* View_UserDetail.swift in Sources */,
 				8F932B8B28C751EE00FAC04B /* ViewModel_ChatEngine.swift in Sources */,
 				8F932B9E28C751EE00FAC04B /* View_SignupScreen.swift in Sources */,
 				8F932B8128C751EE00FAC04B /* View_Inbox.swift in Sources */,
@@ -312,6 +319,7 @@
 				8F932B8E28C751EE00FAC04B /* ViewModel_Navigation.swift in Sources */,
 				8F932B8928C751EE00FAC04B /* Comp_ImagePicker.swift in Sources */,
 				8F932B9728C751EE00FAC04B /* Style_GlobalStyle.swift in Sources */,
+				D5AAA9B428C89E50007603DD /* Comp_Course.swift in Sources */,
 				8F932B9428C751EE00FAC04B /* View_Splash.swift in Sources */,
 				8F932B9228C751EE00FAC04B /* Style_CornerRadiusStyle.swift in Sources */,
 				8F932BA128C751EE00FAC04B /* Comp_ChatListRow.swift in Sources */,

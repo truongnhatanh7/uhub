@@ -80,3 +80,31 @@ struct ModalStyle: ViewModifier {
         content.frame(minWidth: 320, idealWidth: 350, maxWidth: 360, minHeight: 450, idealHeight: 460, maxHeight: 480).background(.white).cornerRadius(24).padding()
     }
 }
+
+struct TextTitle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(Font.system(size: 24).weight(.bold))
+    }
+}
+
+struct DetailImage: ViewModifier {
+    func body(content: Content) -> some View {
+        content.frame(minWidth: 400, idealWidth: 450, maxWidth: 480, minHeight: 550, idealHeight: 580, maxHeight: 600)
+    }
+}
+
+struct CourseButton: ViewModifier {
+    func body(content: Content) -> some View {
+        content.padding(.vertical, 12).padding(.horizontal, 36).background(LinearGradient(gradient: Gradient(colors: [Color("pink_disabled"), Color("pink_primary")]), startPoint: .topLeading, endPoint: .bottomTrailing)).foregroundColor(.white).cornerRadius(32)
+    }
+}
+
+struct CourseText: ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(Font.system(size: 16).weight(.semibold))
+    }
+}
+
+    
+
+
