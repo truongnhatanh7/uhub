@@ -39,7 +39,11 @@ struct FilterProfileView: View {
                             "friends_semester_learned": filterProfileVM.filterSemester
                         ]
                     ], callback: {
-                        pageVM.visit(page: .Notification)
+                        if userAuthManager.errorMsg == "" {
+                            pageVM.visit(page: .Notification)
+                        } else {
+                            print(userAuthManager.errorMsg)
+                        }
                     })
                 }, isDisabled: false)
             }

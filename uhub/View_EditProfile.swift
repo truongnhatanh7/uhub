@@ -39,7 +39,11 @@ struct EditProfileView: View {
                         "semester_learned": editProfileVM.semesterLearned,
                         "about": editProfileVM.about
                     ], callback: {
-                        pageVM.visit(page: .FilterProfile)
+                        if userAuthManager.errorMsg == "" {
+                            pageVM.visit(page: .FilterProfile)
+                        } else {
+                            print(userAuthManager.errorMsg)
+                        }
                     })
                 }, isDisabled: editProfileVM.isDisabled)
             }
