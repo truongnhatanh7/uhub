@@ -66,7 +66,7 @@ struct NotificationView: View {
             }
             BottomBar {
                 ButtonView(textContent: "Next", onTap: {
-                    pageVM.visit(page: .Home)
+                    pageVM.visit(page: .Congrat)
                 })
             }
         }

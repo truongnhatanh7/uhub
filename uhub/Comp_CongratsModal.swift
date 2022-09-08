@@ -28,7 +28,8 @@ struct CongratsModal: View {
                     }.modifier(CongratsButtonStyle())
                 }
                 
-            }.modifier(ModalStyle())
+            }
+            .modifier(ModalStyle())
         }
     }
 }

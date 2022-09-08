@@ -10,18 +10,14 @@ import SwiftUI
 struct CongratsView: View {
     
     @State private var isGoToHome = false
+    @EnvironmentObject var pageVM: PageViewModel
     
     var body: some View {
-        if isGoToHome {
-            Text("Temp Home View")
-        } else {
-            CongratsModal(isGoToHome: $isGoToHome)
-        }
-    }
-}
-
-struct CongratsView_Previews: PreviewProvider {
-    static var previews: some View {
-        CongratsView()
+        CongratsModal(isGoToHome: $isGoToHome)
+            .onChange(of: isGoToHome) { newValue in
+                if newValue {
+                    pageVM.visit(page: .Home)
+                }
+            }
     }
 }

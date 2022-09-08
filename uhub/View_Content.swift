@@ -38,6 +38,9 @@ struct ContentView: View {
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Security:
                 EmptyView()
+            case .Congrat:
+                CongratsView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Setting:
                 EmptyView()
             case .Logout:

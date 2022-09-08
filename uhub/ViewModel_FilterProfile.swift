@@ -23,7 +23,10 @@ import Foundation
     func updateInfo(_ currentUserData: [String: Any]) {
         let tmpDict = currentUserData["friends_filter"] as? [String: Any]
         self.filterAge = tmpDict?["friends_age"] as? String ?? ageRange.first!
+        self.filterAge = self.filterAge.isEmpty ? ageRange.first! : self.filterAge
         self.filterGPA = tmpDict?["freinds_gpa"] as? String ?? GPARange.first!
+        self.filterGPA = self.filterGPA.isEmpty ? GPARange.first! : self.filterGPA
         self.filterSemester = tmpDict?["friends_semester_learned"] as? String ?? semesterLearnedRange.first!
+        self.filterSemester = self.filterSemester.isEmpty ? semesterLearnedRange.first! : self.filterSemester
     }
 }
