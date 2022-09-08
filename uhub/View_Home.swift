@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var showCongratModal = false
     
     var body: some View {
-        if showCongratModal {
-            Text("Ditme")
-        } else {
-            CongratsModal(isGoToHome: $showCongratModal)
+        VStack {
+            Spacer()
+            
+            BottomBar {
+                MenuBar(menuInPage: .Home)
+            }
         }
+        .edgesIgnoringSafeArea(.bottom)
     }
 }

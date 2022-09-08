@@ -42,7 +42,12 @@ struct ChatListView: View {
                 .padding(.vertical, 2)
                 .padding(.horizontal, 8)
             }
+            
+            BottomBar {
+                MenuBar(menuInPage: .Chat)
+            }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {
             chatEngine.loadChatList()
