@@ -113,7 +113,6 @@ class ChatEngine: ObservableObject {
                 }
                 
                 self.conversations.sort { $0.timestamp > $1.timestamp }
-                self.fetchUserStatus()
                 self.objectWillChange.send()
                
             }
@@ -121,7 +120,6 @@ class ChatEngine: ObservableObject {
     }
     
     func sendMessage(content: String) {
-        print(conversations)
         if content == "" { return }
         
         if let currentConversation = currentConversation {
