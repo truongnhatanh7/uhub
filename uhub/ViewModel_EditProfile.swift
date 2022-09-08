@@ -36,14 +36,14 @@ import SwiftUI
     
     func updateInfo(_ currentUserData: [String: Any]) {
         self.fullname = currentUserData["fullname"] as? String ?? ""
-        self.age = currentUserData["age"] as? String ?? "18"
-        self.age = self.age.isEmpty ? "18" : self.age
+        self.age = currentUserData["age"] as? String ?? ageRange.first!
+        self.age = self.age.isEmpty ? ageRange.first! : self.age
         self.school = currentUserData["school"] as? String ?? ""
         self.major = currentUserData["major"] as? String ?? ""
-        self.gpa = currentUserData["gpa"] as? String ?? "Less than 50%"
-        self.gpa = self.gpa.isEmpty ? "Less than 50%" : self.gpa
-        self.semesterLearned = currentUserData["semester_learned"] as? String ?? "0"
-        self.semesterLearned = self.semesterLearned.isEmpty ? "0" : self.semesterLearned
+        self.gpa = currentUserData["gpa"] as? String ?? GPARange.first!
+        self.gpa = self.gpa.isEmpty ? GPARange.first! : self.gpa
+        self.semesterLearned = currentUserData["semester_learned"] as? String ?? semesterLearnedRange.first!
+        self.semesterLearned = self.semesterLearned.isEmpty ? semesterLearnedRange.first! : self.semesterLearned
         self.about = currentUserData["about"] as? String ?? ""
     }
     

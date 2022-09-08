@@ -17,6 +17,8 @@ struct uhubApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
+
 //            EditProfileView()
 //                .environmentObject(PageViewModel())
 //                .environmentObject(EditProfileViewModel())

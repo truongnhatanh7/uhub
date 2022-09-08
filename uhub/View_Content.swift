@@ -34,17 +34,17 @@ struct ContentView: View {
                 FilterProfileView()
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Notification:
-                EmptyView()
+                NotificationView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Security:
-                EmptyView()
-            case .SetupComplete:
                 EmptyView()
             case .Setting:
                 EmptyView()
             case .Logout:
                 EmptyView()
             case .Home:
-                EmptyView()
+                HomeView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Detail:
                 EmptyView()
             case .Matches:
@@ -59,11 +59,5 @@ struct ContentView: View {
         .environmentObject(pageVM)
         .environmentObject(userAuthManager)
         .environmentObject(chatEngine)
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

@@ -55,6 +55,7 @@
 		8FDB54B128BF2AA10013816E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8FDB54B028BF2AA10013816E /* FirebaseFirestore */; };
 		8FDB54B328BF2AA10013816E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8FDB54B228BF2AA10013816E /* FirebaseMessaging */; };
 		8FDB54B728BF2B4A0013816E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */; };
+		C133E47628CA2670002FFA9E /* View_Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47528CA2670002FFA9E /* View_Home.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		8F932B7928C751EE00FAC04B /* View_ChatList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View_ChatList.swift; sourceTree = "<group>"; };
 		8F932B7A28C751EE00FAC04B /* Manager_UserAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager_UserAuth.swift; sourceTree = "<group>"; };
 		8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C133E47528CA2670002FFA9E /* View_Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_Home.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 				8F932B7928C751EE00FAC04B /* View_ChatList.swift */,
 				8F932B4F28C751EC00FAC04B /* View_Congrats.swift */,
 				8F932B6E28C751EE00FAC04B /* View_Content.swift */,
+				C133E47528CA2670002FFA9E /* View_Home.swift */,
 				8F932B7628C751EE00FAC04B /* View_EditProfile.swift */,
 				8F932B6C28C751EE00FAC04B /* View_FilterProfile.swift */,
 				8F932B5528C751EC00FAC04B /* View_Inbox.swift */,
@@ -294,6 +297,7 @@
 				8F932B7B28C751EE00FAC04B /* View_Congrats.swift in Sources */,
 				8F932B8228C751EE00FAC04B /* ViewModel_FilterProfile.swift in Sources */,
 				8F932B7D28C751EE00FAC04B /* Comp_PickerInputModal.swift in Sources */,
+				C133E47628CA2670002FFA9E /* View_Home.swift in Sources */,
 				8F932BA528C751EE00FAC04B /* View_ChatList.swift in Sources */,
 				8F932BA028C751EE00FAC04B /* Comp_Button.swift in Sources */,
 				8F932B9F28C751EE00FAC04B /* Comp_StandardHeader.swift in Sources */,
