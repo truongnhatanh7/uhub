@@ -12,7 +12,7 @@ import FirebaseFirestore
 struct ChatListRow: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @State var conversation: Conversation
-//    @State var isActive: Bool = false
+    @Binding var showDeleteAlert: Bool
     var body: some View {
         HStack {
             HStack {
@@ -67,8 +67,6 @@ struct ChatListRow: View {
                     } else {
                         Text(conversation.latestMessage)
                     }
-                    
-
                 }
                 .padding(.leading, 8)
                 
@@ -92,21 +90,15 @@ struct ChatListRow: View {
             .stroke(Color("neutral"), lineWidth: 1)
         )
         .onAppear {
-//            let db = Firestore.firestore()
-//            db.collection("users").document(conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!).getDocument { (document, error) in
-//                if let document = document, document.exists {
-//                    let data = document.data()
-//
-//                    let status = data?["isActive"] as? Bool ?? false
-//                    print("\(document.documentID) => \(status)")
-//                    self.isActive = status
-//                } else {
-//                    print("Document does not exist")
-//                }
-//            }
         }
-        
+        .alert(isPresented: $showDeleteAlert) { () -> Alert in
+            Alert(title: Text("Delete this conversation"), message: Text("Do you want to delete the conversation with \(conversation.name)"), primaryButton: .default(Text("Delete"), action: {
+                chatEngine.deleteConversation(id: conversation.conversationId)
+                }), secondaryButton: .default(Text("Dismiss")))
+       
+        }
     }
+        
 }
 
 //struct ChatListRow_Previews: PreviewProvider {

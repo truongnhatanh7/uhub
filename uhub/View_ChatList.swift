@@ -11,6 +11,7 @@ struct ChatListView: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @EnvironmentObject var pageVM: PageViewModel
     @State var searchText = ""
+    @State var showAlert = false
     
     var searchResults: [Conversation] {
         if searchText == ""  {
@@ -32,28 +33,31 @@ struct ChatListView: View {
                     Spacer()
                     Image(systemName: "magnifyingglass")
                         .padding(.trailing, 28)
-                        
                 }
             }
 
             ScrollView {
-                    ForEach(searchResults, id: \.self) { conversation in
-                        Button {
-                            chatEngine.currentConversation = conversation
-                            chatEngine.setRead()
-                            pageVM.visit(page: .Inbox)
-                        } label: {
-                            ChatListRow(conversation: conversation)
-                        }
-                        .foregroundColor(.black)
+                
+                ForEach(searchResults, id: \.self) { conversation in
+                    Button {
+                        chatEngine.currentConversation = conversation
+                        chatEngine.setRead()
+                        pageVM.visit(page: .Inbox)
+                    } label: {
+                        ChatListRow(conversation: conversation, showDeleteAlert: $showAlert)
                     }
-                    .padding(.vertical, 2)
-                    .padding(.horizontal, 8)
+                    .foregroundColor(.black)
+                }
+                .padding(.vertical, 2)
+                .padding(.horizontal, 8)
+
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear() {
-            chatEngine.loadChatList()
+        .onAppear {
+            chatEngine.loadChatList {
+                chatEngine.fetchUserStatus()
+            }
         }
     }
 }

@@ -80,7 +80,10 @@ class ChatEngine: ObservableObject {
                     
                     // For scolling to latest message
                     if let latestMsg = self.messages.last {
-                        self.lastMessageId = latestMsg.id
+                        if self.lastMessageId != latestMsg.id {
+                            self.lastMessageId = latestMsg.id
+                        }
+                        
                     }
                 }
             }
@@ -88,7 +91,7 @@ class ChatEngine: ObservableObject {
          
     }
     
-    func loadChatList() {
+    func loadChatList(callback: @escaping ()->()) {
         print("Start to load chat list") // TODO: Load chat that belongs to that user (save in user db)
         conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else {
@@ -113,8 +116,8 @@ class ChatEngine: ObservableObject {
                 }
                 
                 self.conversations.sort { $0.timestamp > $1.timestamp }
+                callback()
                 self.objectWillChange.send()
-               
             }
         }
     }
@@ -197,6 +200,15 @@ class ChatEngine: ObservableObject {
                 }
             }
         }
-        
+    }
+    
+    func deleteConversation(id: String) {
+        db.collection("conversations").document(id).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
     }
 }
