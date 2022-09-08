@@ -112,6 +112,7 @@ class ChatEngine: ObservableObject {
                 }
                 
                 self.conversations.sort { $0.timestamp > $1.timestamp }
+                self.objectWillChange.send()
                
             }
         }
@@ -139,6 +140,9 @@ class ChatEngine: ObservableObject {
                     "latestMessageSender": currentUser.uid
                 ])
             }
+            
+            playMusic(sound: "send_message", isLoop: false)
+            
         }
     }
     
