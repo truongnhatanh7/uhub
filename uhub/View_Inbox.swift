@@ -62,7 +62,6 @@ struct InboxView: View {
                 }
             }
             
-            
             HStack {
                 TextField("Send message", text: $textBoxContent)
                     .lineLimit(3)
@@ -81,7 +80,6 @@ struct InboxView: View {
                 .stroke(Color("neutral"), lineWidth: 2)
             )
             .padding(.horizontal)
-            
         }
         .onAppear {
             chatEngine.loadConversation()
