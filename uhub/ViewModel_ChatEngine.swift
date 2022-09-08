@@ -89,7 +89,7 @@ class ChatEngine: ObservableObject {
     
     func loadChatList() {
         print("Start to load chat list") // TODO: Load chat that belongs to that user (save in user db)
-        conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").order(by: "timestamp", descending: true).addSnapshotListener { (querySnapshot, err) in
+        conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else {
                     print("No documents")
                     return
@@ -110,6 +110,8 @@ class ChatEngine: ObservableObject {
                     
                     return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
                 }
+                
+                self.conversations.sort { $0.timestamp > $1.timestamp }
                
             }
         }
