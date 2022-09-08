@@ -35,16 +35,22 @@ struct ChatListRow: View {
                     }
 
                     // TODO: Handle online -> Green light
-//                    if isActive {
-//
-//                        Text("") // Active status
-//                            .frame(width: 12, height: 12)
-//                            .background(.gray)
-//                            .clipShape(Circle())
-//                            .padding(.leading, 36)
-//                            .padding(.top, 36)
-//
-//                    }
+                    if chatEngine.conversationStatus[conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!] ?? false {
+                        Text("") // Active status
+                            .frame(width: 12, height: 12)
+                            .background(Color("pink_primary"))
+                            .clipShape(Circle())
+                            .padding(.leading, 36)
+                            .padding(.top, 36)
+
+                    } else {
+                        Text("") // Inactive status
+                            .frame(width: 12, height: 12)
+                            .background(.gray)
+                            .clipShape(Circle())
+                            .padding(.leading, 36)
+                            .padding(.top, 36)
+                    }
 
 
                     

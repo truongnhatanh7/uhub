@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		55125DA128CA3B6D003B84C3 /* ViewModel_SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55125DA028CA3B6D003B84C3 /* ViewModel_SoundManager.swift */; };
-		55125DA328CA3D5C003B84C3 /* new_message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 55125DA228CA3D5C003B84C3 /* new_message.mp3 */; };
 		55125DA528CA3DE6003B84C3 /* send_message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 55125DA428CA3DE6003B84C3 /* send_message.mp3 */; };
 		55FA436C28BE26C4006AC2F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436B28BE26C4006AC2F8 /* Assets.xcassets */; };
 		55FA436F28BE26C4006AC2F8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */; };
@@ -62,7 +61,6 @@
 
 /* Begin PBXFileReference section */
 		55125DA028CA3B6D003B84C3 /* ViewModel_SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_SoundManager.swift; sourceTree = "<group>"; };
-		55125DA228CA3D5C003B84C3 /* new_message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = new_message.mp3; sourceTree = "<group>"; };
 		55125DA428CA3DE6003B84C3 /* send_message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = send_message.mp3; sourceTree = "<group>"; };
 		55FA436428BE26BD006AC2F8 /* uhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = uhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FA436B28BE26C4006AC2F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 		55FA436628BE26BD006AC2F8 /* uhub */ = {
 			isa = PBXGroup;
 			children = (
-				55125DA228CA3D5C003B84C3 /* new_message.mp3 */,
 				55125DA428CA3DE6003B84C3 /* send_message.mp3 */,
 				8F932B4E28C751EC00FAC04B /* uhub-Bridging-Header.h */,
 				8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */,
@@ -277,7 +274,6 @@
 				55125DA528CA3DE6003B84C3 /* send_message.mp3 in Resources */,
 				55FA436F28BE26C4006AC2F8 /* Preview Assets.xcassets in Resources */,
 				55FA436C28BE26C4006AC2F8 /* Assets.xcassets in Resources */,
-				55125DA328CA3D5C003B84C3 /* new_message.mp3 in Resources */,
 				8FDB54B728BF2B4A0013816E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

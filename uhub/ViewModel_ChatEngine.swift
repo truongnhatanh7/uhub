@@ -19,6 +19,7 @@ class ChatEngine: ObservableObject {
     @Published var currentConversation: Conversation?
     @Published var isProcessing: Bool = false
     @Published var lastMessageId: String = ""
+    @Published var conversationStatus: [String: Bool] = [:]
     
     private var messagesListener: ListenerRegistration?
     private var conversationListener: ListenerRegistration?
@@ -112,6 +113,7 @@ class ChatEngine: ObservableObject {
                 }
                 
                 self.conversations.sort { $0.timestamp > $1.timestamp }
+                self.fetchUserStatus()
                 self.objectWillChange.send()
                
             }
@@ -180,5 +182,23 @@ class ChatEngine: ObservableObject {
             }
 
         }
+    }
+    
+    func fetchUserStatus() {
+        for conversation in conversations {
+            let notThisUserId = conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!
+            db.collection("users").document(notThisUserId).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let data = document.data()
+                    let status = data?["isActive"] as? Bool ?? false
+                    self.conversationStatus[notThisUserId] = status
+                    print(self.conversationStatus)
+                    self.objectWillChange.send()
+                } else {
+                    print("Document does not exist")
+                }
+            }
+        }
+        
     }
 }
