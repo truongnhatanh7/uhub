@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  MatchesView.swift
 //  uhub
 //
 //  Created by Ho Le Minh Thach on 08/09/2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct MatchesView: View {
     @State var showMenu = false
 
     var body: some View {
@@ -15,7 +15,7 @@ struct HomeView: View {
             Spacer()
             if showMenu {
                 BottomBar {
-                    MenuBar(menuInPage: .Home, showMenu: $showMenu)
+                    MenuBar(menuInPage: .Matches, showMenu: $showMenu)
                 }
             }
         }

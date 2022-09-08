@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatListView: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @EnvironmentObject var pageVM: PageViewModel
+    @State var showMenu = false
     @State var searchText = ""
     var body: some View {
         VStack {
@@ -42,11 +43,19 @@ struct ChatListView: View {
                 .padding(.vertical, 2)
                 .padding(.horizontal, 8)
             }
+            
+            if showMenu {
+                BottomBar {
+                    MenuBar(menuInPage: .Chat, showMenu: $showMenu)
+                }
+            }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear() {
             chatEngine.loadChatList()
             print(chatEngine.conversations)
+            withAnimation { showMenu = true }
         }
     }
 

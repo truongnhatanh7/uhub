@@ -42,7 +42,8 @@ struct ContentView: View {
                 CongratsView()
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Setting:
-                EmptyView()
+                SettingView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Logout:
                 EmptyView()
             case .Home:
@@ -51,11 +52,14 @@ struct ContentView: View {
             case .Detail:
                 EmptyView()
             case .Matches:
-                EmptyView()
+                MatchesView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Chat:
                 ChatListView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Inbox:
                 InboxView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             }
         
         }
