@@ -89,7 +89,7 @@ class ChatEngine: ObservableObject {
     
     func loadChatList() {
         print("Start to load chat list") // TODO: Load chat that belongs to that user (save in user db)
-        conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
+        conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").order(by: "timestamp", descending: true).addSnapshotListener { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else {
                     print("No documents")
                     return
@@ -100,7 +100,7 @@ class ChatEngine: ObservableObject {
                     let data = queryDocumentSnapshot.data()
                     let conversationId = queryDocumentSnapshot.documentID
                     let latestMessage = data["latestMessage"] as? String ?? ""
-                    let timestamp = data["timestamp"] as? Date ?? Date()
+                    let timestamp = data["timestamp"] as? Timestamp
                     let unread = data["unread"] as? Bool ?? false
                     let users = data["users"] as? [String] ?? []
                     let latestMessageSender = data["latestMessageSender"] as? String ?? ""
@@ -108,7 +108,7 @@ class ChatEngine: ObservableObject {
                     let userNames = data["userNames"] as? [String: String] ?? [:]
                     let name = userNames[notThisUserId ?? ""]
                     
-                    return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp, unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
+                    return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
                 }
                
             }
@@ -116,6 +116,7 @@ class ChatEngine: ObservableObject {
     }
     
     func sendMessage(content: String) {
+        print(conversations)
         if content == "" { return }
         
         if let currentConversation = currentConversation {
