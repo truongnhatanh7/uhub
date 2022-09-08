@@ -10,6 +10,7 @@ import SwiftUI
 struct MenuBar: View {
     @EnvironmentObject var pageVM: PageViewModel
     let menuInPage: Page
+    @Binding var showMenu: Bool
     
     var isCurrentPageHome: Bool {
         pageVM.currentPage == .Home
@@ -32,24 +33,28 @@ struct MenuBar: View {
             MenuButton(action: {
                 if !isCurrentPageHome {
                     pageVM.visit(page: .Home)
+                    withAnimation { showMenu = false }
                 }
             }, imageStr: "house.fill", labelStr: "Home", isSelect: isCurrentPageHome)
             Spacer()
             MenuButton(action: {
                 if !isCurrentPageChat {
                     pageVM.visit(page: .Chat)
+                    withAnimation { showMenu = false }
                 }
             }, imageStr: "text.bubble.fill", labelStr: "Chat", isSelect: isCurrentPageChat)
             Spacer()
             MenuButton(action: {
                 if !isCurrentPageMatches {
                     pageVM.visit(page: .Matches)
+                    withAnimation { showMenu = false }
                 }
             }, imageStr: "hand.thumbsup.fill", labelStr: "Matches", isSelect: isCurrentPageMatches)
             Spacer()
             MenuButton(action: {
                 if !isCurrentPageSetting {
                     pageVM.visit(page: .Setting)
+                    withAnimation { showMenu = false }
                 }
             }, imageStr: "gearshape.fill", labelStr: "Setting", isSelect: isCurrentPageSetting)
         }
