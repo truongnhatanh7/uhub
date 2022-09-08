@@ -29,23 +29,7 @@ struct EditProfileView: View {
                 StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
             }
             BottomBar {
-                ButtonView(textContent: "Next", onTap: {
-                    userAuthManager.updateProfileInfo(updatedData: [
-                        "fullname": editProfileVM.fullname,
-                        "age": editProfileVM.age,
-                        "school": editProfileVM.school,
-                        "major": editProfileVM.major,
-                        "gpa": editProfileVM.gpa,
-                        "semester_learned": editProfileVM.semesterLearned,
-                        "about": editProfileVM.about
-                    ], callback: {
-                        if userAuthManager.errorMsg == "" {
-                            pageVM.visit(page: .FilterProfile)
-                        } else {
-                            print(userAuthManager.errorMsg)
-                        }
-                    })
-                }, isDisabled: editProfileVM.isDisabled)
+                ButtonView(textContent: "Next", onTap: submitData, isDisabled: editProfileVM.isDisabled)
             }
             
             PickerInputModal(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)
@@ -61,6 +45,27 @@ struct EditProfileView: View {
         .onChange(of: editProfileVM.inputImage) { _ in
             editProfileVM.loadImage()
         }
+        .onAppear {
+            editProfileVM.updateInfo(userAuthManager.currentUserData)
+        }
+    }
+    
+    private func submitData() {
+        userAuthManager.updateProfileInfo(updatedData: [
+            "fullname": editProfileVM.fullname,
+            "age": editProfileVM.age,
+            "school": editProfileVM.school,
+            "major": editProfileVM.major,
+            "gpa": editProfileVM.gpa,
+            "semester_learned": editProfileVM.semesterLearned,
+            "about": editProfileVM.about
+        ], callback: {
+            if userAuthManager.errorMsg == "" {
+                pageVM.visit(page: .FilterProfile)
+            } else {
+                print(userAuthManager.errorMsg)
+            }
+        })
     }
 }
 
