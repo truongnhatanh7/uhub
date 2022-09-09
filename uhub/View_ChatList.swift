@@ -12,6 +12,15 @@ struct ChatListView: View {
     @EnvironmentObject var pageVM: PageViewModel
     @State var showMenu = false
     @State var searchText = ""
+    @State var showAlert = false
+    
+    var searchResults: [Conversation] {
+        if searchText == ""  {
+            return chatEngine.conversations
+        }
+        return chatEngine.conversations.filter({ $0.name.contains(searchText) })
+    }
+    
     var body: some View {
         VStack {
             ZStack {
@@ -25,23 +34,24 @@ struct ChatListView: View {
                     Spacer()
                     Image(systemName: "magnifyingglass")
                         .padding(.trailing, 28)
-                        
                 }
             }
 
             ScrollView {
-                ForEach(chatEngine.conversations, id: \.self) { conversation in
+                
+                ForEach(searchResults, id: \.self) { conversation in
                     Button {
-                        chatEngine.currentConversation = conversation.conversationId
-                        chatEngine.currentUnread = conversation.unread
+                        chatEngine.currentConversation = conversation
+                        chatEngine.setRead()
                         pageVM.visit(page: .Inbox)
                     } label: {
-                        ChatListRow(conversation: conversation)
+                        ChatListRow(conversation: conversation, showDeleteAlert: $showAlert)
                     }
                     .foregroundColor(.black)
                 }
                 .padding(.vertical, 2)
                 .padding(.horizontal, 8)
+
             }
             
             if showMenu {
@@ -52,13 +62,12 @@ struct ChatListView: View {
         }
         .edgesIgnoringSafeArea(.bottom)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear() {
-            chatEngine.loadChatList()
-            print(chatEngine.conversations)
-            withAnimation { showMenu = true }
+        .onAppear {
+            chatEngine.loadChatList {
+                chatEngine.fetchUserStatus()
+            }
         }
     }
-
 }
 
 //struct ChatList_Previews: PreviewProvider {
