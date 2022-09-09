@@ -18,6 +18,7 @@ struct InboxView: View {
     var body: some View {
         VStack {
             StandardHeader(title: "Inbox") {
+                chatEngine.fetchUserStatus()
                 pageVM.visit(page: .Chat)
             }
             
@@ -40,6 +41,7 @@ struct InboxView: View {
                     }
                     .listStyle(PlainListStyle())
                     .onChange(of: chatEngine.lastMessageId) { id in
+                        chatEngine.setRead()
                         withAnimation {
                             proxy.scrollTo(id, anchor: .bottom)
                         }
@@ -49,43 +51,39 @@ struct InboxView: View {
                     }
                     .refreshable {
                         print("Refreshing...")
-
-                            currentLoadLimit += newMessagesToBeLoaded
-                            chatEngine.setCurrentLimit(limit: currentLoadLimit)
-                            chatEngine.loadMessages()
-
+                        currentLoadLimit += newMessagesToBeLoaded
+                        chatEngine.setCurrentLimit(limit: currentLoadLimit)
+                        chatEngine.loadMessages()
+                        
                     }
                 }
             } else {
                 VStack {
-                    
+                    // Render blank space
                 }
             }
             
-
             HStack {
                 TextField("Send message", text: $textBoxContent)
                     .lineLimit(3)
                     .padding()
-                    Spacer()
+                Spacer()
                 Button {
                     chatEngine.sendMessage(content: textBoxContent)
                     textBoxContent = ""
                 } label: {
                     Image(systemName: "paperplane")
+                        .padding()
+                        .tint(Color("pink_primary"))
                 }
             }
             .overlay(RoundedRectangle(cornerRadius: 18)
                 .stroke(Color("neutral"), lineWidth: 2)
             )
             .padding(.horizontal)
-            
         }
         .onAppear {
-            print(chatEngine.currentConversation)
-
-                chatEngine.loadConversation()
-            
+            chatEngine.loadConversation()
         }
         
     }
