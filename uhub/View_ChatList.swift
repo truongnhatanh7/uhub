@@ -12,7 +12,6 @@ struct ChatListView: View {
     @EnvironmentObject var pageVM: PageViewModel
     @State var showMenu = false
     @State var searchText = ""
-    @State var showAlert = false
     
     var searchResults: [Conversation] {
         if searchText == ""  {
@@ -45,7 +44,7 @@ struct ChatListView: View {
                         chatEngine.setRead()
                         pageVM.visit(page: .Inbox)
                     } label: {
-                        ChatListRow(conversation: conversation, showDeleteAlert: $showAlert)
+                        ChatListRow(conversation: conversation)
                     }
                     .foregroundColor(.black)
                 }

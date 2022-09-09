@@ -12,7 +12,8 @@ import FirebaseFirestore
 struct ChatListRow: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @State var conversation: Conversation
-    @Binding var showDeleteAlert: Bool
+    @State var showDeleteAlert: Bool = false
+    @State var offset = CGSize.zero
     var body: some View {
         HStack {
             HStack {
@@ -92,11 +93,35 @@ struct ChatListRow: View {
         .onAppear {
         }
         .alert(isPresented: $showDeleteAlert) { () -> Alert in
-            Alert(title: Text("Delete this conversation"), message: Text("Do you want to delete the conversation with \(conversation.name)"), primaryButton: .default(Text("Delete"), action: {
-                chatEngine.deleteConversation(id: conversation.conversationId)
-                }), secondaryButton: .default(Text("Dismiss")))
-       
+            Alert(title: Text("Delete this conversation"), message: Text("Do you want to delete the conversation with \(conversation.name)"), primaryButton: .default(Text("Cancel"), action: {
+                withAnimation {
+                    offset = .zero
+                }
+            }), secondaryButton: .destructive(Text("Delete"), action: {
+                withAnimation {
+                    chatEngine.deleteConversation(id: conversation.conversationId)
+                }
+            }))
         }
+        .offset(x: offset.width * 1.2, y: 0)
+        .opacity(2 - Double(abs(offset.width / 50)))
+        .gesture(
+            DragGesture()
+                .onChanged { gesture in
+                    offset = gesture.translation
+                }
+                .onEnded { _ in
+                    if offset.width < 100 {
+                        // remove the card
+                        showDeleteAlert = true
+                    } else {
+                        withAnimation {
+                            offset = .zero
+                        }
+
+                    }
+                }
+        )
     }
         
 }
