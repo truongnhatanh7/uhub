@@ -59,6 +59,8 @@
 		C133E47828CA3DEB002FFA9E /* Comp_MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47728CA3DEB002FFA9E /* Comp_MenuBar.swift */; };
 		C133E47A28CA4C31002FFA9E /* View_Matches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47928CA4C31002FFA9E /* View_Matches.swift */; };
 		C133E47C28CA4C3F002FFA9E /* View_Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47B28CA4C3F002FFA9E /* View_Setting.swift */; };
+		C133E47E28CAD61F002FFA9E /* ViewModel_Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47D28CAD61F002FFA9E /* ViewModel_Home.swift */; };
+		C133E48028CADD92002FFA9E /* Comp_StackCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47F28CADD92002FFA9E /* Comp_StackCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +115,8 @@
 		C133E47728CA3DEB002FFA9E /* Comp_MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_MenuBar.swift; sourceTree = "<group>"; };
 		C133E47928CA4C31002FFA9E /* View_Matches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_Matches.swift; sourceTree = "<group>"; };
 		C133E47B28CA4C3F002FFA9E /* View_Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_Setting.swift; sourceTree = "<group>"; };
+		C133E47D28CAD61F002FFA9E /* ViewModel_Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_Home.swift; sourceTree = "<group>"; };
+		C133E47F28CADD92002FFA9E /* Comp_StackCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_StackCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +171,7 @@
 				8F932B7128C751EE00FAC04B /* Comp_OneThirdModal.swift */,
 				8F932B6928C751ED00FAC04B /* Comp_PickerInput.swift */,
 				8F932B5128C751EC00FAC04B /* Comp_PickerInputModal.swift */,
+				C133E47F28CADD92002FFA9E /* Comp_StackCard.swift */,
 				8F932B7328C751EE00FAC04B /* Comp_StandardHeader.swift */,
 				8F932B6A28C751ED00FAC04B /* Comp_TextBox.swift */,
 				8F932B5A28C751ED00FAC04B /* Comp_TextInput.swift */,
@@ -185,16 +190,17 @@
 				8F932B7628C751EE00FAC04B /* View_EditProfile.swift */,
 				8F932B6C28C751EE00FAC04B /* View_FilterProfile.swift */,
 				C133E47528CA2670002FFA9E /* View_Home.swift */,
-				C133E47928CA4C31002FFA9E /* View_Matches.swift */,
-				C133E47B28CA4C3F002FFA9E /* View_Setting.swift */,
 				8F932B5528C751EC00FAC04B /* View_Inbox.swift */,
+				C133E47928CA4C31002FFA9E /* View_Matches.swift */,
 				8F932B5828C751EC00FAC04B /* View_Notification.swift */,
+				C133E47B28CA4C3F002FFA9E /* View_Setting.swift */,
 				8F932B6D28C751EE00FAC04B /* View_SigninScreen.swift */,
 				8F932B7228C751EE00FAC04B /* View_SignupScreen.swift */,
 				8F932B6828C751ED00FAC04B /* View_Splash.swift */,
 				8F932B5F28C751ED00FAC04B /* ViewModel_ChatEngine.swift */,
 				8F932B5028C751EC00FAC04B /* ViewModel_EditProfile.swift */,
 				8F932B5628C751EC00FAC04B /* ViewModel_FilterProfile.swift */,
+				C133E47D28CAD61F002FFA9E /* ViewModel_Home.swift */,
 				8F932B6228C751ED00FAC04B /* ViewModel_Navigation.swift */,
 				55FA436B28BE26C4006AC2F8 /* Assets.xcassets */,
 				55FA436D28BE26C4006AC2F8 /* Preview Content */,
@@ -310,6 +316,7 @@
 				8F932BA528C751EE00FAC04B /* View_ChatList.swift in Sources */,
 				8F932BA028C751EE00FAC04B /* Comp_Button.swift in Sources */,
 				8F932B9F28C751EE00FAC04B /* Comp_StandardHeader.swift in Sources */,
+				C133E47E28CAD61F002FFA9E /* ViewModel_Home.swift in Sources */,
 				8F932B9028C751EE00FAC04B /* Comp_BottomBar.swift in Sources */,
 				8F932B8B28C751EE00FAC04B /* ViewModel_ChatEngine.swift in Sources */,
 				8F932B9E28C751EE00FAC04B /* View_SignupScreen.swift in Sources */,
@@ -331,6 +338,7 @@
 				8F932B9228C751EE00FAC04B /* Style_CornerRadiusStyle.swift in Sources */,
 				8F932BA128C751EE00FAC04B /* Comp_ChatListRow.swift in Sources */,
 				8F932B8428C751EE00FAC04B /* View_Notification.swift in Sources */,
+				C133E48028CADD92002FFA9E /* Comp_StackCard.swift in Sources */,
 				8F932B9B28C751EE00FAC04B /* uhubApp.swift in Sources */,
 				8F932B8F28C751EE00FAC04B /* Comp_NotificationOption.swift in Sources */,
 				8F932B9628C751EE00FAC04B /* Comp_TextBox.swift in Sources */,
