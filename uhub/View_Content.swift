@@ -43,25 +43,33 @@ struct ContentView: View {
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Setting:
                 SettingView()
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .transition(
+                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+                    )
             case .Logout:
                 EmptyView()
             case .Home:
                 HomeView()
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .transition(
+                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+                    )
             case .Detail:
                 EmptyView()
             case .Matches:
                 MatchesView()
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .transition(
+                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+                    )
             case .Chat:
                 ChatListView()
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .transition(
+                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+                    )
             case .Inbox:
                 InboxView()
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             }
-        
+            
         }
         .environmentObject(pageVM)
         .environmentObject(userAuthManager)

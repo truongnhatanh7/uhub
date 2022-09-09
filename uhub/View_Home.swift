@@ -14,17 +14,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Image("Icon")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-                Text("Discovery")
-                    .font(.title.bold())
-                    .foregroundStyle(.primary)
-                Spacer()
-            }
-            .padding(.horizontal)
+            HeaderHome(title: "Discovery")
             ZStack(alignment: .bottom) {
                 ZStack {
                     if let users = homeVM.displayingUsers {
