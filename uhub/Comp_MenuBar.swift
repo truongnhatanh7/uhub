@@ -83,8 +83,9 @@ struct MenuButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .foregroundColor(isSelect ? .white : Color("pink_primary"))
-            .frame(width: 60)
-            .padding(.vertical)
+            .frame(width: 55)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 15)
             .background(
                 isSelect ?
                 configuration.isPressed ? Color("pink_disabled") : Color("pink_primary")
