@@ -15,6 +15,9 @@ struct StackCard: View {
     @GestureState var isDragging: Bool = false
     @State var endSwipe: Bool = false
     
+    @State var btnSwipe = false
+    @State var opacity: CGFloat = 0
+    
     var body: some View {
         GeometryReader { proxy in
             let size = proxy.size
@@ -29,6 +32,27 @@ struct StackCard: View {
                     .frame(width: size.width - topOffset, height: size.height)
                     .cornerRadius(15)
                     .offset(y: -topOffset)
+                    .overlay(alignment: .top) {
+                        Text("Like")
+                            .font(.title.bold())
+                            .foregroundColor(Color("pink_primary"))
+                            .padding(10)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("pink_primary"), lineWidth: 4))
+                            .opacity(btnSwipe ? opacity / 100.0 : offset / 100.0)
+                            .rotationEffect(Angle(degrees: -30))
+                            .offset(x: -100, y: 50)
+                        
+                        Text("Nope")
+                            .font(.title.bold())
+                            .foregroundColor(Color("pink_primary"))
+                            .padding(10)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("pink_primary"), lineWidth: 4))
+                            .opacity(btnSwipe ? opacity / -100.0 : offset / -100.0)
+                            .rotationEffect(Angle(degrees: 30))
+                            .offset(x: 100, y: 50)
+                    }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
@@ -72,13 +96,19 @@ struct StackCard: View {
             let width = getRect().width - 50
             if user.id == id {
                 withAnimation {
-                    offset = (rightSwipe ? width : -width) * 2
-                    endSwipeAction()
-                    
-                    if rightSwipe {
-                        self.rightSwipe()
-                    } else {
-                        leftSwipe()
+                    opacity = rightSwipe ? 100 : -100
+                    btnSwipe = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    withAnimation(.easeInOut(duration: 0.4)) {
+                        offset = (rightSwipe ? width : -width) * 2
+                        endSwipeAction()
+                        
+                        if rightSwipe {
+                            self.rightSwipe()
+                        } else {
+                            leftSwipe()
+                        }
                     }
                 }
             }
@@ -91,9 +121,9 @@ struct StackCard: View {
     }
     
     func endSwipeAction() {
-        withAnimation(.none) { endSwipe = true }
+        withAnimation { endSwipe = true }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             if let _ = homeVM.displayingUsers?.first {
                 let _ = withAnimation {
                     homeVM.displayingUsers?.removeFirst()

@@ -18,6 +18,7 @@ struct HomeView: View {
                 Image("Icon")
                     .resizable()
                     .frame(width: 40, height: 40)
+                    .clipShape(Circle())
                 Text("Discovery")
                     .font(.title.bold())
                     .foregroundStyle(.primary)
