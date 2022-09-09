@@ -34,36 +34,37 @@ struct ContentView: View {
                 FilterProfileView()
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Notification:
-                EmptyView()
+                NotificationView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Security:
                 EmptyView()
-            case .SetupComplete:
-                EmptyView()
+            case .Congrat:
+                CongratsView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Setting:
-                EmptyView()
+                SettingView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Logout:
                 EmptyView()
             case .Home:
-                EmptyView()
+                HomeView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Detail:
                 EmptyView()
             case .Matches:
-                EmptyView()
+                MatchesView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Chat:
                 ChatListView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Inbox:
                 InboxView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             }
         
         }
         .environmentObject(pageVM)
         .environmentObject(userAuthManager)
         .environmentObject(chatEngine)
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

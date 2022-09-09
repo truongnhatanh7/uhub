@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 enum Page {
-    case Splash, SignIn, SignUp, EditProfile, FilterProfile, Notification, Security, SetupComplete, Setting, Logout, Home, Detail, Matches, Chat, Inbox
+    case Splash, SignIn, SignUp, EditProfile, FilterProfile, Notification, Security, Congrat, Setting, Logout, Home, Detail, Matches, Chat, Inbox
 }
 
 final class PageViewModel: ObservableObject {
