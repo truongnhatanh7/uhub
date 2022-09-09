@@ -11,12 +11,14 @@ struct StackCard: View {
     @EnvironmentObject var homeVM: HomeViewModel
     var user: User
     
-    @State var offset: CGFloat = 0
+    @State var offsetX: CGFloat = 0
+    @State var offsetY: CGFloat = 0
     @GestureState var isDragging: Bool = false
     @State var endSwipe: Bool = false
     
     @State var btnSwipe = false
     @State var opacity: CGFloat = 0
+    @State var startYPosition: CGFloat = 0
     
     var body: some View {
         GeometryReader { proxy in
@@ -39,7 +41,7 @@ struct StackCard: View {
                             .padding(10)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("pink_primary"), lineWidth: 4))
-                            .opacity(btnSwipe ? opacity / 100.0 : offset / 100.0)
+                            .opacity(btnSwipe ? opacity / 100.0 : offsetX / 100.0)
                             .rotationEffect(Angle(degrees: -30))
                             .offset(x: -100, y: 50)
                         
@@ -49,14 +51,14 @@ struct StackCard: View {
                             .padding(10)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("pink_primary"), lineWidth: 4))
-                            .opacity(btnSwipe ? opacity / -100.0 : offset / -100.0)
+                            .opacity(btnSwipe ? opacity / -100.0 : offsetX / -100.0)
                             .rotationEffect(Angle(degrees: 30))
                             .offset(x: 100, y: 50)
                     }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
-        .offset(x: offset)
+        .offset(x: offsetX, y: offsetY)
         .rotationEffect(.init(degrees: getRotation(angle: 20)))
         .contentShape(Rectangle().trim(from: 0, to: endSwipe ? 0 : 1))
         .gesture(
@@ -65,8 +67,13 @@ struct StackCard: View {
                     out = true
                 }
                 .onChanged { value in
-                    let translation = value.translation.width
-                    offset = isDragging ? translation : .zero
+                    print(value.startLocation.y)
+                    let startYPosition = value.startLocation.y
+                    self.startYPosition = isDragging ? startYPosition : .zero
+                    let translationX = value.translation.width
+                    offsetX = isDragging ? translationX : .zero
+                    let translationY = value.translation.height
+                    offsetY = isDragging ? translationY : .zero
                 }
                 .onEnded { value in
                     let width = getRect().width - 50
@@ -75,7 +82,7 @@ struct StackCard: View {
                     
                     withAnimation {
                         if checkingStatus > width / 2 {
-                            offset = (translation > 0 ? width : -width) * 2
+                            offsetX = (translation > 0 ? width : -width) * 2
                             endSwipeAction()
                             
                             if translation > 0 {
@@ -84,7 +91,9 @@ struct StackCard: View {
                                 leftSwipe()
                             }
                         } else {
-                            offset = .zero
+                            offsetX = .zero
+                            offsetY = .zero
+                            startYPosition = .zero
                         }
                     }
                 }
@@ -101,7 +110,9 @@ struct StackCard: View {
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     withAnimation(.easeInOut(duration: 0.4)) {
-                        offset = (rightSwipe ? width : -width) * 2
+                        offsetX = (rightSwipe ? width : -width) * 2
+                        offsetY = .zero
+                        startYPosition = .zero
                         endSwipeAction()
                         
                         if rightSwipe {
@@ -116,7 +127,7 @@ struct StackCard: View {
     }
     
     func getRotation(angle: Double) -> Double {
-        let rotation = (offset / (getRect().width - 50)) * angle
+        let rotation = (offsetX / (getRect().width - 50)) * angle * (startYPosition > 250 ? -1 : 1)
         return rotation
     }
     
