@@ -84,6 +84,7 @@ class ChatEngine: ObservableObject {
                             self.lastMessageId = latestMsg.id
                         }
                         
+                        
                     }
                 }
             }
@@ -100,25 +101,33 @@ class ChatEngine: ObservableObject {
                 }
             
             DispatchQueue.main.async {
-                self.conversations = documents.map { (queryDocumentSnapshot) -> Conversation in
-                    let data = queryDocumentSnapshot.data()
-                    let conversationId = queryDocumentSnapshot.documentID
-                    let latestMessage = data["latestMessage"] as? String ?? ""
-                    let timestamp = data["timestamp"] as? Timestamp
-                    let unread = data["unread"] as? Bool ?? false
-                    let users = data["users"] as? [String] ?? []
-                    let latestMessageSender = data["latestMessageSender"] as? String ?? ""
-                    let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
-                    let userNames = data["userNames"] as? [String: String] ?? [:]
-                    let name = userNames[notThisUserId ?? ""]
+                withAnimation {
+                    self.conversations = documents.map { (queryDocumentSnapshot) -> Conversation in
+                        let data = queryDocumentSnapshot.data()
+                        let conversationId = queryDocumentSnapshot.documentID
+                        let latestMessage = data["latestMessage"] as? String ?? ""
+                        let timestamp = data["timestamp"] as? Timestamp
+                        let unread = data["unread"] as? Bool ?? false
+                        let users = data["users"] as? [String] ?? []
+                        let latestMessageSender = data["latestMessageSender"] as? String ?? ""
+                        let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+                        let userNames = data["userNames"] as? [String: String] ?? [:]
+                        let name = userNames[notThisUserId ?? ""]
+                        
+                        print("Not this id \(notThisUserId) and unread: \(unread)")
+                        
+                        
+                        return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
+                    }
                     
-                    return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
+                    self.conversations.sort { $0.timestamp > $1.timestamp }
                 }
                 
-                self.conversations.sort { $0.timestamp > $1.timestamp }
                 callback()
                 self.objectWillChange.send()
             }
+            
+
         }
     }
     
@@ -193,7 +202,6 @@ class ChatEngine: ObservableObject {
                     let data = document.data()
                     let status = data?["isActive"] as? Bool ?? false
                     self.conversationStatus[notThisUserId] = status
-                    print(self.conversationStatus)
                     self.objectWillChange.send()
                 } else {
                     print("Document does not exist")
@@ -208,6 +216,15 @@ class ChatEngine: ObservableObject {
                 print("Error removing document: \(err)")
             } else {
                 print("Document successfully removed!")
+            }
+        }
+    }
+    
+    func notifyUnreadMessages() {
+        for conversation in conversations {
+            if conversation.unread {
+                playMusic(sound: "receive_message", isLoop: false)
+                break
             }
         }
     }
