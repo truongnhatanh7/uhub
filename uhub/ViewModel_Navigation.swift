@@ -13,7 +13,7 @@ enum Page {
 }
 
 final class PageViewModel: ObservableObject {
-    @Published private(set) var currentPage: Page = .Splash
+    @Published private(set) var currentPage: Page = .Setting
     
     func visit(page: Page) {
         withAnimation {
