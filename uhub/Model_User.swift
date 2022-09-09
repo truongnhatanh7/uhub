@@ -9,13 +9,16 @@ import Foundation
 import SwiftUI
 
 struct User : Identifiable {
-    var id = UUID()
+    var id = UUID().uuidString
     var name:String
     var gpa:CGFloat
     var major:String
     var about:String
     var courseStudying:[String]
     var image:String
+    
+    var place: String
+    var profilePic: String
     
     func getFormattedGpa() -> String {
         let formatter = NumberFormatter()

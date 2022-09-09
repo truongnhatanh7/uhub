@@ -13,17 +13,17 @@ class HomeViewModel: ObservableObject {
     
     init() {
         fetchedUsers = [
-            User(name: "Michael", place: "Vietnam", profilePic: "User1"),
-            User(name: "Andrew", place: "Singapore", profilePic: "User2"),
-            User(name: "Anh", place: "Thailand", profilePic: "User3"),
-            User(name: "Bao", place: "USA", profilePic: "User4"),
-            User(name: "John", place: "Malay", profilePic: "User5"),
-            User(name: "Henry", place: "Australia", profilePic: "User6"),
-            User(name: "Mary", place: "Hongkong", profilePic: "User7"),
-            User(name: "Annie", place: "England", profilePic: "User8"),
-            User(name: "Tom", place: "Russia", profilePic: "User9"),
-            User(name: "Water", place: "Japan", profilePic: "User10")
-            
+//            User(name: "Michael", place: "Vietnam", profilePic: "User1"),
+//            User(name: "Andrew", place: "Singapore", profilePic: "User2"),
+//            User(name: "Anh", place: "Thailand", profilePic: "User3"),
+//            User(name: "Bao", place: "USA", profilePic: "User4"),
+//            User(name: "John", place: "Malay", profilePic: "User5"),
+//            User(name: "Henry", place: "Australia", profilePic: "User6"),
+//            User(name: "Mary", place: "Hongkong", profilePic: "User7"),
+//            User(name: "Annie", place: "England", profilePic: "User8"),
+//            User(name: "Tom", place: "Russia", profilePic: "User9"),
+//            User(name: "Water", place: "Japan", profilePic: "User10")
+//            
         ]
         displayingUsers = fetchedUsers
     }
@@ -33,9 +33,9 @@ class HomeViewModel: ObservableObject {
     }
 }
 
-struct User: Identifiable {
-    var id = UUID().uuidString
-    var name: String
-    var place: String
-    var profilePic: String
-}
+//struct User: Identifiable {
+//    var id = UUID().uuidString
+//    var name: String
+//    var place: String
+//    var profilePic: String
+//}

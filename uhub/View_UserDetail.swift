@@ -11,7 +11,7 @@ struct View_UserDetail: View {
     
     @State var isShowSheet:Bool = true
     var isFromMatchPage:Bool
-    var user:User
+    var user: User
     
     var body: some View {
         ZStack {
@@ -96,6 +96,6 @@ struct View_UserDetail: View {
 
 struct View_UserDetail_Previews: PreviewProvider {
     static var previews: some View {
-        View_UserDetail(isFromMatchPage: true, user: User(name: "Michiael Ho", gpa: 3.9, major: "Software Enginner", about: "I am a senior student at RMIT. My strengths are machine learning and data visualization. I know a bit about web development and finding a team for my capstone.", courseStudying: ["iOS Development", "Software Engineering Design", "Engineering Computing 1"], image: "user"))
+        View_UserDetail(isFromMatchPage: true, user: User(name: "Michiael Ho", gpa: 3.9, major: "Software Enginner", about: "I am a senior student at RMIT. My strengths are machine learning and data visualization. I know a bit about web development and finding a team for my capstone.", courseStudying: ["iOS Development", "Software Engineering Design", "Engineering Computing 1"], image: "user", place: "", profilePic: ""))
     }
 }

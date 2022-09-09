@@ -11,6 +11,7 @@ struct ContentView: View {
     @StateObject private var pageVM = PageViewModel()
     @StateObject private var userAuthManager = UserAuthManager()
     @StateObject private var chatEngine = ChatEngine()
+    @StateObject private var notificationManager = NotiManager()
     
     var body: some View {
         Group {
@@ -74,5 +75,9 @@ struct ContentView: View {
         .environmentObject(pageVM)
         .environmentObject(userAuthManager)
         .environmentObject(chatEngine)
+        .environmentObject(notificationManager)
+        .onAppear {
+            notificationManager.requestNotiAuth()
+        }
     }
 }

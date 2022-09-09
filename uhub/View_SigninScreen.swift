@@ -11,6 +11,7 @@ struct SigninScreenView: View {
     @EnvironmentObject var pageVM: PageViewModel
     @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var chatEngine: ChatEngine
+    @EnvironmentObject var notiManager: NotiManager
     
     @State private var email = ""
     @State private var pwd = ""
@@ -106,6 +107,8 @@ struct SigninScreenView: View {
                     
                     // sign in button
                     ButtonBindingView(textContent: "Sign In", onTap: {
+                        // THIS LINE IS TEST ONLY
+                        self.notiManager.generateNoti(title: "UHUB", subtitle: "Mãi mãi là anh em cột chèo!")
                         userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
                             if userAuthManager.errorMsg == "" {
                                 pageVM.visit(page: .Home)

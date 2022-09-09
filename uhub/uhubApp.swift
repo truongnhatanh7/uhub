@@ -8,8 +8,33 @@
 import SwiftUI
 import Firebase
 
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions:
+        [UIApplication.LaunchOptionsKey : Any]? = nil
+    ) -> Bool {
+        // Show local notification in foreground
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+}
+// Conform to UNUserNotificationCenterDelegate to show local notification in foreground
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler:
+        @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .list, .badge, .sound])
+    }
+}
+
 @main
 struct uhubApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     init() {
         FirebaseApp.configure()
     }
@@ -18,14 +43,14 @@ struct uhubApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
-
-//            EditProfileView()
-//                .environmentObject(PageViewModel())
-//                .environmentObject(EditProfileViewModel())
-//                .environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
             
-//            FilterProfileView()
-//                .environmentObject(PageViewModel())
+            //            EditProfileView()
+            //                .environmentObject(PageViewModel())
+            //                .environmentObject(EditProfileViewModel())
+            //                .environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
+            
+            //            FilterProfileView()
+            //                .environmentObject(PageViewModel())
         }
     }
 }
