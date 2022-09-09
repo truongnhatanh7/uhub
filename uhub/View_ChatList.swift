@@ -66,6 +66,7 @@ struct ChatListView: View {
             chatEngine.loadChatList {
                 chatEngine.fetchUserStatus()
             }
+            showMenu = true
         }
     }
 }
