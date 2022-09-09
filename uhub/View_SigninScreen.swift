@@ -108,7 +108,7 @@ struct SigninScreenView: View {
                     ButtonBindingView(textContent: "Sign In", onTap: {
                         userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
                             if userAuthManager.errorMsg == "" {
-                                pageVM.visit(page: .Chat)
+                                pageVM.visit(page: .Home)
                             } else {
                                 print(userAuthManager.errorMsg)
                             }

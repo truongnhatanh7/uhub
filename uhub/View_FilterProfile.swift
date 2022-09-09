@@ -31,17 +31,7 @@ struct FilterProfileView: View {
                 }
             }
             BottomBar {
-                ButtonView(textContent: "Next", onTap: {
-                    userAuthManager.updateProfileInfo(updatedData: [
-                        "friends_filter": [
-                            "friends_age": filterProfileVM.filterAge,
-                            "freinds_gpa": filterProfileVM.filterGPA,
-                            "friends_semester_learned": filterProfileVM.filterSemester
-                        ]
-                    ], callback: {
-                        pageVM.visit(page: .Notification)
-                    })
-                }, isDisabled: false)
+                ButtonView(textContent: "Next", onTap: submitData)
             }
             
             PickerInputModal(label: "Filter age", showPicker: $filterProfileVM.showAgePicker, value: $filterProfileVM.filterAge, items: filterProfileVM.ageRange)
@@ -51,5 +41,24 @@ struct FilterProfileView: View {
             PickerInputModal(label: "Filter semester learned", showPicker: $filterProfileVM.showSemesterLearned, value: $filterProfileVM.filterSemester, items: filterProfileVM.semesterLearnedRange)
         }
         .edgesIgnoringSafeArea(.bottom)
+        .onAppear {
+            filterProfileVM.updateInfo(userAuthManager.currentUserData)
+        }
+    }
+    
+    private func submitData() {
+        userAuthManager.updateProfileInfo(updatedData: [
+            "friends_filter": [
+                "friends_age": filterProfileVM.filterAge,
+                "freinds_gpa": filterProfileVM.filterGPA,
+                "friends_semester_learned": filterProfileVM.filterSemester
+            ]
+        ], callback: {
+            if userAuthManager.errorMsg == "" {
+                pageVM.visit(page: .Notification)
+            } else {
+                print(userAuthManager.errorMsg)
+            }
+        })
     }
 }

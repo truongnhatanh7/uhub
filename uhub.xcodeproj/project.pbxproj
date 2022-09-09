@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		55FA436C28BE26C4006AC2F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436B28BE26C4006AC2F8 /* Assets.xcassets */; };
 		55FA436F28BE26C4006AC2F8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */; };
+		5818C7CDB9C288843EA797FE /* send_message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72EB29FAEE120BDE0D3550D3 /* send_message.mp3 */; };
 		8F932B7B28C751EE00FAC04B /* View_Congrats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B4F28C751EC00FAC04B /* View_Congrats.swift */; };
 		8F932B7C28C751EE00FAC04B /* ViewModel_EditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5028C751EC00FAC04B /* ViewModel_EditProfile.swift */; };
 		8F932B7D28C751EE00FAC04B /* Comp_PickerInputModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5128C751EC00FAC04B /* Comp_PickerInputModal.swift */; };
@@ -55,15 +56,28 @@
 		8FDB54B128BF2AA10013816E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8FDB54B028BF2AA10013816E /* FirebaseFirestore */; };
 		8FDB54B328BF2AA10013816E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8FDB54B228BF2AA10013816E /* FirebaseMessaging */; };
 		8FDB54B728BF2B4A0013816E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */; };
+
 		D5AAA9B228C8933D007603DD /* View_UserDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA9B128C8933D007603DD /* View_UserDetail.swift */; };
 		D5AAA9B428C89E50007603DD /* Comp_Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA9B328C89E50007603DD /* Comp_Course.swift */; };
 		D5AAA9B628C8A3F0007603DD /* Model_User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA9B528C8A3F0007603DD /* Model_User.swift */; };
+
+		A1D3E2FE85D0AA2D08E752FF /* receive_message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 23F0EC11FF3454662C95E7AF /* receive_message.mp3 */; };
+		C133E47628CA2670002FFA9E /* View_Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47528CA2670002FFA9E /* View_Home.swift */; };
+		C133E47828CA3DEB002FFA9E /* Comp_MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47728CA3DEB002FFA9E /* Comp_MenuBar.swift */; };
+		C133E47A28CA4C31002FFA9E /* View_Matches.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47928CA4C31002FFA9E /* View_Matches.swift */; };
+		C133E47C28CA4C3F002FFA9E /* View_Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47B28CA4C3F002FFA9E /* View_Setting.swift */; };
+		C133E47E28CAD61F002FFA9E /* ViewModel_Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47D28CAD61F002FFA9E /* ViewModel_Home.swift */; };
+		C133E48028CADD92002FFA9E /* Comp_StackCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C133E47F28CADD92002FFA9E /* Comp_StackCard.swift */; };
+		DEE1006715F5FC856F802C09 /* ViewModel_SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9D4FADB1B04B535FDC9B3C /* ViewModel_SoundManager.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23F0EC11FF3454662C95E7AF /* receive_message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = receive_message.mp3; sourceTree = "<group>"; };
 		55FA436428BE26BD006AC2F8 /* uhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = uhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FA436B28BE26C4006AC2F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		72EB29FAEE120BDE0D3550D3 /* send_message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = send_message.mp3; sourceTree = "<group>"; };
 		8F932B4E28C751EC00FAC04B /* uhub-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "uhub-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F932B4F28C751EC00FAC04B /* View_Congrats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View_Congrats.swift; sourceTree = "<group>"; };
 		8F932B5028C751EC00FAC04B /* ViewModel_EditProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel_EditProfile.swift; sourceTree = "<group>"; };
@@ -108,9 +122,19 @@
 		8F932B7928C751EE00FAC04B /* View_ChatList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View_ChatList.swift; sourceTree = "<group>"; };
 		8F932B7A28C751EE00FAC04B /* Manager_UserAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager_UserAuth.swift; sourceTree = "<group>"; };
 		8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+
 		D5AAA9B128C8933D007603DD /* View_UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_UserDetail.swift; sourceTree = "<group>"; };
 		D5AAA9B328C89E50007603DD /* Comp_Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_Course.swift; sourceTree = "<group>"; };
 		D5AAA9B528C8A3F0007603DD /* Model_User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model_User.swift; sourceTree = "<group>"; };
+
+		C133E47528CA2670002FFA9E /* View_Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_Home.swift; sourceTree = "<group>"; };
+		C133E47728CA3DEB002FFA9E /* Comp_MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_MenuBar.swift; sourceTree = "<group>"; };
+		C133E47928CA4C31002FFA9E /* View_Matches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_Matches.swift; sourceTree = "<group>"; };
+		C133E47B28CA4C3F002FFA9E /* View_Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_Setting.swift; sourceTree = "<group>"; };
+		C133E47D28CAD61F002FFA9E /* ViewModel_Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_Home.swift; sourceTree = "<group>"; };
+		C133E47F28CADD92002FFA9E /* Comp_StackCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_StackCard.swift; sourceTree = "<group>"; };
+		DD9D4FADB1B04B535FDC9B3C /* ViewModel_SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_SoundManager.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,12 +182,14 @@
 				8F932B6028C751ED00FAC04B /* Comp_CongratsModal.swift */,
 				8F932B5428C751EC00FAC04B /* Comp_ErrorMsg.swift */,
 				8F932B5D28C751ED00FAC04B /* Comp_ImagePicker.swift */,
+				C133E47728CA3DEB002FFA9E /* Comp_MenuBar.swift */,
 				8F932B5228C751EC00FAC04B /* Comp_MessageDefaultBubble.swift */,
 				8F932B6128C751ED00FAC04B /* Comp_MessageSelfBubble.swift */,
 				8F932B6328C751ED00FAC04B /* Comp_NotificationOption.swift */,
 				8F932B7128C751EE00FAC04B /* Comp_OneThirdModal.swift */,
 				8F932B6928C751ED00FAC04B /* Comp_PickerInput.swift */,
 				8F932B5128C751EC00FAC04B /* Comp_PickerInputModal.swift */,
+				C133E47F28CADD92002FFA9E /* Comp_StackCard.swift */,
 				8F932B7328C751EE00FAC04B /* Comp_StandardHeader.swift */,
 				D5AAA9B328C89E50007603DD /* Comp_Course.swift */,
 				8F932B6A28C751ED00FAC04B /* Comp_TextBox.swift */,
@@ -184,17 +210,24 @@
 				8F932B6E28C751EE00FAC04B /* View_Content.swift */,
 				8F932B7628C751EE00FAC04B /* View_EditProfile.swift */,
 				8F932B6C28C751EE00FAC04B /* View_FilterProfile.swift */,
+				C133E47528CA2670002FFA9E /* View_Home.swift */,
 				8F932B5528C751EC00FAC04B /* View_Inbox.swift */,
+				C133E47928CA4C31002FFA9E /* View_Matches.swift */,
 				8F932B5828C751EC00FAC04B /* View_Notification.swift */,
+				C133E47B28CA4C3F002FFA9E /* View_Setting.swift */,
 				8F932B6D28C751EE00FAC04B /* View_SigninScreen.swift */,
 				8F932B7228C751EE00FAC04B /* View_SignupScreen.swift */,
 				8F932B6828C751ED00FAC04B /* View_Splash.swift */,
 				8F932B5F28C751ED00FAC04B /* ViewModel_ChatEngine.swift */,
 				8F932B5028C751EC00FAC04B /* ViewModel_EditProfile.swift */,
 				8F932B5628C751EC00FAC04B /* ViewModel_FilterProfile.swift */,
+				C133E47D28CAD61F002FFA9E /* ViewModel_Home.swift */,
 				8F932B6228C751ED00FAC04B /* ViewModel_Navigation.swift */,
 				55FA436B28BE26C4006AC2F8 /* Assets.xcassets */,
 				55FA436D28BE26C4006AC2F8 /* Preview Content */,
+				72EB29FAEE120BDE0D3550D3 /* send_message.mp3 */,
+				23F0EC11FF3454662C95E7AF /* receive_message.mp3 */,
+				DD9D4FADB1B04B535FDC9B3C /* ViewModel_SoundManager.swift */,
 			);
 			path = uhub;
 			sourceTree = "<group>";
@@ -258,7 +291,7 @@
 			);
 			mainGroup = 55FA435B28BE26BD006AC2F8;
 			packageReferences = (
-				8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
 			);
 			productRefGroup = 55FA436528BE26BD006AC2F8 /* Products */;
 			projectDirPath = "";
@@ -277,6 +310,8 @@
 				55FA436F28BE26C4006AC2F8 /* Preview Assets.xcassets in Resources */,
 				55FA436C28BE26C4006AC2F8 /* Assets.xcassets in Resources */,
 				8FDB54B728BF2B4A0013816E /* GoogleService-Info.plist in Resources */,
+				5818C7CDB9C288843EA797FE /* send_message.mp3 in Resources */,
+				A1D3E2FE85D0AA2D08E752FF /* receive_message.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,10 +338,15 @@
 				8F932B7B28C751EE00FAC04B /* View_Congrats.swift in Sources */,
 				8F932B8228C751EE00FAC04B /* ViewModel_FilterProfile.swift in Sources */,
 				8F932B7D28C751EE00FAC04B /* Comp_PickerInputModal.swift in Sources */,
+
 				D5AAA9B628C8A3F0007603DD /* Model_User.swift in Sources */,
+
+				C133E47628CA2670002FFA9E /* View_Home.swift in Sources */,
+
 				8F932BA528C751EE00FAC04B /* View_ChatList.swift in Sources */,
 				8F932BA028C751EE00FAC04B /* Comp_Button.swift in Sources */,
 				8F932B9F28C751EE00FAC04B /* Comp_StandardHeader.swift in Sources */,
+				C133E47E28CAD61F002FFA9E /* ViewModel_Home.swift in Sources */,
 				8F932B9028C751EE00FAC04B /* Comp_BottomBar.swift in Sources */,
 				D5AAA9B228C8933D007603DD /* View_UserDetail.swift in Sources */,
 				8F932B8B28C751EE00FAC04B /* ViewModel_ChatEngine.swift in Sources */,
@@ -315,10 +355,12 @@
 				8F932B7F28C751EE00FAC04B /* Comp_Checkbox.swift in Sources */,
 				8F932B8728C751EE00FAC04B /* Comp_Toogle.swift in Sources */,
 				8F932B7E28C751EE00FAC04B /* Comp_MessageDefaultBubble.swift in Sources */,
+				C133E47C28CA4C3F002FFA9E /* View_Setting.swift in Sources */,
 				8F932BA628C751EE00FAC04B /* Manager_UserAuth.swift in Sources */,
 				8F932BA428C751EE00FAC04B /* Model_Message.swift in Sources */,
 				8F932B8C28C751EE00FAC04B /* Comp_CongratsModal.swift in Sources */,
 				8F932B8328C751EE00FAC04B /* Comp_AdaptiveSheet.swift in Sources */,
+				C133E47A28CA4C31002FFA9E /* View_Matches.swift in Sources */,
 				8F932B8028C751EE00FAC04B /* Comp_ErrorMsg.swift in Sources */,
 				8F932B8E28C751EE00FAC04B /* ViewModel_Navigation.swift in Sources */,
 				8F932B8928C751EE00FAC04B /* Comp_ImagePicker.swift in Sources */,
@@ -328,10 +370,13 @@
 				8F932B9228C751EE00FAC04B /* Style_CornerRadiusStyle.swift in Sources */,
 				8F932BA128C751EE00FAC04B /* Comp_ChatListRow.swift in Sources */,
 				8F932B8428C751EE00FAC04B /* View_Notification.swift in Sources */,
+				C133E48028CADD92002FFA9E /* Comp_StackCard.swift in Sources */,
 				8F932B9B28C751EE00FAC04B /* uhubApp.swift in Sources */,
 				8F932B8F28C751EE00FAC04B /* Comp_NotificationOption.swift in Sources */,
 				8F932B9628C751EE00FAC04B /* Comp_TextBox.swift in Sources */,
+				C133E47828CA3DEB002FFA9E /* Comp_MenuBar.swift in Sources */,
 				8F932B8628C751EE00FAC04B /* Comp_TextInput.swift in Sources */,
+				DEE1006715F5FC856F802C09 /* ViewModel_SoundManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,7 +584,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -552,17 +597,17 @@
 /* Begin XCSwiftPackageProductDependency section */
 		8FDB54AA28BF2AA10013816E /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAuth;
 		};
 		8FDB54B028BF2AA10013816E /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseFirestore;
 		};
 		8FDB54B228BF2AA10013816E /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */

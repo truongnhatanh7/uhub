@@ -61,7 +61,11 @@ struct SignupScreenView: View {
                             
                             if userAuthManager.errorMsg != ""
                                 && !userAuthManager.errorMsg.lowercased().contains("password") {
-                                ErrorMsgView(msg: "Valid email: abc123@mail.provider.com")
+                                if userAuthManager.errorMsg.lowercased().contains("already") {
+                                    ErrorMsgView(msg: "Email already exists")
+                                } else {
+                                    ErrorMsgView(msg: "Valid email format: abc123@mail.provider.com")
+                                }
                             }
                         }
                         
@@ -86,7 +90,7 @@ struct SignupScreenView: View {
                             
                             if userAuthManager.errorMsg != ""
                                 && userAuthManager.errorMsg.lowercased().contains("password") {
-                                ErrorMsgView(msg: "Valid password: at least 6 characters")
+                                ErrorMsgView(msg: "Valid password format: at least 6 characters")
                             }
                         }
                     }

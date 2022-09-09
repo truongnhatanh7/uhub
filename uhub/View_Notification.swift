@@ -12,6 +12,7 @@ import MediaPlayer
 struct NotificationView: View {
     
     @EnvironmentObject private var notificationSettings:NotificationSettings
+    @EnvironmentObject var pageVM: PageViewModel
     
     @State var isSoundToogle:Bool = false
     @State var isVibarateToogle:Bool = false
@@ -27,20 +28,20 @@ struct NotificationView: View {
         
         print("Set volume to \(volume)")
     }
-
+    
     func handleVibarateToogle(isOn:Bool) {
         print("handle vibarate")
         notificationSettings.isVibarate = isOn
         print(notificationSettings.isVibarate ? "true" : "false")
         
     }
-
+    
     func handleChatToogle(isOn:Bool) {
         print("handle chat")
         notificationSettings.isShowChat = isOn
         print(notificationSettings.isShowChat ? "true" : "false")
     }
-
+    
     func handleNewMatchToogle(isOn:Bool) {
         print("handle new match")
         notificationSettings.isShowNewMatch = isOn
@@ -48,28 +49,27 @@ struct NotificationView: View {
     }
     
     var body: some View {
-        VStack(spacing: 10) {
-            
-            HStack {
-                Text("Notification").fontWeight(.bold).padding(.vertical, 30).font(.system(size: 30))
-
-                Spacer()
-            }.padding(.all, 24)
-
-
-            NotificationOption(label: "sound", toogle: $isSoundToogle, handler: handleSoundToogle)
-            NotificationOption(label: "vibarate", toogle: $isVibarateToogle, handler: handleVibarateToogle)
-            NotificationOption(label: "chat", toogle: $isChatToogle, handler: handleChatToogle)
-            NotificationOption(label: "new match", toogle: $isNewMatchToogle, isLast: true, handler: handleNewMatchToogle)
-        
-            
-            Spacer()
+        ZStack(alignment: .bottom) {
+            ZStack(alignment: .top) {
+                ScrollView {
+                    VStack(spacing: 10) {
+                        NotificationOption(label: "sound", toogle: $isSoundToogle, handler: handleSoundToogle)
+                        NotificationOption(label: "vibarate", toogle: $isVibarateToogle, handler: handleVibarateToogle)
+                        NotificationOption(label: "chat", toogle: $isChatToogle, handler: handleChatToogle)
+                        NotificationOption(label: "new match", toogle: $isNewMatchToogle, isLast: true, handler: handleNewMatchToogle)
+                    }
+                    .padding(.top, 60)
+                }
+                StandardHeader(title: "Notification") {
+                    pageVM.visit(page: .FilterProfile)
+                }
+            }
+            BottomBar {
+                ButtonView(textContent: "Next", onTap: {
+                    pageVM.visit(page: .Congrat)
+                })
+            }
         }
-    }
-}
-
-struct NotificationView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationView().environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
