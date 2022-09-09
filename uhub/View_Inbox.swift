@@ -17,7 +17,7 @@ struct InboxView: View {
     
     var body: some View {
         VStack {
-            StandardHeader(title: "Inbox") {
+            StandardHeader(title: "\(chatEngine.currentConversation?.name ?? "")") {
                 chatEngine.setRead()
                 chatEngine.fetchUserStatus()
                 pageVM.visit(page: .Chat)
