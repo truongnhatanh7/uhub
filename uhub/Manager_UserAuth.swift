@@ -228,6 +228,26 @@ class UserAuthManager: ObservableObject {
           } else {
             // Account deleted.
               print("Remove account successfully!")
+              
+              // reset currentUserData
+              self.currentUserData = [
+                  "id": "",
+                  "email": "",
+                  "password": "",
+                  "fullname": "",
+                  "age": "",
+                  "school": "",
+                  "major": "",
+                  "gpa": "",
+                  "semester_learned": "",
+                  "about": "",
+                  "friends_filter": [
+                      "friends_age": "",
+                      "freinds_gpa": "",
+                      "friends_semester_learned": ""
+                  ],
+                  "isActive": "false"
+              ]
           }
         }
     }
