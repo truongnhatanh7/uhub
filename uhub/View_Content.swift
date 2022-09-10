@@ -30,13 +30,13 @@ struct ContentView: View {
                     )
             case .EditProfile:
                 EditProfileView()
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .transition(.move(edge: .trailing).combined(with: .opacity).animation(.linear(duration: 0.1)))
             case .FilterProfile:
                 FilterProfileView()
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .transition(.move(edge: .trailing).combined(with: .opacity).animation(.linear(duration: 0.1)))
             case .Notification:
                 NotificationView()
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                    .transition(.move(edge: .trailing).combined(with: .opacity).animation(.linear(duration: 0.1)))
             case .Security:
                 EmptyView()
             case .Congrat:
@@ -44,28 +44,20 @@ struct ContentView: View {
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             case .Setting:
                 SettingView()
-                    .transition(
-                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
-                    )
+                    .transition(.opacity.combined(with: .offset(y: -40)).animation(.linear(duration: 0.1)))
             case .Logout:
                 EmptyView()
             case .Home:
                 HomeView()
-                    .transition(
-                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
-                    )
+                    .transition(.opacity.combined(with: .offset(y: -40)).animation(.linear(duration: 0.1)))
             case .Detail:
                 EmptyView()
             case .Matches:
                 MatchesView()
-                    .transition(
-                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
-                    )
+                    .transition(.opacity.combined(with: .offset(y: -40)).animation(.linear(duration: 0.1)))
             case .Chat:
                 ChatListView()
-                    .transition(
-                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
-                    )
+                    .transition(.opacity.combined(with: .offset(y: -40)).animation(.linear(duration: 0.1)))
             case .Inbox:
                 InboxView()
                     .transition(.move(edge: .trailing).combined(with: .opacity))

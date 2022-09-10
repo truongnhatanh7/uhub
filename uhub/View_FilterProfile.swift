@@ -27,7 +27,11 @@ struct FilterProfileView: View {
                     .padding(.top, 60)
                 }
                 StandardHeader(title: "Filter People") {
-                    pageVM.visit(page: .EditProfile)
+                    if pageVM.isfirstFlow {
+                        pageVM.visit(page: .EditProfile)
+                    } else {
+                        pageVM.visit(page: pageVM.previousPage ?? .FilterProfile)
+                    }
                 }
             }
             BottomBar {

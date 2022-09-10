@@ -16,6 +16,7 @@ struct CongratsView: View {
         CongratsModal(isGoToHome: $isGoToHome)
             .onChange(of: isGoToHome) { newValue in
                 if newValue {
+                    pageVM.isfirstFlow = false
                     pageVM.visit(page: .Home)
                 }
             }
