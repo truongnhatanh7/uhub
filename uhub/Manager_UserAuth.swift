@@ -211,4 +211,24 @@ class UserAuthManager: ObservableObject {
             self.errorMsg = "[FAILURE - SIGN OUT]: \(error.localizedDescription)"
         }
     }
+    
+    func deleteAccount() {
+        let user = Auth.auth().currentUser
+        db.collection("users").document(user?.uid ?? "").delete() { error in
+            if let error = error {
+                print("Error clear user data: \(error)")
+            } else {
+                print("Successfully remove user data!")
+            }
+        }
+        user?.delete() { error in
+          if let error = error {
+            // An error happened.
+              print("Error removing document: \(error)")
+          } else {
+            // Account deleted.
+              print("Remove account successfully!")
+          }
+        }
+    }
 }

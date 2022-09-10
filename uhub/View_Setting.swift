@@ -15,18 +15,18 @@ struct SettingView: View {
         VStack {
             HeaderHome(title: "Setting")
             List {
-                ListRow(action: {
+                ListRow(icon: "square.and.pencil", label: "Edit Profile") {
                     pageVM.visit(page: .EditProfile)
-                }, icon: "square.and.pencil", label: "Edit Profile")
-                ListRow(action: {
-//                    pageVM.visit(page: )
-                }, icon: "person.fill", label: "Manage Account")
-                ListRow(action: {
+                }
+                ListRow(icon: "person.fill", label: "Manage Account") {
+                    pageVM.visit(page: .Account)
+                }
+                ListRow(icon: "bell.fill", label: "Notification") {
                     pageVM.visit(page: .Notification)
-                }, icon: "bell.fill", label: "Notification")
-                ListRow(action: {
+                }
+                ListRow(icon: "slider.horizontal.3", label: "Filter People") {
                     pageVM.visit(page: .FilterProfile)
-                }, icon: "slider.horizontal.3", label: "Filter People")
+                }
             }
             .listStyle(.plain)
             

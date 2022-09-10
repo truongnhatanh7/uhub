@@ -50,16 +50,7 @@ struct NotificationView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            ZStack(alignment: .top) {
-                ScrollView {
-                    VStack(spacing: 10) {
-                        NotificationOption(label: "sound", toogle: $isSoundToogle, handler: handleSoundToogle)
-                        NotificationOption(label: "vibarate", toogle: $isVibarateToogle, handler: handleVibarateToogle)
-                        NotificationOption(label: "chat", toogle: $isChatToogle, handler: handleChatToogle)
-                        NotificationOption(label: "new match", toogle: $isNewMatchToogle, isLast: true, handler: handleNewMatchToogle)
-                    }
-                    .padding(.top, 60)
-                }
+            VStack {
                 StandardHeader(title: "Notification") {
                     if pageVM.isfirstFlow {
                         pageVM.visit(page: .FilterProfile)
@@ -67,6 +58,13 @@ struct NotificationView: View {
                         pageVM.visit(page: pageVM.previousPage ?? .Notification)
                     }
                 }
+                List {
+                    Toogle(label: "Sound", toogle: $isSoundToogle, handler: handleSoundToogle)
+                    Toogle(label: "Vibarate", toogle: $isVibarateToogle, handler: handleVibarateToogle)
+                    Toogle(label: "Chat", toogle: $isChatToogle, handler: handleChatToogle)
+                    Toogle(label: "New match", toogle: $isNewMatchToogle, handler: handleNewMatchToogle)
+                }
+                .listStyle(.plain)
             }
             BottomBar {
                 ButtonView(textContent: "Next", onTap: {

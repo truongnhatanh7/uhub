@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ButtonView: View {
     @State var textContent: String
-    @State var onTap: () -> ()
     var isDisabled: Bool = false
+    var isSecondaryBtn: Bool = false
+    @State var onTap: () -> ()
+
     
     var body: some View {
         if isDisabled {
@@ -20,7 +22,7 @@ struct ButtonView: View {
             }, label:  {
                 Text("\(textContent)").bold()
             })
-            .buttonStyle(DisabledButtonStyle())
+            .buttonStyle(DisabledButtonStyle(isSecondaryBtn: isSecondaryBtn))
             .disabled(true)
         } else {
             Button(action: {
@@ -29,31 +31,37 @@ struct ButtonView: View {
             }, label:  {
                 Text("\(textContent)").bold()
             })
-            .buttonStyle(PrimaryButtonStyle())
+            .buttonStyle(PrimaryButtonStyle(isSecondaryBtn: isSecondaryBtn))
             .disabled(false)
         }
     }
 }
 
 struct PrimaryButtonStyle: ButtonStyle {
+    var isSecondaryBtn: Bool = false
+    
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             Spacer()
-            configuration.label.foregroundColor(.white)
+            configuration.label.foregroundColor(isSecondaryBtn ? Color("pink_primary") : .white)
             Spacer()
         }
         .padding()
         .background(
+            isSecondaryBtn ? .clear :
             configuration.isPressed ?
             Color("pink_disabled")
             : Color("pink_primary")
         )
         .cornerRadius(30)
+        .overlay(RoundedRectangle(cornerRadius: 30).stroke(isSecondaryBtn ? Color("pink_primary") : .clear, lineWidth: 4))
         .scaleEffect(configuration.isPressed ? 0.9 : 1)
     }
 }
 
 struct DisabledButtonStyle: ButtonStyle {
+    var isSecondaryBtn: Bool = false
+
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             Spacer()
@@ -65,13 +73,3 @@ struct DisabledButtonStyle: ButtonStyle {
         .cornerRadius(30)
     }
 }
-
-struct ButtonView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            ButtonView(textContent: "Sign In", onTap: {})
-            ButtonView(textContent: "Sign Up", onTap: {}, isDisabled: true)
-        }
-    }
-}
-
