@@ -26,7 +26,7 @@ struct EditProfileView: View {
                     TextInputSubView()
                         .padding(.bottom, 100)
                 }
-                StandardHeader(title: "Fill Your Profile", showReturn: false, action: {})
+                StandardHeader(title: "Fill Your Profile", showReturn: !pageVM.isfirstFlow, action: { pageVM.visit(page: pageVM.previousPage ?? pageVM.currentPage ) })
             }
             BottomBar {
                 ButtonView(textContent: "Next", onTap: submitData, isDisabled: editProfileVM.isDisabled)

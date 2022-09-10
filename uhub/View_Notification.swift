@@ -61,7 +61,11 @@ struct NotificationView: View {
                     .padding(.top, 60)
                 }
                 StandardHeader(title: "Notification") {
-                    pageVM.visit(page: .FilterProfile)
+                    if pageVM.isfirstFlow {
+                        pageVM.visit(page: .FilterProfile)
+                    } else {
+                        pageVM.visit(page: pageVM.previousPage ?? .Notification)
+                    }
                 }
             }
             BottomBar {
