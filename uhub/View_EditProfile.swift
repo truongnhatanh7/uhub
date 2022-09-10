@@ -29,7 +29,7 @@ struct EditProfileView: View {
                 StandardHeader(title: "Fill Your Profile", showReturn: !pageVM.isfirstFlow, action: { pageVM.visit(page: pageVM.previousPage ?? pageVM.currentPage ) })
             }
             BottomBar {
-                ButtonView(textContent: "Next", onTap: submitData, isDisabled: editProfileVM.isDisabled)
+                ButtonView(textContent: "Next", isDisabled: editProfileVM.isDisabled, onTap: submitData)
             }
             
             PickerInputModal(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)

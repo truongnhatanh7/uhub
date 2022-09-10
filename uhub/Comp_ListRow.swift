@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ListRow: View {
-    let action: () -> Void
     let icon: String
     let label: String
-    
+    var showNavigationIcon: Bool = true
+    let action: () -> Void
+
     var body: some View {
         Button(action: action) {
             HStack {
@@ -22,8 +23,10 @@ struct ListRow: View {
                     .clipShape(Circle())
                 Text(label)
                 Spacer()
-                Image(systemName: "chevron.forward")
-                    .foregroundColor(Color("pink_primary"))
+                if showNavigationIcon {
+                    Image(systemName: "chevron.forward")
+                        .foregroundColor(Color("pink_primary"))
+                }
             }
             .padding(.vertical)
         }
