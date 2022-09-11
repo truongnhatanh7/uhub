@@ -83,18 +83,44 @@ import FirebaseStorage
     /// This function is to get the input image and add to the render view
     func loadImage() {
         guard let inputImage = inputImage else { return }
-        image = Image(uiImage: inputImage)
+        self.image = Image(uiImage: inputImage)
+    }
+    
+    /// This function is to reetrive user existing profile image from Storage database
+    func retrieveImage(userId: String, callback: @escaping () -> ()) {
+        // create storage ref
+        let storageRef = Storage.storage().reference()
+        
+        // specify the remote file path and name
+        let remoteFileRef = storageRef.child("images/\(userId).jpg")
+        
+        // retrieve the data
+        remoteFileRef.getData(maxSize: 5*1024*1024) { data, error in
+            // check for errors
+            if error != nil && data == nil {
+                print("[FAILURE - Retrieve Image]: \(error!.localizedDescription)")
+            } else {
+                if let transformImage = UIImage(data: data!) {
+                    self.image = Image(uiImage: transformImage)
+                    print("[SUCCESS - Retrieve Image]: User with ID = \(userId) - Profile image retrieved")
+                    callback()
+                } else {
+                    print("[FAILURE - Retrieve Image]: Cannot transform image data")
+                }
+            }
+        }
     }
     
     /// This function is to get the input image and upload it to Storage database
     func uploadImage(userId: String, callback: @escaping () -> ()) {
         // make sure that the selected image is not nil
+        guard let inputImage = inputImage else { return }
         
         // create storage ref
         let storageRef = Storage.storage().reference()
         
         // turn selected image into data
-        let imageData = inputImage!.jpegData(compressionQuality: 0.8)
+        let imageData = inputImage.jpegData(compressionQuality: 0.8)
         
         // check that we were able to convert it to data
         guard imageData != nil else { return }
@@ -103,13 +129,13 @@ import FirebaseStorage
         let remoteFileRef = storageRef.child("images/\(userId).jpg")
         
         // upload data process starts
-        remoteFileRef.putData(imageData!, metadata: nil) { _, error in
+        remoteFileRef.putData(imageData!, metadata: nil) { metadata, error in
             // check for errors, great place to upload to Firestore if needed
-            if error != nil {
+            if error != nil && metadata == nil {
                 print("[FAILURE - Upload Image]: \(error!.localizedDescription)")
             } else {
-                callback()
                 print("[SUCCESS - Upload Image]: User with ID = \(userId) - Profile image uploaded")
+                callback()
             }
         }
     }

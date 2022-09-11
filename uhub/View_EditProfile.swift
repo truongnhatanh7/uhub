@@ -46,7 +46,18 @@ struct EditProfileView: View {
             editProfileVM.loadImage()
         }
         .onAppear {
-            editProfileVM.updateInfo(userAuthManager.currentUserData)
+            if userAuthManager.currentUserData["id"] != nil {
+                editProfileVM.updateInfo(userAuthManager.currentUserData)
+                
+                if !pageVM.isfirstFlow {
+                    editProfileVM.retrieveImage(
+                        userId: userAuthManager.currentUserData["id"] as! String,
+                        callback: {
+                            editProfileVM.loadImage()
+                        }
+                    )
+                }
+            }
         }
     }
     
