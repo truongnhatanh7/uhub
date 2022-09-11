@@ -113,6 +113,7 @@ struct SignupScreenView: View {
                     ButtonBindingView(textContent: "Sign Up", onTap: {
                         userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
                             if userAuthManager.errorMsg == "" {
+                                pageVm.isfirstFlow = true
                                 pageVm.visit(page: .EditProfile)
                             } else {
                                 print(userAuthManager.errorMsg)
