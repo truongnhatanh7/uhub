@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import FirebaseStorage
 
 @MainActor class EditProfileViewModel: ObservableObject {
     @Published var fullname: String
@@ -83,6 +84,34 @@ import SwiftUI
     func loadImage() {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
+    }
+    
+    /// This function is to get the input image and upload it to Storage database
+    func uploadImage(userId: String, callback: @escaping () -> ()) {
+        // make sure that the selected image is not nil
+        
+        // create storage ref
+        let storageRef = Storage.storage().reference()
+        
+        // turn selected image into data
+        let imageData = inputImage!.jpegData(compressionQuality: 0.8)
+        
+        // check that we were able to convert it to data
+        guard imageData != nil else { return }
+        
+        // specify the remote file path and name
+        let remoteFileRef = storageRef.child("images/\(userId).jpg")
+        
+        // upload data process starts
+        remoteFileRef.putData(imageData!, metadata: nil) { _, error in
+            // check for errors, great place to upload to Firestore if needed
+            if error != nil {
+                print("[FAILURE - Upload Image]: \(error!.localizedDescription)")
+            } else {
+                callback()
+                print("[SUCCESS - Upload Image]: User with ID = \(userId) - Profile image uploaded")
+            }
+        }
     }
 }
 
