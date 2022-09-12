@@ -9,16 +9,27 @@ import Foundation
 import SwiftUI
 
 struct User : Identifiable {
-    var id = UUID().uuidString
-    var name:String
-    var gpa:CGFloat
-    var major:String
-    var about:String
-    var courseStudying:[String]
-    var image:String
+    var id: String
+    var name: String
+    var age: Int
+    var school: String
+    var major: String
+    var gpa: Int
+    var semesterLearned: Int
+    var about: String
+    var image: Image
     
-    var place: String
-    var profilePic: String
+    init(id: String?, name: String?, age: Int?, school: String?, major: String?, gpa: Int?, semesterLearned: Int?, about: String?) {
+        self.id = id ?? UUID().uuidString
+        self.name = name ?? "N/A"
+        self.age = age ?? 18
+        self.school = school ?? "N/A"
+        self.major = major ?? "N/A"
+        self.gpa = gpa ?? 0
+        self.semesterLearned = semesterLearned ?? 0
+        self.about = about ?? "N/A"
+        self.image = Image("User1")
+    }
     
     func getFormattedGpa() -> String {
         let formatter = NumberFormatter()

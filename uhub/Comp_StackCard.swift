@@ -28,7 +28,7 @@ struct StackCard: View {
             let topOffset = (idx <= 2 ? idx : 2) * 15
             
             ZStack {
-                Image(user.profilePic)
+                user.image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: size.width - topOffset, height: size.height)
@@ -67,25 +67,25 @@ struct StackCard: View {
                     out = true
                 }
                 .onChanged { value in
-                    print(value.startLocation.y)
-                    let startYPosition = value.startLocation.y
-                    self.startYPosition = isDragging ? startYPosition : .zero
-                    let translationX = value.translation.width
-                    offsetX = isDragging ? translationX : .zero
-                    let translationY = value.translation.height
-                    offsetY = isDragging ? translationY : .zero
+                    withAnimation(.linear(duration: 0.1)) {
+                        let startYPosition = value.startLocation.y
+                        self.startYPosition = isDragging ? startYPosition : .zero
+                        let translationX = value.translation.width
+                        offsetX = isDragging ? translationX : .zero
+                        let translationY = value.translation.height
+                        offsetY = isDragging ? translationY : .zero
+                    }
                 }
                 .onEnded { value in
-                    let width = getRect().width - 50
-                    let translation = value.translation.width
-                    let checkingStatus = translation > 0 ? translation : -translation
-                    
+                    let width = getRect().width - 100
+                    let translationX = value.translation.width
+                    let checkingStatusX = translationX > 0 ? translationX : -translationX
                     withAnimation {
-                        if checkingStatus > width / 2 {
-                            offsetX = (translation > 0 ? width : -width) * 2
+                        if checkingStatusX > width / 2 {
+                            offsetX = (translationX > 0 ? width + 80 : -width - 80) * 2
                             endSwipeAction()
                             
-                            if translation > 0 {
+                            if translationX > 0 {
                                 rightSwipe()
                             } else {
                                 leftSwipe()
@@ -135,9 +135,9 @@ struct StackCard: View {
         withAnimation { endSwipe = true }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            if let _ = homeVM.displayingUsers?.first {
+            if let _ = homeVM.fetchedUsers.first {
                 let _ = withAnimation {
-                    homeVM.displayingUsers?.removeFirst()
+                    homeVM.fetchedUsers.removeFirst()
                 }
             }
         }

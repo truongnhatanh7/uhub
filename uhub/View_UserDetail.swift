@@ -17,7 +17,7 @@ struct View_UserDetail: View {
         ZStack {
             // MARK: Image
             VStack {
-                Image(user.image).resizable().modifier(DetailImage())
+//                Image(user.image).resizable().modifier(DetailImage())
                 
                 Spacer()
             }.edgesIgnoringSafeArea(.all)
@@ -73,9 +73,9 @@ struct View_UserDetail: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 
-                                ForEach(user.courseStudying, id: \.self) { courseName in
-                                    Comp_Course(name: courseName)
-                                }
+//                                ForEach(user.courseStudying, id: \.self) { courseName in
+//                                    Comp_Course(name: courseName)
+//                                }
                         
                             }
                             
@@ -91,11 +91,5 @@ struct View_UserDetail: View {
             }
             
         })
-    }
-}
-
-struct View_UserDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        View_UserDetail(isFromMatchPage: true, user: User(name: "Michiael Ho", gpa: 3.9, major: "Software Enginner", about: "I am a senior student at RMIT. My strengths are machine learning and data visualization. I know a bit about web development and finding a team for my capstone.", courseStudying: ["iOS Development", "Software Engineering Design", "Engineering Computing 1"], image: "user", place: "", profilePic: ""))
     }
 }

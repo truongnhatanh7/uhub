@@ -193,16 +193,16 @@ class UserAuthManager: ObservableObject {
                 "email": "",
                 "password": "",
                 "fullname": "",
-                "age": "",
+                "age": 18,
                 "school": "",
                 "major": "",
-                "gpa": "",
-                "semester_learned": "",
+                "gpa": 0,
+                "semester_learned": 0,
                 "about": "",
                 "friends_filter": [
-                    "friends_age": "",
-                    "friends_gpa": "",
-                    "friends_semester_learned": ""
+                    "friends_age": 0,
+                    "friends_gpa": 0,
+                    "friends_semester_learned": 0
                 ],
                 "isActive": "false"
             ]
@@ -231,29 +231,24 @@ class UserAuthManager: ObservableObject {
               
               // reset currentUserData
               self.currentUserData = [
-                  "id": "",
-                  "email": "",
-                  "password": "",
-                  "fullname": "",
-                  "age": "",
-                  "school": "",
-                  "major": "",
-                  "gpa": "",
-                  "semester_learned": "",
-                  "about": "",
-                  "friends_filter": [
-                      "friends_age": "",
-                      "friends_gpa": "",
-                      "friends_semester_learned": ""
-                  ],
-                  "isActive": "false"
+                "id": "",
+                "email": "",
+                "password": "",
+                "fullname": "",
+                "age": 18,
+                "school": "",
+                "major": "",
+                "gpa": 0,
+                "semester_learned": 0,
+                "about": "",
+                "friends_filter": [
+                    "friends_age": 0,
+                    "friends_gpa": 0,
+                    "friends_semester_learned": 0
+                ],
+                "isActive": "false"
               ]
           }
         }
     }
-    
-//    func fetchListUsers() -> [User] {
-//        let usersRef = db.collection("users")
-//        return usersRef
-//    }
 }
