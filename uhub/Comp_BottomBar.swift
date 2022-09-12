@@ -22,6 +22,7 @@ struct BottomBar<T: View>: View {
         .overlay(
             RoundedRectangle(cornerRadius: 20)
                 .stroke(.secondary)
+                .opacity(0.4)
         )
     }
 }

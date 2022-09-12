@@ -46,26 +46,46 @@ struct EditProfileView: View {
             editProfileVM.loadImage()
         }
         .onAppear {
-            editProfileVM.updateInfo(userAuthManager.currentUserData)
+            if userAuthManager.currentUserData["id"] != nil {
+                editProfileVM.updateInfo(userAuthManager.currentUserData)
+                
+                if !pageVM.isfirstFlow {
+                    editProfileVM.retrieveImage(
+                        userId: userAuthManager.currentUserData["id"] as! String,
+                        callback: {
+                            editProfileVM.loadImage()
+                        }
+                    )
+                }
+            }
         }
     }
     
     private func submitData() {
-        userAuthManager.updateProfileInfo(updatedData: [
-            "fullname": editProfileVM.fullname,
-            "age": editProfileVM.age,
-            "school": editProfileVM.school,
-            "major": editProfileVM.major,
-            "gpa": editProfileVM.gpa,
-            "semester_learned": editProfileVM.semesterLearned,
-            "about": editProfileVM.about
-        ], callback: {
-            if userAuthManager.errorMsg == "" {
-                pageVM.visit(page: .FilterProfile)
-            } else {
-                print(userAuthManager.errorMsg)
+        // upload chosen profile image to Storage
+        if userAuthManager.currentUserData["id"] != nil {
+            editProfileVM.uploadImage(userId: userAuthManager.currentUserData["id"] as! String) {
+                
+                // when finish uploading image, update users info on Firestore
+                userAuthManager.updateProfileInfo(updatedData: [
+                    "fullname": editProfileVM.fullname,
+                    "age": editProfileVM.age,
+                    "school": editProfileVM.school,
+                    "major": editProfileVM.major,
+                    "gpa": editProfileVM.gpa,
+                    "semester_learned": editProfileVM.semesterLearned,
+                    "about": editProfileVM.about
+                ], callback: {
+                    if userAuthManager.errorMsg == "" {
+                        pageVM.visit(page: .FilterProfile)
+                    } else {
+                        print(userAuthManager.errorMsg)
+                    }
+                })
             }
-        })
+        } else {
+            print("[FAILURE - Upload User Image at Edit Profile View]: user is not identified")
+        }
     }
 }
 
