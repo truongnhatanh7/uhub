@@ -55,7 +55,8 @@ enum AgeRange: Int, CaseIterable, Description, PickerEnum {
         case 1: self = .From18To27
         case 2: self = .From28To37
         case 3: self = .From38To47
-        case 4: self = .GreaterThan57
+        case 4: self = .From48To57
+        case 5: self = .GreaterThan57
         default: self = .All
         }
     }

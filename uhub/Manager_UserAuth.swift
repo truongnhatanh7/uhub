@@ -24,7 +24,7 @@ class UserAuthManager: ObservableObject {
         "about": "",
         "friends_filter": [
             "friends_age": 0,
-            "friefnds_gpa": 0,
+            "friends_gpa": 0,
             "friends_semester_learned": 0
         ],
         "isActive": "false"
