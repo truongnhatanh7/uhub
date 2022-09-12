@@ -11,6 +11,7 @@ struct HomeView: View {
     @State var showMenu = false
 
     @StateObject var homeVM = HomeViewModel()
+    @EnvironmentObject var userAuthManager: UserAuthManager
     
     var body: some View {
         VStack {
@@ -71,6 +72,7 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             withAnimation { showMenu = true }
+            
         }
     }
     

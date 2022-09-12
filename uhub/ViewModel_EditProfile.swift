@@ -10,13 +10,13 @@ import UIKit
 import SwiftUI
 
 @MainActor class EditProfileViewModel: ObservableObject {
-    @Published var fullname: String
-    @Published var age: String
-    @Published var school: String
-    @Published var major: String
-    @Published var gpa: String
-    @Published var semesterLearned: String
-    @Published var about: String
+    @Published var fullname: String = ""
+    @Published var age: Int = 18
+    @Published var school: String = ""
+    @Published var major: String = ""
+    @Published var gpa: GPARange = .From50To59
+    @Published var semesterLearned: Int = 0
+    @Published var about: String = ""
     
     @Published var showImagePicker = false
     @Published var inputImage: UIImage? = nil
@@ -26,57 +26,34 @@ import SwiftUI
     @Published var showGPAPicker = false
     @Published var showSemesterLearned = false
     
-    let ageRange = (18...100).compactMap { "\($0)" }
-    let GPARange = ["Less than 50%", "50% - 59%", "60% - 69%", "70% - 79%", "80% - 100%"]
-    let semesterLearnedRange = (0...20).compactMap { "\($0)" }
+    let ageRange = (18...100).map { $0 }
+//    let GPARange = ["Less than 50%", "50% - 59%", "60% - 69%", "70% - 79%", "80% - 100%"]
+    let semesterLearnedRange = (0...20).map { $0 }
     
     var isDisabled: Bool {
-        image == nil || fullname.isEmpty || age.isEmpty || school.isEmpty || major.isEmpty || gpa.isEmpty || semesterLearned.isEmpty
+        image == nil || fullname.isEmpty || school.isEmpty || major.isEmpty
     }
     
     func updateInfo(_ currentUserData: [String: Any]) {
         self.fullname = currentUserData["fullname"] as? String ?? ""
-        self.age = currentUserData["age"] as? String ?? ageRange.first!
-        self.age = self.age.isEmpty ? ageRange.first! : self.age
+        self.age = currentUserData["age"] as? Int ?? 18
         self.school = currentUserData["school"] as? String ?? ""
         self.major = currentUserData["major"] as? String ?? ""
-        self.gpa = currentUserData["gpa"] as? String ?? GPARange.first!
-        self.gpa = self.gpa.isEmpty ? GPARange.first! : self.gpa
-        self.semesterLearned = currentUserData["semester_learned"] as? String ?? semesterLearnedRange.first!
-        self.semesterLearned = self.semesterLearned.isEmpty ? semesterLearnedRange.first! : self.semesterLearned
+        self.gpa = GPARange(type: currentUserData["gpa"] as? Int ?? 0)
+        self.semesterLearned = currentUserData["semester_learned"] as? Int ?? 0
         self.about = currentUserData["about"] as? String ?? ""
     }
     
-    init(fullname: String = "", age: String = "18", school: String = "", major: String = "", gpa: String = "Less than 50%", semesterLearned: String = "0", about: String = "") {
-        self.fullname = fullname
-        self.age = age
-        self.school = school
-        self.major = major
-        self.gpa = gpa
-        self.semesterLearned = semesterLearned
-        self.about = about
-    }
-    
-    func updateField(_ field: Field, _ newValue: String) {
-        let filtered = newValue.filter { $0.isNumber }
-        if filtered != newValue {
-            switch field {
-            case .FullName:
-                return
-            case .Age:
-                self.age = filtered
-            case .School:
-                return
-            case .Major:
-                return
-            case .GPA:
-                self.gpa = filtered
-            case .SemeterLearned:
-                self.semesterLearned = semesterLearned
-            case .About:
-                return
-            }
-        }
+    func submitData(_ manager: UserAuthManager, callback: @escaping () -> ()) {
+        manager.updateProfileInfo(updatedData: [
+            "fullname": fullname,
+            "age": age,
+            "school": school,
+            "major": major,
+            "gpa": gpa.rawValue,
+            "semester_learned": semesterLearned,
+            "about": about
+        ], callback: callback)
     }
     
     /// This function is to get the input image and add to the render view
