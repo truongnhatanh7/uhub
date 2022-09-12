@@ -18,11 +18,11 @@ import SwiftUI
     @Published var filterSemester = SemesterLearnedRange.All
     
     func updateInfo(_ currentUserData: [String: Any]) {
-        let tmpDict = currentUserData["friends_filter"] as? [String: Any]
-        self.filterAge = AgeRange(type: tmpDict?["friends_age"] as? Int ?? 0)
-        self.filterGPA = GPARange(type: tmpDict?["friends_gpa"] as? Int ?? 0)
+        let filter = currentUserData["friends_filter"] as? [String: Any]
+        self.filterAge = AgeRange(type: filter?["friends_age"] as? Int ?? 0)
+        self.filterGPA = GPARange(type: filter?["friends_gpa"] as? Int ?? 0)
         self.filterSemester = SemesterLearnedRange(
-            type: tmpDict?["friends_semester_learned"] as? Int ?? 0
+            type: filter?["friends_semester_learned"] as? Int ?? 0
         )
     }
     
