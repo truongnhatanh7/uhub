@@ -17,11 +17,11 @@ struct FilterProfileView: View {
             ZStack(alignment: .top) {
                 ScrollView {
                     VStack(spacing: 30) {
-                        PickerInputComponent(label: "Age", value: $filterProfileVM.filterAge, items: filterProfileVM.ageRange, showPicker: $filterProfileVM.showAgePicker)
+                        PickerInputComponent(label: "Age", value: $filterProfileVM.filterAge, showPicker: $filterProfileVM.showAgePicker)
                         
-                        PickerInputComponent(label: "GPA", value: $filterProfileVM.filterGPA, items: filterProfileVM.GPARange, showPicker: $filterProfileVM.showGPAPicker)
+                        PickerInputComponent(label: "GPA", value: $filterProfileVM.filterGPA, showPicker: $filterProfileVM.showGPAPicker)
                         
-                        PickerInputComponent(label: "Semester Learned", value: $filterProfileVM.filterSemester, items: filterProfileVM.semesterLearnedRange, showPicker: $filterProfileVM.showSemesterLearned)
+                        PickerInputComponent(label: "Semester Learned", value: $filterProfileVM.filterSemester, showPicker: $filterProfileVM.showSemesterLearned)
                     }
                     .padding()
                     .padding(.top, 60)
@@ -35,14 +35,16 @@ struct FilterProfileView: View {
                 }
             }
             BottomBar {
-                ButtonView(textContent: "Next", onTap: submitData)
+                ButtonView(textContent: pageVM.isfirstFlow ? "Next" : "Submit") {
+                    filterProfileVM.submitData(userAuthManager, callback: switchPageForBtn)
+                }
             }
             
-            PickerInputModal(label: "Filter age", showPicker: $filterProfileVM.showAgePicker, value: $filterProfileVM.filterAge, items: filterProfileVM.ageRange)
+            PickerInputModal(label: "Filter age", showPicker: $filterProfileVM.showAgePicker, value: $filterProfileVM.filterAge)
             
-            PickerInputModal(label: "Filter GPA", showPicker: $filterProfileVM.showGPAPicker, value: $filterProfileVM.filterGPA, items: filterProfileVM.GPARange)
+            PickerInputModal(label: "Filter GPA", showPicker: $filterProfileVM.showGPAPicker, value: $filterProfileVM.filterGPA)
             
-            PickerInputModal(label: "Filter semester learned", showPicker: $filterProfileVM.showSemesterLearned, value: $filterProfileVM.filterSemester, items: filterProfileVM.semesterLearnedRange)
+            PickerInputModal(label: "Filter semester learned", showPicker: $filterProfileVM.showSemesterLearned, value: $filterProfileVM.filterSemester)
         }
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
@@ -50,19 +52,15 @@ struct FilterProfileView: View {
         }
     }
     
-    private func submitData() {
-        userAuthManager.updateProfileInfo(updatedData: [
-            "friends_filter": [
-                "friends_age": filterProfileVM.filterAge,
-                "freinds_gpa": filterProfileVM.filterGPA,
-                "friends_semester_learned": filterProfileVM.filterSemester
-            ]
-        ], callback: {
-            if userAuthManager.errorMsg == "" {
+    private func switchPageForBtn() {
+        if userAuthManager.errorMsg == "" {
+            if pageVM.isfirstFlow {
                 pageVM.visit(page: .Notification)
             } else {
-                print(userAuthManager.errorMsg)
+                pageVM.visit(page: pageVM.previousPage ?? .FilterProfile)
             }
-        })
+        } else {
+            print(userAuthManager.errorMsg)
+        }
     }
 }

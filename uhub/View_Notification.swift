@@ -66,10 +66,12 @@ struct NotificationView: View {
                 }
                 .listStyle(.plain)
             }
-            BottomBar {
-                ButtonView(textContent: "Next", onTap: {
-                    pageVM.visit(page: .Congrat)
-                })
+            if pageVM.isfirstFlow {
+                BottomBar {
+                    ButtonView(textContent: "Next", onTap: {
+                        pageVM.visit(page: .Congrat)
+                    })
+                }
             }
         }
         .edgesIgnoringSafeArea(.bottom)

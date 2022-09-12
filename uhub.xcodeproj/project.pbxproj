@@ -158,7 +158,7 @@
 			children = (
 				55FA436628BE26BD006AC2F8 /* uhub */,
 				55FA436528BE26BD006AC2F8 /* Products */,
-				9AB9019DFD02914A3A999B6D /* Frameworks */,
+				E03DC350ACC096A1B9E495C7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,10 +216,10 @@
 				8F932B4F28C751EC00FAC04B /* View_Congrats.swift */,
 				8F932B6E28C751EE00FAC04B /* View_Content.swift */,
 				8F932B7628C751EE00FAC04B /* View_EditProfile.swift */,
-				C133E48528CC3529002FFA9E /* View_ManageAccount.swift */,
 				8F932B6C28C751EE00FAC04B /* View_FilterProfile.swift */,
 				C133E47528CA2670002FFA9E /* View_Home.swift */,
 				8F932B5528C751EC00FAC04B /* View_Inbox.swift */,
+				C133E48528CC3529002FFA9E /* View_ManageAccount.swift */,
 				C133E47928CA4C31002FFA9E /* View_Matches.swift */,
 				8F932B5828C751EC00FAC04B /* View_Notification.swift */,
 				C133E47B28CA4C3F002FFA9E /* View_Setting.swift */,
@@ -247,7 +247,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		9AB9019DFD02914A3A999B6D /* Frameworks */ = {
+		E03DC350ACC096A1B9E495C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -274,7 +274,7 @@
 				8FDB54AA28BF2AA10013816E /* FirebaseAuth */,
 				8FDB54B028BF2AA10013816E /* FirebaseFirestore */,
 				8FDB54B228BF2AA10013816E /* FirebaseMessaging */,
-				7F45D5F4FB72469A52C06D4C /* FirebaseStorage */,
+				8A76789569B8694AF27CBAB1 /* FirebaseStorage */,
 			);
 			productName = uhub;
 			productReference = 55FA436428BE26BD006AC2F8 /* uhub.app */;
@@ -600,7 +600,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		001935D63EF841A9D48D6E1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -608,7 +608,7 @@
 				minimumVersion = 9.0.0;
 			};
 		};
-		F5EC37820AAE08A1DD3B2BF2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		8FDB54A728BF2AA10013816E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -619,9 +619,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7F45D5F4FB72469A52C06D4C /* FirebaseStorage */ = {
+		8A76789569B8694AF27CBAB1 /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F5EC37820AAE08A1DD3B2BF2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 001935D63EF841A9D48D6E1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseStorage;
 		};
 		8FDB54AA28BF2AA10013816E /* FirebaseAuth */ = {
