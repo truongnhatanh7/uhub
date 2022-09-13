@@ -43,9 +43,11 @@ import FirebaseStorage
         self.gpa = GPARange(type: currentUserData["gpa"] as? Int ?? 0)
         self.semesterLearned = currentUserData["semester_learned"] as? Int ?? 0
         self.about = currentUserData["about"] as? String ?? ""
+        retrieveImage(userId: currentUserData["id"] as? String ?? "", callback: {})
     }
     
     func submitData(_ manager: UserAuthManager, callback: @escaping () -> ()) {
+        uploadImage(userId: manager.currentUserData["id"] as? String ?? UUID().uuidString, callback: {})
         manager.updateProfileInfo(updatedData: [
             "fullname": fullname,
             "age": age,

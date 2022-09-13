@@ -9,6 +9,8 @@ import SwiftUI
 
 struct StackCard: View {
     @EnvironmentObject var homeVM: HomeViewModel
+    @EnvironmentObject var userAuthManager: UserAuthManager
+
     var user: User
     
     @State var offsetX: CGFloat = 0
@@ -28,7 +30,7 @@ struct StackCard: View {
             let topOffset = (idx <= 2 ? idx : 2) * 15
             
             ZStack {
-                user.image
+                user.image?
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: size.width - topOffset, height: size.height)

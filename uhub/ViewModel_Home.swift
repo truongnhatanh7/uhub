@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseStorage
+import SwiftUI
 
 class HomeViewModel: ObservableObject {
     @Published var fetchedUsers: [User] = []
@@ -54,8 +56,15 @@ class HomeViewModel: ObservableObject {
                         let gpa = data["gpa"] as? Int
                         let semesterLearned = data["semester_learned"] as? Int
                         let about = data["about"] as? String
-                        let user = User(id: id, name: name, age: age, school: school, major: major, gpa: gpa, semesterLearned: semesterLearned, about: about)
-                        self.fetchedUsers.append(user)
+                        var image: Image? = nil
+                        if let id = id {
+                            self.retrieveImage(userId: id) { loadedImage in
+                                image = loadedImage
+                                
+                                let user = User(id: id, name: name, age: age, school: school, major: major, gpa: gpa, semesterLearned: semesterLearned, about: about, image: image)
+                                self.fetchedUsers.append(user)
+                            }
+                        }
                     }
                 }
             }
@@ -63,5 +72,30 @@ class HomeViewModel: ObservableObject {
     
     func getIdx(user: User) -> Int {
         fetchedUsers.firstIndex { $0.id == user.id } ?? 0
+    }
+    
+    /// This function is to reetrive user existing profile image from Storage database
+    func retrieveImage(userId: String, callback: @escaping (Image) -> ()) {
+        // create storage ref
+        let storageRef = Storage.storage().reference()
+        
+        // specify the remote file path and name
+        let remoteFileRef = storageRef.child("images/\(userId).jpg")
+        
+        // retrieve the data
+        remoteFileRef.getData(maxSize: 5*1024*1024) { data, error in
+            // check for errors
+            if error != nil && data == nil {
+                print("[FAILURE - Retrieve Image]: \(error!.localizedDescription)")
+            } else {
+                if let transformImage = UIImage(data: data!) {
+                    let image = Image(uiImage: transformImage)
+                    print("[SUCCESS - Retrieve Image]: User with ID = \(userId) - Profile image retrieved")
+                    callback(image)
+                } else {
+                    print("[FAILURE - Retrieve Image]: Cannot transform image data")
+                }
+            }
+        }
     }
 }
