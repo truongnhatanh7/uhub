@@ -12,6 +12,7 @@ import SwiftUI
 
 class HomeViewModel: ObservableObject {
     @Published var fetchedUsers: [User] = []
+    @Published var showDetailUser: Bool = false
     
     func fetchData(_ currentUserData: [String: Any]) {
         let usersRef = Firestore.firestore().collection("users")

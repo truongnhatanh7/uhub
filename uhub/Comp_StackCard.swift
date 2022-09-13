@@ -10,7 +10,7 @@ import SwiftUI
 struct StackCard: View {
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var userAuthManager: UserAuthManager
-
+    
     var user: User
     
     @State var offsetX: CGFloat = 0
@@ -30,12 +30,32 @@ struct StackCard: View {
             let topOffset = (idx <= 2 ? idx : 2) * 15
             
             ZStack {
-                user.image?
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: size.width - topOffset, height: size.height)
-                    .cornerRadius(15)
+                Card(image: user.image, width: size.width - topOffset, height: size.height)
                     .offset(y: -topOffset)
+                    .overlay(alignment: .bottom) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("\(user.name)")
+                                        .font(.largeTitle)
+                                    Text("\(user.age)")
+                                        .font(.title2)
+                                }
+                                Label("\(user.school)", systemImage: "graduationcap.fill")
+                                    .font(.title3)
+                            }
+                            Spacer()
+                            Button {
+                                homeVM.showDetailUser = true
+                            } label: {
+                                Image(systemName: "info.circle.fill")
+                                    .font(.title)
+                            }
+                        }
+                        .padding(.bottom, 40)
+                        .padding(.horizontal, 20)
+                        .foregroundColor(.white)
+                    }
                     .overlay(alignment: .top) {
                         Text("Like")
                             .font(.title.bold())
@@ -125,6 +145,9 @@ struct StackCard: View {
                     }
                 }
             }
+        }
+        .fullScreenCover(isPresented: $homeVM.showDetailUser) {
+            View_UserDetail(isFromMatchPage: false, user: user)
         }
     }
     
