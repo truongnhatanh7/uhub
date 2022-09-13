@@ -62,9 +62,6 @@ struct ChatListView: View {
         .edgesIgnoringSafeArea(.bottom)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
-            chatEngine.loadChatList {
-                chatEngine.fetchUserStatus()
-            }
             withAnimation {
                 showMenu = true
             }

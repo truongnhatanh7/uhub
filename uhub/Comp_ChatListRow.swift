@@ -22,18 +22,19 @@ struct ChatListRow: View {
                     
                         // TODO: Load real img
 
-                    AsyncImage(url: URL(string: "https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"), scale: 1) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        Text("")
-                            .frame(width: 50, height: 50)
-                            .background(Color("pink_primary"))
-                            .clipShape(Circle())
-                    }
+//                    AsyncImage(url: URL(string: "https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"), scale: 1) { image in
+//                        image
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fill)
+//                            .frame(width: 50, height: 50)
+//                            .clipShape(Circle())
+//                    } placeholder: {
+//                        Text("")
+//                            .frame(width: 50, height: 50)
+//                            .background(Color("pink_primary"))
+//                            .clipShape(Circle())
+//                    }
+                    FirebaseImage(id: Auth.auth().currentUser?.uid ?? "")
 
                     // TODO: Handle online -> Green light
                     if chatEngine.conversationStatus[conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!] ?? false {
