@@ -17,7 +17,7 @@ struct View_UserDetail: View {
         ZStack {
             // MARK: Image
             VStack {
-                Image(user.image).resizable().modifier(DetailImage())
+                user.image.resizable().frame(width: .infinity, height: 450, alignment: .center)
                 
                 Spacer()
             }.edgesIgnoringSafeArea(.all)
@@ -65,22 +65,11 @@ struct View_UserDetail: View {
                     Spacer()
                 }
                 
-                // MARK: Course taking
+                // MARK: Semester learn
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Studying this semester").modifier(TextTitle())
-                        
-                        HStack {
-                            VStack(alignment: .leading) {
-                                
-                                ForEach(user.courseStudying, id: \.self) { courseName in
-                                    Comp_Course(name: courseName)
-                                }
-                        
-                            }
-                            
-                            Spacer()
-                        }
+                        Text("Semester learned").modifier(TextTitle())
+                        Text("\(user.semesterLearned)")
                        
                     }.padding()
                     
@@ -96,6 +85,6 @@ struct View_UserDetail: View {
 
 struct View_UserDetail_Previews: PreviewProvider {
     static var previews: some View {
-        View_UserDetail(isFromMatchPage: true, user: User(name: "Michiael Ho", gpa: 3.9, major: "Software Enginner", about: "I am a senior student at RMIT. My strengths are machine learning and data visualization. I know a bit about web development and finding a team for my capstone.", courseStudying: ["iOS Development", "Software Engineering Design", "Engineering Computing 1"], image: "user", place: "", profilePic: ""))
+        View_UserDetail(isFromMatchPage: true, user: User( id: nil, name: "Bao Nguyen", age: 19, school: "SSET", major: "IT", gpa: 3, semesterLearned: 6, about: "IT Student"))
     }
 }

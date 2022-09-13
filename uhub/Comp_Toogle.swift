@@ -11,7 +11,6 @@ struct Toogle: View {
     
     var label:String
     @Binding var toogle:Bool
-    var isLast:Bool = false
     var handler: (_ isOn:Bool) -> Void
     
     
@@ -22,11 +21,5 @@ struct Toogle: View {
             
             handler(value)
         }
-    }
-}
-
-struct Toogle_Previews: PreviewProvider {
-    static var previews: some View {
-        Toogle(label: "label", toogle: .constant(true), handler: {isOn in })
     }
 }

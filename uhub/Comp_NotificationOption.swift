@@ -27,9 +27,3 @@ struct NotificationOption: View {
         }
     }
 }
-
-struct NotificationOption_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationOption(label: "sound", toogle: .constant(false), isLast: false, handler: {isOn in })
-    }
-}

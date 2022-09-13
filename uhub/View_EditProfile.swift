@@ -26,15 +26,17 @@ struct EditProfileView: View {
                     TextInputSubView()
                         .padding(.bottom, 100)
                 }
-                StandardHeader(title: "Fill Your Profile", showReturn: !pageVM.isfirstFlow, action: { pageVM.visit(page: pageVM.previousPage ?? pageVM.currentPage ) })
+                StandardHeader(title: "Fill Your Profile", showReturn: !pageVM.isfirstFlow, action: { pageVM.visit(page: pageVM.previousPage ?? pageVM.currentPage) })
             }
             BottomBar {
-                ButtonView(textContent: "Next", onTap: submitData, isDisabled: editProfileVM.isDisabled)
+                ButtonView(textContent: pageVM.isfirstFlow ? "Next" : "Submit", isDisabled: editProfileVM.isDisabled) {
+                    editProfileVM.submitData(userAuthManager, callback: switchPageForBtn)
+                }
             }
             
-            PickerInputModal(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)
-            PickerInputModal(label: "Your GPA", showPicker: $editProfileVM.showGPAPicker, value: $editProfileVM.gpa, items: editProfileVM.GPARange)
-            PickerInputModal(label: "Semester learned", showPicker: $editProfileVM.showSemesterLearned, value: $editProfileVM.semesterLearned, items: editProfileVM.semesterLearnedRange)
+            PickerInputModalInt(label: "Your age", showPicker: $editProfileVM.showAgePicker, value: $editProfileVM.age, items: editProfileVM.ageRange)
+            PickerInputModal(label: "Your GPA", showPicker: $editProfileVM.showGPAPicker, value: $editProfileVM.gpa)
+            PickerInputModalInt(label: "Semester learned", showPicker: $editProfileVM.showSemesterLearned, value: $editProfileVM.semesterLearned, items: editProfileVM.semesterLearnedRange)
             
         }
         .edgesIgnoringSafeArea(.bottom)
@@ -46,26 +48,31 @@ struct EditProfileView: View {
             editProfileVM.loadImage()
         }
         .onAppear {
-            editProfileVM.updateInfo(userAuthManager.currentUserData)
+            if userAuthManager.currentUserData["id"] != nil {
+                editProfileVM.updateInfo(userAuthManager.currentUserData)
+                
+                if !pageVM.isfirstFlow {
+                    editProfileVM.retrieveImage(
+                        userId: userAuthManager.currentUserData["id"] as! String,
+                        callback: {
+                            editProfileVM.loadImage()
+                        }
+                    )
+                }
+            }
         }
     }
     
-    private func submitData() {
-        userAuthManager.updateProfileInfo(updatedData: [
-            "fullname": editProfileVM.fullname,
-            "age": editProfileVM.age,
-            "school": editProfileVM.school,
-            "major": editProfileVM.major,
-            "gpa": editProfileVM.gpa,
-            "semester_learned": editProfileVM.semesterLearned,
-            "about": editProfileVM.about
-        ], callback: {
-            if userAuthManager.errorMsg == "" {
+    private func switchPageForBtn() {
+        if userAuthManager.errorMsg == "" {
+            if pageVM.isfirstFlow {
                 pageVM.visit(page: .FilterProfile)
             } else {
-                print(userAuthManager.errorMsg)
+                pageVM.visit(page: pageVM.previousPage ?? pageVM.currentPage)
             }
-        })
+        } else {
+            print(userAuthManager.errorMsg)
+        }
     }
 }
 
@@ -80,7 +87,7 @@ struct TextInputSubView: View {
             TextInputComponent(label: "Full Name", value: $editProfileVM.fullname, placeholder: "Full Name", isSecure: false, isRequired: true, icon: "person")
                 .focused($isFocusKeyboard, equals: .FullName)
             
-            PickerInputComponent(label: "Age", value: $editProfileVM.age, isRequired: true, items: editProfileVM.ageRange, showPicker: $editProfileVM.showAgePicker)
+            PickerInputComponentForInt(label: "Age", value: $editProfileVM.age, isRequired: true, showPicker: $editProfileVM.showAgePicker)
             
             TextInputComponent(label: "School", value: $editProfileVM.school, placeholder: "School Name", isRequired: true, icon: "mappin.and.ellipse")
                 .focused($isFocusKeyboard, equals: .School)
@@ -88,9 +95,9 @@ struct TextInputSubView: View {
             TextInputComponent(label: "Major", value: $editProfileVM.major, placeholder: "Learning Major", isRequired: true, icon: "graduationcap")
                 .focused($isFocusKeyboard, equals: .Major)
             
-            PickerInputComponent(label: "GPA", value: $editProfileVM.gpa, isRequired: true, items: editProfileVM.GPARange, showPicker: $editProfileVM.showGPAPicker)
+            PickerInputComponent(label: "GPA", value: $editProfileVM.gpa, isRequired: true, showPicker: $editProfileVM.showGPAPicker)
             
-            PickerInputComponent(label: "Semester Learned", value: $editProfileVM.semesterLearned, isRequired: true, items: editProfileVM.semesterLearnedRange, showPicker: $editProfileVM.showSemesterLearned)
+            PickerInputComponentForInt(label: "Semester Learned", value: $editProfileVM.semesterLearned, isRequired: true, showPicker: $editProfileVM.showSemesterLearned)
             
             TextBox(label: "About", value: $editProfileVM.about, placeholder: "Tell me about yourself")
                 .focused($isFocusKeyboard, equals: .About)

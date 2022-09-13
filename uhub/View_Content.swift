@@ -45,6 +45,9 @@ struct ContentView: View {
             case .Setting:
                 SettingView()
                     .transition(.opacity.combined(with: .offset(y: -40)).animation(.linear(duration: 0.1)))
+            case .Account:
+                ManageAccountView()
+                    .transition(.move(edge: .trailing).combined(with: .opacity).animation(.linear(duration: 0.1)))
             case .Logout:
                 EmptyView()
             case .Home:

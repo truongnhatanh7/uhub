@@ -26,7 +26,7 @@ struct StandardHeader: View {
             Spacer()
         }
         .padding()
-        .background(.bar)
+        .background(.background)
     }
 }
 

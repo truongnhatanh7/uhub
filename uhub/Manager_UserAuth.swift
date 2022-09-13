@@ -16,16 +16,16 @@ class UserAuthManager: ObservableObject {
         "email": "",
         "password": "",
         "fullname": "",
-        "age": "",
+        "age": 18,
         "school": "",
         "major": "",
-        "gpa": "",
-        "semester_learned": "",
+        "gpa": 0,
+        "semester_learned": 0,
         "about": "",
         "friends_filter": [
-            "friends_age": "",
-            "freinds_gpa": "",
-            "friends_semester_learned": ""
+            "friends_age": 0,
+            "friends_gpa": 0,
+            "friends_semester_learned": 0
         ],
         "isActive": "false"
     ]
@@ -193,22 +193,62 @@ class UserAuthManager: ObservableObject {
                 "email": "",
                 "password": "",
                 "fullname": "",
-                "age": "",
+                "age": 18,
                 "school": "",
                 "major": "",
-                "gpa": "",
-                "semester_learned": "",
+                "gpa": 0,
+                "semester_learned": 0,
                 "about": "",
                 "friends_filter": [
-                    "friends_age": "",
-                    "freinds_gpa": "",
-                    "friends_semester_learned": ""
+                    "friends_age": 0,
+                    "friends_gpa": 0,
+                    "friends_semester_learned": 0
                 ],
                 "isActive": "false"
             ]
         } catch {
             // update error msg
             self.errorMsg = "[FAILURE - SIGN OUT]: \(error.localizedDescription)"
+        }
+    }
+    
+    func deleteAccount() {
+        let user = Auth.auth().currentUser
+        db.collection("users").document(user?.uid ?? "").delete() { error in
+            if let error = error {
+                print("Error clear user data: \(error)")
+            } else {
+                print("Successfully remove user data!")
+            }
+        }
+        user?.delete() { error in
+          if let error = error {
+            // An error happened.
+              print("Error removing document: \(error)")
+          } else {
+            // Account deleted.
+              print("Remove account successfully!")
+              
+              // reset currentUserData
+              self.currentUserData = [
+                "id": "",
+                "email": "",
+                "password": "",
+                "fullname": "",
+                "age": 18,
+                "school": "",
+                "major": "",
+                "gpa": 0,
+                "semester_learned": 0,
+                "about": "",
+                "friends_filter": [
+                    "friends_age": 0,
+                    "friends_gpa": 0,
+                    "friends_semester_learned": 0
+                ],
+                "isActive": "false"
+              ]
+          }
         }
     }
 }

@@ -11,13 +11,14 @@ struct HomeView: View {
     @State var showMenu = false
 
     @StateObject var homeVM = HomeViewModel()
+    @EnvironmentObject var userAuthManager: UserAuthManager
     
     var body: some View {
         VStack {
             HeaderHome(title: "Discovery")
             ZStack(alignment: .bottom) {
                 ZStack {
-                    if let users = homeVM.displayingUsers {
+                    if let users = homeVM.fetchedUsers {
                         if users.isEmpty {
                             Text("Come back later for more new friends!")
                                 .font(.caption)
@@ -57,8 +58,8 @@ struct HomeView: View {
                 }
                 .foregroundStyle(Color("pink_primary"))
                 .labelStyle(.iconOnly)
-                .disabled(homeVM.displayingUsers?.isEmpty ?? false)
-                .opacity(homeVM.displayingUsers?.isEmpty ?? false ? 0.6 : 1)
+                .disabled(homeVM.fetchedUsers.isEmpty )
+                .opacity(homeVM.fetchedUsers.isEmpty ? 0.6 : 1)
             }
             
             Spacer()
@@ -71,11 +72,12 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             withAnimation { showMenu = true }
+            homeVM.fetchData(userAuthManager.currentUserData)
         }
     }
     
     func doSwipe(rightSwipe: Bool = false) {
-        guard let first = homeVM.displayingUsers?.first else { return }
+        guard let first = homeVM.fetchedUsers.first else { return }
         NotificationCenter.default.post(name: NSNotification.Name("ACTIONFROMBUTTON"), object: nil, userInfo: [
             "id": first.id,
             "rightSwipe": rightSwipe
