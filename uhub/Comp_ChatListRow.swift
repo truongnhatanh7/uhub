@@ -8,10 +8,13 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import FirebaseStorage
 
 struct ChatListRow: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @State var conversation: Conversation
+    @State var uiImage: UIImage? 
+    @State var imageIsLoaded: Bool = false
     @Binding var showDeleteAlert: Bool
     var body: some View {
         HStack {
@@ -20,19 +23,33 @@ struct ChatListRow: View {
                     // TODO: Add condition for rendering images
                     
                         // TODO: Load real img
+//                    if (!imageIsLoaded) {
+//                        AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/uhub-44f91.appspot.com/images\(conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!)"), scale: 1) { image in
+//                            image
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                                .frame(width: 50, height: 50)
+//                                .clipShape(Circle())
+//                        } placeholder: {
+//                            Text("")
+//                                .frame(width: 50, height: 50)
+//                                .background(Color("pink_primary"))
+//                                .clipShape(Circle())
+//                        }
+//                    } else {
+                        if let uiImage = uiImage {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                        }
 
-                    AsyncImage(url: URL(string: "https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"), scale: 1) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        Text("")
-                            .frame(width: 50, height: 50)
-                            .background(Color("pink_primary"))
-                            .clipShape(Circle())
-                    }
+//                    }
+
+                    
+
+                        
 
                     // TODO: Handle online -> Green light
                     if chatEngine.conversationStatus[conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!] ?? false {
@@ -90,6 +107,9 @@ struct ChatListRow: View {
             .stroke(Color("neutral"), lineWidth: 1)
         )
         .onAppear {
+            chatEngine.fetchUserImage(conversation: conversation) { img in
+                self.uiImage = img
+            }
         }
         .alert(isPresented: $showDeleteAlert) { () -> Alert in
             Alert(title: Text("Delete this conversation"), message: Text("Do you want to delete the conversation with \(conversation.name)"), primaryButton: .default(Text("Delete"), action: {

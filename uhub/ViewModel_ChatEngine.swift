@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import FirebaseStorage
 
 class ChatEngine: ObservableObject {
     private let db = Firestore.firestore()
-    
+
     @StateObject var userAuthManager = UserAuthManager()
     @Published var messages: [Message] = []
     @Published var conversations: [Conversation] = []
@@ -20,6 +21,7 @@ class ChatEngine: ObservableObject {
     @Published var isProcessing: Bool = false
     @Published var lastMessageId: String = ""
     @Published var conversationStatus: [String: Bool] = [:]
+    @Published var imagesMemoization: [String: UIImage] = [:]
     
     private var messagesListener: ListenerRegistration?
     private var conversationListener: ListenerRegistration?
@@ -210,5 +212,30 @@ class ChatEngine: ObservableObject {
                 print("Document successfully removed!")
             }
         }
+    }
+    
+    func fetchUserImage(conversation: Conversation, callback: @escaping (_ img: UIImage) -> ()) {
+
+        let notThisUserId = conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!
+        if let val = imagesMemoization[notThisUserId] {
+            callback(val)
+        } else {
+            let storage = Storage.storage().reference()
+            let ref = storage.child("images/\(notThisUserId).jpg")
+            ref.getData(maxSize: 1 * 1024 * 1024) { data, error in
+              if let error = error {
+                // Uh-oh, an error occurred!
+                  print(error)
+              } else {
+                  print("Retrived image")
+                // Data for "images/island.jpg" is returned
+                let image = UIImage(data: data!)
+                  self.imagesMemoization[notThisUserId] = image
+                  callback(image!)
+              }
+            }
+        }
+
+
     }
 }
