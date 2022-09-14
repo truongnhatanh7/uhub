@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "CongratsIcon.png",
+      "filename" : "congrats.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "CongratsIcon-1.png",
+      "filename" : "congrats@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "CongratsIcon-2.png",
+      "filename" : "congrats@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
