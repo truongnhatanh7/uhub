@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MenuBar: View {
     @EnvironmentObject var pageVM: PageViewModel
+    @EnvironmentObject var chatEngine: ChatEngine
     let menuInPage: Page
     @Binding var showMenu: Bool
     
@@ -39,6 +40,7 @@ struct MenuBar: View {
             Spacer()
             MenuButton(action: {
                 if !isCurrentPageChat {
+                    chatEngine.fetchUserStatus()
                     pageVM.visit(page: .Chat)
                     withAnimation { showMenu = false }
                 }
