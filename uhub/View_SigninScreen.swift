@@ -111,6 +111,9 @@ struct SigninScreenView: View {
                         self.notiManager.generateNoti(title: "UHUB", subtitle: "Mãi mãi là anh em cột chèo!")
                         userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
                             if userAuthManager.errorMsg == "" {
+                                chatEngine.loadChatList {
+                                    chatEngine.fetchUserStatus()
+                                }
                                 pageVM.visit(page: .Home)
                             } else {
                                 print(userAuthManager.errorMsg)

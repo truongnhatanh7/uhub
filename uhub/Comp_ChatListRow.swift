@@ -12,7 +12,8 @@ import FirebaseFirestore
 struct ChatListRow: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @State var conversation: Conversation
-    @Binding var showDeleteAlert: Bool
+    @State var showDeleteAlert: Bool = false
+    @State var offset = CGSize.zero
     var body: some View {
         HStack {
             HStack {
@@ -21,18 +22,19 @@ struct ChatListRow: View {
                     
                         // TODO: Load real img
 
-                    AsyncImage(url: URL(string: "https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"), scale: 1) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        Text("")
-                            .frame(width: 50, height: 50)
-                            .background(Color("pink_primary"))
-                            .clipShape(Circle())
-                    }
+//                    AsyncImage(url: URL(string: "https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"), scale: 1) { image in
+//                        image
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fill)
+//                            .frame(width: 50, height: 50)
+//                            .clipShape(Circle())
+//                    } placeholder: {
+//                        Text("")
+//                            .frame(width: 50, height: 50)
+//                            .background(Color("pink_primary"))
+//                            .clipShape(Circle())
+//                    }
+                    FirebaseImage(id: Auth.auth().currentUser?.uid ?? "")
 
                     // TODO: Handle online -> Green light
                     if chatEngine.conversationStatus[conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!] ?? false {
@@ -92,11 +94,35 @@ struct ChatListRow: View {
         .onAppear {
         }
         .alert(isPresented: $showDeleteAlert) { () -> Alert in
-            Alert(title: Text("Delete this conversation"), message: Text("Do you want to delete the conversation with \(conversation.name)"), primaryButton: .default(Text("Delete"), action: {
-                chatEngine.deleteConversation(id: conversation.conversationId)
-                }), secondaryButton: .default(Text("Dismiss")))
-       
+            Alert(title: Text("Delete this conversation"), message: Text("Do you want to delete the conversation with \(conversation.name)"), primaryButton: .default(Text("Cancel"), action: {
+                withAnimation {
+                    offset = .zero
+                }
+            }), secondaryButton: .destructive(Text("Delete"), action: {
+                withAnimation {
+                    chatEngine.deleteConversation(id: conversation.conversationId)
+                }
+            }))
         }
+        .offset(x: offset.width * 1.2, y: 0)
+        .opacity(2 - Double(abs(offset.width / 50)))
+        .gesture(
+            DragGesture()
+                .onChanged { gesture in
+                    offset = gesture.translation
+                }
+                .onEnded { _ in
+                    if offset.width < 100 {
+                        // remove the card
+                        showDeleteAlert = true
+                    } else {
+                        withAnimation {
+                            offset = .zero
+                        }
+
+                    }
+                }
+        )
     }
         
 }

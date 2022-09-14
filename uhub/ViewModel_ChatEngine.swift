@@ -13,7 +13,8 @@ import FirebaseFirestore
 class ChatEngine: ObservableObject {
     private let db = Firestore.firestore()
     
-    @StateObject var userAuthManager = UserAuthManager()
+    @StateObject private var userAuthManager = UserAuthManager()
+    @StateObject private var notificationManager = NotiManager()
     @Published var messages: [Message] = []
     @Published var conversations: [Conversation] = []
     @Published var currentConversation: Conversation?
@@ -84,6 +85,7 @@ class ChatEngine: ObservableObject {
                             self.lastMessageId = latestMsg.id
                         }
                         
+                        
                     }
                 }
             }
@@ -98,27 +100,41 @@ class ChatEngine: ObservableObject {
                     print("No documents")
                     return
                 }
-            
+            print("Rerender chat list")
             DispatchQueue.main.async {
-                self.conversations = documents.map { (queryDocumentSnapshot) -> Conversation in
-                    let data = queryDocumentSnapshot.data()
-                    let conversationId = queryDocumentSnapshot.documentID
-                    let latestMessage = data["latestMessage"] as? String ?? ""
-                    let timestamp = data["timestamp"] as? Timestamp
-                    let unread = data["unread"] as? Bool ?? false
-                    let users = data["users"] as? [String] ?? []
-                    let latestMessageSender = data["latestMessageSender"] as? String ?? ""
-                    let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
-                    let userNames = data["userNames"] as? [String: String] ?? [:]
-                    let name = userNames[notThisUserId ?? ""]
+                withAnimation {
+                    self.conversations = documents.map { (queryDocumentSnapshot) -> Conversation in
+                        let data = queryDocumentSnapshot.data()
+                        let conversationId = queryDocumentSnapshot.documentID
+                        let latestMessage = data["latestMessage"] as? String ?? ""
+                        let timestamp = data["timestamp"] as? Timestamp
+                        let unread = data["unread"] as? Bool ?? false
+                        let users = data["users"] as? [String] ?? []
+                        let latestMessageSender = data["latestMessageSender"] as? String ?? ""
+                        let didNotify = data["didNotify"] as? Bool ?? false
+                        let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+                        let userNames = data["userNames"] as? [String: String] ?? [:]
+                        let name = userNames[notThisUserId ?? ""]
+                        
+                        if Auth.auth().currentUser?.uid != latestMessageSender && unread && !didNotify { // Not the send + unread msg + did NOT notify -> play sound
+                            playMusic(sound: "receive_message", isLoop: false)
+                            self.notificationManager.generateNoti(title: userNames[notThisUserId ?? ""] ?? "", subtitle: latestMessage)
+                            self.db.collection("conversations").document(conversationId).updateData([ // Updatte latest message when sending new message from both sides
+                                "didNotify": true
+                            ])
+                        }
+                        
+                        return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
+                    }
                     
-                    return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
+                    self.conversations.sort { $0.timestamp > $1.timestamp }
                 }
                 
-                self.conversations.sort { $0.timestamp > $1.timestamp }
                 callback()
                 self.objectWillChange.send()
             }
+            
+
         }
     }
     
@@ -140,7 +156,8 @@ class ChatEngine: ObservableObject {
                     "latestMessage": content,
                     "timestamp": Date(),
                     "unread": true,
-                    "latestMessageSender": currentUser.uid
+                    "latestMessageSender": currentUser.uid,
+                    "didNotify": false
                 ])
             }
             
@@ -154,7 +171,8 @@ class ChatEngine: ObservableObject {
             if Auth.auth().currentUser?.uid != currentConversation.latestMessageSender && currentConversation.unread { // If unread == false, do not call this
                 db.collection("conversations").document(currentConversation.conversationId).updateData([
                     "timestamp": Date(),
-                    "unread": false
+                    "unread": false,
+                    "didNotify": true
                 ])
             }
         }
@@ -193,7 +211,6 @@ class ChatEngine: ObservableObject {
                     let data = document.data()
                     let status = data?["isActive"] as? Bool ?? false
                     self.conversationStatus[notThisUserId] = status
-                    print(self.conversationStatus)
                     self.objectWillChange.send()
                 } else {
                     print("Document does not exist")
