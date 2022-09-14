@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "flying_hearts.png",
+      "filename" : "logo-splash.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "flying_hearts-1.png",
+      "filename" : "logo-splash@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "flying_hearts-2.png",
+      "filename" : "logo-splash@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
