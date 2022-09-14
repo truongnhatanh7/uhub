@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FirebaseStorage
 
 struct User : Identifiable {
     var id: String
@@ -17,9 +18,9 @@ struct User : Identifiable {
     var gpa: Int
     var semesterLearned: Int
     var about: String
-    var image: Image
+    var image: Image?
     
-    init(id: String?, name: String?, age: Int?, school: String?, major: String?, gpa: Int?, semesterLearned: Int?, about: String?) {
+    init(id: String?, name: String?, age: Int?, school: String?, major: String?, gpa: Int?, semesterLearned: Int?, about: String?, image: Image?) {
         self.id = id ?? UUID().uuidString
         self.name = name ?? "N/A"
         self.age = age ?? 18
@@ -28,7 +29,7 @@ struct User : Identifiable {
         self.gpa = gpa ?? 0
         self.semesterLearned = semesterLearned ?? 0
         self.about = about ?? "N/A"
-        self.image = Image("User1")
+        self.image = image
     }
     
     func getFormattedGpa() -> String {
@@ -38,6 +39,5 @@ struct User : Identifiable {
         formatter.maximumFractionDigits = 2
 
         return formatter.string(from: self.gpa as NSNumber) ?? "0"
-        
     }
 }

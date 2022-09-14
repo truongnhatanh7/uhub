@@ -72,6 +72,8 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             withAnimation { showMenu = true }
+        }
+        .task {
             homeVM.fetchData(userAuthManager.currentUserData)
         }
     }
