@@ -57,15 +57,18 @@ class HomeViewModel: ObservableObject {
                         let gpa = data["gpa"] as? Int
                         let semesterLearned = data["semester_learned"] as? Int
                         let about = data["about"] as? String
-                        var image: Image? = nil
-                        if let id = id {
-                            self.retrieveImage(userId: id) { loadedImage in
-                                image = loadedImage
-                                
-                                let user = User(id: id, name: name, age: age, school: school, major: major, gpa: gpa, semesterLearned: semesterLearned, about: about, image: image)
-                                self.fetchedUsers.append(user)
-                            }
-                        }
+                        var image: Image? = Image("User1")
+                        let user = User(id: id, name: name, age: age, school: school, major: major, gpa: gpa, semesterLearned: semesterLearned, about: about, image: image)
+                        self.fetchedUsers.append(user)
+                        
+//                        if let id = id {
+//                            self.retrieveImage(userId: id) { loadedImage in
+//                                image = loadedImage
+//
+//                                let user = User(id: id, name: name, age: age, school: school, major: major, gpa: gpa, semesterLearned: semesterLearned, about: about, image: image)
+//                                self.fetchedUsers.append(user)
+//                            }
+//                        }
                     }
                 }
             }
