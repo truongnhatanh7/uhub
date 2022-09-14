@@ -20,38 +20,20 @@ struct ChatListRow: View {
         HStack {
             HStack {
                 ZStack {
-                    // TODO: Add condition for rendering images
-                    
-                        // TODO: Load real img
-//                    if (!imageIsLoaded) {
-//                        AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/uhub-44f91.appspot.com/images\(conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!)"), scale: 1) { image in
-//                            image
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fill)
-//                                .frame(width: 50, height: 50)
-//                                .clipShape(Circle())
-//                        } placeholder: {
-//                            Text("")
-//                                .frame(width: 50, height: 50)
-//                                .background(Color("pink_primary"))
-//                                .clipShape(Circle())
-//                        }
-//                    } else {
-                        if let uiImage = uiImage {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                        }
+                    if let uiImage = uiImage {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 50, height: 50)
+                            .clipShape(Circle())
+                    } else {
+                        Text("")
+                            .frame(width: 50, height: 50)
+                            .background(Color("pink_primary"))
+                            .clipShape(Circle())
+                    }
 
-//                    }
 
-                    
-
-                        
-
-                    // TODO: Handle online -> Green light
                     if chatEngine.conversationStatus[conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!] ?? false {
                         Text("") // Active status
                             .frame(width: 12, height: 12)
@@ -74,7 +56,6 @@ struct ChatListRow: View {
                 }
 
                 VStack(alignment: .leading) {
-                    // TODO: update when database has name
                     Text(conversation.name)
                         .fontWeight(.medium)
                     Spacer()
