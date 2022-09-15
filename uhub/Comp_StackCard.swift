@@ -60,10 +60,10 @@ struct StackCard: View {
                         .overlay(alignment: .top) {
                             Text("Like")
                                 .font(.title.bold())
-                                .foregroundColor(Color("pink_primary"))
+                                .foregroundColor(Color("green"))
                                 .padding(10)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("pink_primary"), lineWidth: 4))
+                                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("red_danger"), lineWidth: 4))
                                 .opacity(btnSwipe ? opacity / 100.0 : offsetX / 100.0)
                                 .rotationEffect(Angle(degrees: -30))
                                 .offset(x: -100, y: 50)

@@ -27,7 +27,7 @@ class UserAuthManager: ObservableObject {
             "friends_gpa": 0,
             "friends_semester_learned": 0
         ],
-        "isActive": "false"
+        "isActive": true
     ]
     
     private let db = Firestore.firestore()
@@ -139,7 +139,7 @@ class UserAuthManager: ObservableObject {
                             "id": userId,
                             "email": inputEmail,
                             "password": inputPwd,
-                            "isActive": "true"
+                            "isActive": true
                         ]
                         // create new user instance
                         self.createUser(inputData: newlyCreatedData, callback: callback)
@@ -185,7 +185,7 @@ class UserAuthManager: ObservableObject {
             print("[SUCCESS - SIGN OUT]: Signed out")
             
             // update active status
-            self.updateProfileInfo(updatedData: ["isActive": "false"], callback: {})
+            self.updateProfileInfo(updatedData: ["isActive": false ], callback: {})
             
             // reset currentUserData
             self.currentUserData = [
@@ -204,7 +204,7 @@ class UserAuthManager: ObservableObject {
                     "friends_gpa": 0,
                     "friends_semester_learned": 0
                 ],
-                "isActive": "false"
+                "isActive": false
             ]
         } catch {
             // update error msg
@@ -246,7 +246,7 @@ class UserAuthManager: ObservableObject {
                     "friends_gpa": 0,
                     "friends_semester_learned": 0
                 ],
-                "isActive": "false"
+                "isActive": false
               ]
           }
         }

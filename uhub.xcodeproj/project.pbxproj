@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
 		55D881F328D2C3F5006C990F /* ViewModel_MatchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */; };
 		55D881F528D2F42E006C990F /* ViewModel_ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */; };
+		55D881ED28D03D50006C990F /* Comp_FirebaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881EC28D03D4F006C990F /* Comp_FirebaseImage.swift */; };
+		55D881EF28D03DAD006C990F /* Helper_Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881EE28D03DAD006C990F /* Helper_Loader.swift */; };
 		55FA436C28BE26C4006AC2F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436B28BE26C4006AC2F8 /* Assets.xcassets */; };
 		55FA436F28BE26C4006AC2F8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */; };
 		5818C7CDB9C288843EA797FE /* send_message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72EB29FAEE120BDE0D3550D3 /* send_message.mp3 */; };
@@ -82,6 +85,8 @@
 		23F0EC11FF3454662C95E7AF /* receive_message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = receive_message.mp3; sourceTree = "<group>"; };
 		55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_MatchEngine.swift; sourceTree = "<group>"; };
 		55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_ImageManager.swift; sourceTree = "<group>"; };
+		55D881EC28D03D4F006C990F /* Comp_FirebaseImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_FirebaseImage.swift; sourceTree = "<group>"; };
+		55D881EE28D03DAD006C990F /* Helper_Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper_Loader.swift; sourceTree = "<group>"; };
 		55FA436428BE26BD006AC2F8 /* uhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = uhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FA436B28BE26C4006AC2F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -205,6 +210,8 @@
 				8F932B7128C751EE00FAC04B /* Comp_OneThirdModal.swift */,
 				8F932B6928C751ED00FAC04B /* Comp_PickerInput.swift */,
 				8F932B5128C751EC00FAC04B /* Comp_PickerInputModal.swift */,
+				55D881EC28D03D4F006C990F /* Comp_FirebaseImage.swift */,
+				55D881EE28D03DAD006C990F /* Helper_Loader.swift */,
 				C133E47F28CADD92002FFA9E /* Comp_StackCard.swift */,
 				C1EBAD6128D0C4A600AC69C6 /* Comp_Card.swift */,
 				8F932B7328C751EE00FAC04B /* Comp_StandardHeader.swift */,
@@ -384,6 +391,7 @@
 				8F932B7E28C751EE00FAC04B /* Comp_MessageDefaultBubble.swift in Sources */,
 				C133E47C28CA4C3F002FFA9E /* View_Setting.swift in Sources */,
 				8F932BA628C751EE00FAC04B /* Manager_UserAuth.swift in Sources */,
+				55D881EF28D03DAD006C990F /* Helper_Loader.swift in Sources */,
 				8F932BA428C751EE00FAC04B /* Model_Message.swift in Sources */,
 				8F932B8C28C751EE00FAC04B /* Comp_CongratsModal.swift in Sources */,
 				8F932B8328C751EE00FAC04B /* Comp_AdaptiveSheet.swift in Sources */,
@@ -398,6 +406,7 @@
 				8F932B9228C751EE00FAC04B /* Style_CornerRadiusStyle.swift in Sources */,
 				8F932BA128C751EE00FAC04B /* Comp_ChatListRow.swift in Sources */,
 				C133E48428CB4F19002FFA9E /* Comp_ListRow.swift in Sources */,
+				55D881ED28D03D50006C990F /* Comp_FirebaseImage.swift in Sources */,
 				8F932B8428C751EE00FAC04B /* View_Notification.swift in Sources */,
 				C133E48028CADD92002FFA9E /* Comp_StackCard.swift in Sources */,
 				8F932B9B28C751EE00FAC04B /* uhubApp.swift in Sources */,
