@@ -18,11 +18,7 @@ class ImageManager: ObservableObject {
     func fetchAllImages(idList: [String]) {
         
     }
-    
-    func fetchMatchesImages(users: [User]) {
 
-    }
-    
     func fetchFromUserId(id: String, callback: @escaping (_ img: UIImage) -> ()) {
         if let val = memoizedImages[id] {
             callback(val)
