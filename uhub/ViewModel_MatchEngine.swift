@@ -60,4 +60,27 @@ class MatchEngine: ObservableObject {
             }
         }
     }
+    
+    func removeMatch(user: User) {
+        if let currentUser = Auth.auth().currentUser {
+            db.collection("matches").document(currentUser.uid).updateData([
+                "users": FieldValue.arrayRemove([
+                    [
+                        "id": user.id,
+                        "fullname": user.name,
+                        "age": user.age,
+                        "school": user.school,
+                        "major": user.major,
+                        "gpa": user.gpa,
+                        "semester_learned": user.semesterLearned,
+                        "about": user.about
+                    ]
+                ])
+            ])
+        }
+    }
+    
+    func removeMatch(id: String) {
+
+    }
 }

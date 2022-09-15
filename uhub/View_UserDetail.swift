@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct View_UserDetail: View {
-    
+
+    @EnvironmentObject var imageManager: ImageManager
     @Binding var isShowSheet: Bool
     var isFromMatchPage:Bool
     var user: User
+    @State var image = Image("User3")
     
     var body: some View {
         ZStack(alignment: .bottom) {
             // MARK: Image
             GeometryReader { proxy in
                 VStack {
-                    Card(image: user.image, width: proxy.size.width, height: proxy.size.height)
+                    Card(image: image, width: proxy.size.width, height: proxy.size.height)
                 }.edgesIgnoringSafeArea(.all)
                 
             }
@@ -106,6 +108,11 @@ struct View_UserDetail: View {
                     .padding()
                 }
 
+            }
+        }
+        .onAppear {
+            imageManager.fetchFromUserId(id: user.id) { img in
+                self.image = Image(uiImage: img)
             }
         }
     }
