@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChatListView: View {
     @EnvironmentObject var chatEngine: ChatEngine
+    @EnvironmentObject var imageManager: ImageManager
     @EnvironmentObject var pageVM: PageViewModel
     @State var showMenu = false
     @State var searchText = ""

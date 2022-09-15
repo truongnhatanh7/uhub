@@ -9,7 +9,11 @@ import SwiftUI
 
 struct View_UserDetail: View {
 
-    @EnvironmentObject var imageManager: ImageManager
+    @EnvironmentObject var imageManager : ImageManager
+    @EnvironmentObject var chatEngine : ChatEngine
+    @EnvironmentObject var matchEngine : MatchEngine
+    @EnvironmentObject var userAuthManager : UserAuthManager
+    @EnvironmentObject var pageVm: PageViewModel
     @Binding var isShowSheet: Bool
     var isFromMatchPage:Bool
     var user: User
@@ -82,6 +86,7 @@ struct View_UserDetail: View {
                             if (true) {
                                 Button(action: {
                                     print("Reject this person")
+                                    matchEngine.removeMatch(id: user.id)
                                 }, label: {
                                     Image(systemName: "hand.thumbsdown.fill")
                                         .padding()
@@ -94,6 +99,9 @@ struct View_UserDetail: View {
                             
                             Button(action: {
                                 print("Go to chat")
+                                chatEngine.createConversation(recipientId: user.id) {
+                                    pageVm.visit(page: .Chat)
+                                }
                             }, label: {
                                 Image(systemName: "text.bubble.fill")
                                     .padding()
@@ -111,6 +119,8 @@ struct View_UserDetail: View {
             }
         }
         .onAppear {
+            chatEngine.imageManager = imageManager
+            chatEngine.userAuthManager = userAuthManager
             imageManager.fetchFromUserId(id: user.id) { img in
                 self.image = Image(uiImage: img)
             }

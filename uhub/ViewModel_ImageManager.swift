@@ -27,11 +27,9 @@ class ImageManager: ObservableObject {
             let ref = storage.child("images/\(id).jpg")
             ref.getData(maxSize: 1 * 2140 * 2140) { data, error in
               if let error = error {
-                // Uh-oh, an error occurred!
                   print(error)
               } else {
                   print("Retrived image")
-                // Data for "images/island.jpg" is returned
                 let image = UIImage(data: data!)
                   self.memoizedImages[id] = image
                   callback(image!)

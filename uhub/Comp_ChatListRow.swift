@@ -11,7 +11,8 @@ import FirebaseFirestore
 import FirebaseStorage
 
 struct ChatListRow: View {
-    @EnvironmentObject var chatEngine: ChatEngine
+    @EnvironmentObject var chatEngine : ChatEngine
+    @EnvironmentObject var imageManager: ImageManager
     @State var conversation: Conversation
     @State var uiImage: UIImage? 
     @State var imageIsLoaded: Bool = false
@@ -88,6 +89,7 @@ struct ChatListRow: View {
             .stroke(Color("neutral"), lineWidth: 1)
         )
         .onAppear {
+            chatEngine.imageManager = imageManager
             chatEngine.fetchUserImage(conversation: conversation) { img in
                 self.uiImage = img
             }
