@@ -73,14 +73,27 @@ struct View_UserDetail: View {
                 .modifier(OneThirdModalStyle())
                 
                 // MARK: BUTTON GROUP
-                HStack {
-                    Spacer()
-                    VStack(spacing: 20) {
-                        if (true) {
+                if isFromMatchPage {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 20) {
+                            if (true) {
+                                Button(action: {
+                                    print("Reject this person")
+                                }, label: {
+                                    Image(systemName: "hand.thumbsdown.fill")
+                                        .padding()
+                                        .font(.title3)
+                                        .foregroundStyle(.white)
+                                        .background(Color("pink_primary"))
+                                        .clipShape(Circle())
+                                })
+                            }
+                            
                             Button(action: {
-                                print("Reject this person")
+                                print("Go to chat")
                             }, label: {
-                                Image(systemName: "hand.thumbsdown.fill")
+                                Image(systemName: "text.bubble.fill")
                                     .padding()
                                     .font(.title3)
                                     .foregroundStyle(.white)
@@ -88,21 +101,11 @@ struct View_UserDetail: View {
                                     .clipShape(Circle())
                             })
                         }
-                        
-                        Button(action: {
-                            print("Go to chat")
-                        }, label: {
-                            Image(systemName: "text.bubble.fill")
-                                .padding()
-                                .font(.title3)
-                                .foregroundStyle(.white)
-                                .background(Color("pink_primary"))
-                                .clipShape(Circle())
-                        })
+                        .shadow(radius: 4)
                     }
-                    .shadow(radius: 4)
+                    .padding()
                 }
-                .padding()
+
             }
         }
     }

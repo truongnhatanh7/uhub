@@ -12,6 +12,7 @@ struct ContentView: View {
     @StateObject private var userAuthManager = UserAuthManager()
     @StateObject private var chatEngine = ChatEngine()
     @StateObject private var notificationManager = NotiManager()
+    @StateObject private var matchEngine = MatchEngine()
     
     var body: some View {
         Group {
@@ -71,6 +72,7 @@ struct ContentView: View {
         .environmentObject(userAuthManager)
         .environmentObject(chatEngine)
         .environmentObject(notificationManager)
+        .environmentObject(matchEngine)
         .onAppear {
             notificationManager.requestNotiAuth()
         }

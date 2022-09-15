@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct MatchesView: View {
+    @EnvironmentObject var matchEngine: MatchEngine
     @State var showMenu = false
-    private var data = Array(1...20)
+    @State var data = [User]()
     @State var showDetailUser = false
+    @State var user: User?
     private let adaptiveColumns = [
         GridItem(.adaptive(minimum: 120))
     ]
@@ -21,18 +23,18 @@ struct MatchesView: View {
                 ScrollView {
                     HeaderHome(title: "Matches")
                     LazyVGrid(columns: adaptiveColumns, spacing: 20) {
-                        ForEach(data, id: \.self) { number in
+                        ForEach(data) { user in
                             ZStack {
                                 Button {
+                                    matchEngine.currentUser = user
                                     showDetailUser = true
                                 } label: {
                                     Card(image: Image("User4"), width: geometry.size.width / 2.2, height: geometry.size.height / 3)
                                         .overlay(alignment: .bottom) {
                                             HStack {
                                                 VStack(alignment: .leading) {
-                                                    Text("Name")
+                                                    Text("\(user.name)")
                                                         .font(.title)
-        
                                                     Text("dfasdf")
                                                         .font(.title3)
                                                 }
@@ -42,14 +44,18 @@ struct MatchesView: View {
                                             .foregroundColor(.white)
                                         }
                                 }
-
                             }
                         }
                     }
                     .padding()
                 }
                 .fullScreenCover(isPresented: $showDetailUser) {
-                    View_UserDetail(isShowSheet: $showDetailUser, isFromMatchPage: true, user: User(id: "daf", name: "fdksaljfa", age: 2, school: "fdkf", major: "fdkj", gpa: 2, semesterLearned: 3, about: "fd", image: Image("User3")))
+                    if let selectedUser = matchEngine.currentUser {
+                        View_UserDetail(isShowSheet: $showDetailUser, isFromMatchPage: true, user: selectedUser)
+                    }
+
+                    
+
                 }
             }
 
@@ -62,6 +68,11 @@ struct MatchesView: View {
         }
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
+            matchEngine.fetchAllMatches {
+                self.data = matchEngine.matchesUsers.map({ element in
+                    return User(id: element.id, name: element.name, age: element.age, school: element.school, major: element.major, gpa: element.gpa, semesterLearned: element.semesterLearned, about: element.about, image: Image("User3"))
+                })
+            }
             withAnimation { showMenu = true }
         }
     }

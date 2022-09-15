@@ -10,6 +10,7 @@ import SwiftUI
 struct StackCard: View {
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var userAuthManager: UserAuthManager
+    @EnvironmentObject var matchEngine: MatchEngine
     
     var user: User
     
@@ -174,7 +175,7 @@ struct StackCard: View {
     }
     
     func rightSwipe() {
-        
+        matchEngine.createMatchPackage(user: user)
     }
 }
 
