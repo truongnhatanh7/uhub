@@ -175,7 +175,7 @@ struct StackCard: View {
     }
     
     func rightSwipe() {
-        matchEngine.createMatchPackage(user: user)
+       matchEngine.createMatchPackage(user: user)
     }
 }
 

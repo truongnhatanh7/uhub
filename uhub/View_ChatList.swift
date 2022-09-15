@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatListView: View {
     @EnvironmentObject var chatEngine: ChatEngine
     @EnvironmentObject var imageManager: ImageManager
+    @EnvironmentObject var notificationManger: NotiManager
     @EnvironmentObject var pageVM: PageViewModel
     @State var showMenu = false
     @State var searchText = ""
@@ -46,7 +47,7 @@ struct ChatListView: View {
                         chatEngine.setRead()
                         pageVM.visit(page: .Inbox)
                     } label: {
-                        ChatListRow(conversation: conversation, showDeleteAlert: $showAlert)
+                        ChatListRow(conversation: conversation)
                     }
                     .foregroundColor(.black)
                 }
@@ -64,9 +65,7 @@ struct ChatListView: View {
         .edgesIgnoringSafeArea(.bottom)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
-            chatEngine.loadChatList {
-                chatEngine.fetchUserStatus()
-            }
+            chatEngine.notificationManager = notificationManger
             withAnimation {
                 showMenu = true
             }

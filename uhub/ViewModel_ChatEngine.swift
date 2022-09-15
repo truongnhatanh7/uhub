@@ -16,6 +16,7 @@ class ChatEngine: ObservableObject {
 
     var imageManager : ImageManager?
     var userAuthManager : UserAuthManager?
+    var notificationManager : NotiManager?
     @Published var messages: [Message] = []
     @Published var conversations: [Conversation] = []
     @Published var currentConversation: Conversation?
@@ -113,8 +114,17 @@ class ChatEngine: ObservableObject {
                     let users = data["users"] as? [String] ?? []
                     let latestMessageSender = data["latestMessageSender"] as? String ?? ""
                     let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+                    let didNotify = data["didNotify"] as? Bool ?? false
                     let userNames = data["userNames"] as? [String: String] ?? [:]
                     let name = userNames[notThisUserId ?? ""]
+                    
+                    if Auth.auth().currentUser?.uid != latestMessageSender && unread && !didNotify { // Not the send + unread msg + did NOT notify -> play sound
+                        playMusic(sound: "receive_message", isLoop: false)
+                        self.notificationManager?.generateNoti(title: userNames[notThisUserId ?? ""] ?? "", subtitle: latestMessage)
+                        self.db.collection("conversations").document(conversationId).updateData([ // Updatte latest message when sending new message from both sides
+                            "didNotify": true
+                        ])
+                    }
                     
                     return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
                 }
@@ -144,7 +154,8 @@ class ChatEngine: ObservableObject {
                     "latestMessage": content,
                     "timestamp": Date(),
                     "unread": true,
-                    "latestMessageSender": currentUser.uid
+                    "latestMessageSender": currentUser.uid,
+                    "didNotify": false
                 ])
             }
             
@@ -158,7 +169,8 @@ class ChatEngine: ObservableObject {
             if Auth.auth().currentUser?.uid != currentConversation.latestMessageSender && currentConversation.unread { // If unread == false, do not call this
                 db.collection("conversations").document(currentConversation.conversationId).updateData([
                     "timestamp": Date(),
-                    "unread": false
+                    "unread": false,
+                    "didNotify": true
                 ])
             }
         }

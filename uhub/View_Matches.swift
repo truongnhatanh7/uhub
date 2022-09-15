@@ -14,7 +14,7 @@ struct MatchesView: View {
     @State var showDetailUser = false
     @State var user: User?
     private let adaptiveColumns = [
-        GridItem(.adaptive(minimum: 120))
+        GridItem(.adaptive(minimum: 100))
     ]
     
     var body: some View {
@@ -29,13 +29,13 @@ struct MatchesView: View {
                                     matchEngine.currentUser = user
                                     showDetailUser = true
                                 } label: {
-                                    Card(image: Image("User4"), width: geometry.size.width / 2.2, height: geometry.size.height / 3)
+                                    Card(image: Image("User4"), width: geometry.size.width / 2.5, height: geometry.size.height / 3)
                                         .overlay(alignment: .bottom) {
                                             HStack {
                                                 VStack(alignment: .leading) {
                                                     Text("\(user.name)")
                                                         .font(.title)
-                                                    Text("dfasdf")
+                                                    Text("\(user.major)")
                                                         .font(.title3)
                                                 }
                                             }
@@ -47,15 +47,11 @@ struct MatchesView: View {
                             }
                         }
                     }
-                    .padding()
                 }
                 .fullScreenCover(isPresented: $showDetailUser) {
                     if let selectedUser = matchEngine.currentUser {
                         View_UserDetail(isShowSheet: $showDetailUser, isFromMatchPage: true, user: selectedUser)
                     }
-
-                    
-
                 }
             }
 
