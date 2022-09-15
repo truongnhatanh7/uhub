@@ -9,9 +9,12 @@ import SwiftUI
 
 struct ChatListView: View {
     @EnvironmentObject var chatEngine: ChatEngine
+    @EnvironmentObject var imageManager: ImageManager
+    @EnvironmentObject var notificationManger: NotiManager
     @EnvironmentObject var pageVM: PageViewModel
     @State var showMenu = false
     @State var searchText = ""
+    @State var showAlert = false
     
     var searchResults: [Conversation] {
         if searchText == ""  {
@@ -62,6 +65,7 @@ struct ChatListView: View {
         .edgesIgnoringSafeArea(.bottom)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
+            chatEngine.notificationManager = notificationManger
             withAnimation {
                 showMenu = true
             }

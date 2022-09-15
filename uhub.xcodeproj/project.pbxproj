@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
+		55D881F328D2C3F5006C990F /* ViewModel_MatchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */; };
+		55D881F528D2F42E006C990F /* ViewModel_ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */; };
 		55D881ED28D03D50006C990F /* Comp_FirebaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881EC28D03D4F006C990F /* Comp_FirebaseImage.swift */; };
 		55D881EF28D03DAD006C990F /* Helper_Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881EE28D03DAD006C990F /* Helper_Loader.swift */; };
 		55FA436C28BE26C4006AC2F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436B28BE26C4006AC2F8 /* Assets.xcassets */; };
@@ -80,6 +83,8 @@
 /* Begin PBXFileReference section */
 		0303D244B030A28212EDB559 /* Comp_HeaderHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_HeaderHome.swift; sourceTree = "<group>"; };
 		23F0EC11FF3454662C95E7AF /* receive_message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = receive_message.mp3; sourceTree = "<group>"; };
+		55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_MatchEngine.swift; sourceTree = "<group>"; };
+		55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_ImageManager.swift; sourceTree = "<group>"; };
 		55D881EC28D03D4F006C990F /* Comp_FirebaseImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_FirebaseImage.swift; sourceTree = "<group>"; };
 		55D881EE28D03DAD006C990F /* Helper_Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper_Loader.swift; sourceTree = "<group>"; };
 		55FA436428BE26BD006AC2F8 /* uhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = uhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +243,8 @@
 				8F932B7228C751EE00FAC04B /* View_SignupScreen.swift */,
 				8F932B6828C751ED00FAC04B /* View_Splash.swift */,
 				D5AAA9B128C8933D007603DD /* View_UserDetail.swift */,
+				55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */,
+				55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */,
 				8F932B5F28C751ED00FAC04B /* ViewModel_ChatEngine.swift */,
 				8F932B5028C751EC00FAC04B /* ViewModel_EditProfile.swift */,
 				8F932B5628C751EC00FAC04B /* ViewModel_FilterProfile.swift */,
@@ -350,8 +357,10 @@
 			files = (
 				8F932B9328C751EE00FAC04B /* Util_DateHelper.swift in Sources */,
 				8F932B8828C751EE00FAC04B /* Model_Notification.swift in Sources */,
+				55D881F528D2F42E006C990F /* ViewModel_ImageManager.swift in Sources */,
 				8F932B9A28C751EE00FAC04B /* View_Content.swift in Sources */,
 				8F932B9828C751EE00FAC04B /* View_FilterProfile.swift in Sources */,
+				55D881F328D2C3F5006C990F /* ViewModel_MatchEngine.swift in Sources */,
 				8F932B9C28C751EE00FAC04B /* Comp_ButtonBinding.swift in Sources */,
 				8F932B9D28C751EE00FAC04B /* Comp_OneThirdModal.swift in Sources */,
 				8F932B7C28C751EE00FAC04B /* ViewModel_EditProfile.swift in Sources */,

@@ -108,7 +108,7 @@ struct SigninScreenView: View {
                     // sign in button
                     ButtonBindingView(textContent: "Sign In", onTap: {
                         // THIS LINE IS TEST ONLY
-                        self.notiManager.generateNoti(title: "UHUB", subtitle: "Mãi mãi là anh em cột chèo!")
+                        //self.notiManager.generateNoti(title: "UHUB", subtitle: "Mãi mãi là anh em cột chèo!")
                         userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
                             if userAuthManager.errorMsg == "" {
                                 chatEngine.loadChatList {

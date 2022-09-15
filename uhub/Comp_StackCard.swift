@@ -10,6 +10,7 @@ import SwiftUI
 struct StackCard: View {
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var userAuthManager: UserAuthManager
+    @EnvironmentObject var matchEngine: MatchEngine
     
     var user: User
     
@@ -30,7 +31,7 @@ struct StackCard: View {
                 let idx = CGFloat(homeVM.getIdx(user: user))
                 let topOffset = (idx <= 2 ? idx : 2) * 15
                 ZStack {
-                    Card(image: user.image, width: size.width - topOffset, height: size.height)
+                    Card(image: user.image, width: size.width - topOffset, height: size.height, imageURL: user.id)
                         .offset(y: -topOffset)
                         .overlay(alignment: .bottom) {
                             HStack {
@@ -174,7 +175,7 @@ struct StackCard: View {
     }
     
     func rightSwipe() {
-        
+       matchEngine.createMatchPackage(user: user)
     }
 }
 

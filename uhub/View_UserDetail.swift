@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct View_UserDetail: View {
-    
+
+    @EnvironmentObject var imageManager : ImageManager
+    @EnvironmentObject var chatEngine : ChatEngine
+    @EnvironmentObject var matchEngine : MatchEngine
+    @EnvironmentObject var userAuthManager : UserAuthManager
+    @EnvironmentObject var pageVm: PageViewModel
     @Binding var isShowSheet: Bool
     var isFromMatchPage:Bool
     var user: User
+    @State var image = Image("User3")
     
     var body: some View {
         ZStack(alignment: .bottom) {
             // MARK: Image
             GeometryReader { proxy in
                 VStack {
-                    Card(image: user.image, width: proxy.size.width, height: proxy.size.height)
+                    Card(image: image, width: proxy.size.width, height: proxy.size.height, imageURL: user.id)
                 }.edgesIgnoringSafeArea(.all)
                 
             }
@@ -73,14 +79,31 @@ struct View_UserDetail: View {
                 .modifier(OneThirdModalStyle())
                 
                 // MARK: BUTTON GROUP
-                HStack {
-                    Spacer()
-                    VStack(spacing: 20) {
-                        if (true) {
+                if isFromMatchPage {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 20) {
+                            if (true) {
+                                Button(action: {
+                                    print("Reject this person")
+                                    matchEngine.removeMatch(id: user.id)
+                                }, label: {
+                                    Image(systemName: "hand.thumbsdown.fill")
+                                        .padding()
+                                        .font(.title3)
+                                        .foregroundStyle(.white)
+                                        .background(Color("pink_primary"))
+                                        .clipShape(Circle())
+                                })
+                            }
+                            
                             Button(action: {
-                                print("Reject this person")
+                                print("Go to chat")
+                                chatEngine.createConversation(recipientId: user.id) {
+                                    pageVm.visit(page: .Chat)
+                                }
                             }, label: {
-                                Image(systemName: "hand.thumbsdown.fill")
+                                Image(systemName: "text.bubble.fill")
                                     .padding()
                                     .font(.title3)
                                     .foregroundStyle(.white)
@@ -88,21 +111,18 @@ struct View_UserDetail: View {
                                     .clipShape(Circle())
                             })
                         }
-                        
-                        Button(action: {
-                            print("Go to chat")
-                        }, label: {
-                            Image(systemName: "text.bubble.fill")
-                                .padding()
-                                .font(.title3)
-                                .foregroundStyle(.white)
-                                .background(Color("pink_primary"))
-                                .clipShape(Circle())
-                        })
+                        .shadow(radius: 4)
                     }
-                    .shadow(radius: 4)
+                    .padding()
                 }
-                .padding()
+
+            }
+        }
+        .onAppear {
+            chatEngine.imageManager = imageManager
+            chatEngine.userAuthManager = userAuthManager
+            imageManager.fetchFromUserId(id: user.id) { img in
+                self.image = Image(uiImage: img)
             }
         }
     }

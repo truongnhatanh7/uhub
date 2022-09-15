@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var showMenu = false
 
+    @StateObject var matchEngine = MatchEngine()
     @StateObject var homeVM = HomeViewModel()
     @EnvironmentObject var userAuthManager: UserAuthManager
     
@@ -46,7 +47,9 @@ struct HomeView: View {
                             .clipShape(Circle())
                     }
                     Spacer()
-                    Button { doSwipe(rightSwipe: true) } label: {
+                    Button {
+                        doSwipe(rightSwipe: true)
+                    } label: {
                         Label("Like", systemImage: "hand.thumbsup.fill")
                             .font(.system(size: 20, weight: .bold))
                             .shadow(radius: 5)

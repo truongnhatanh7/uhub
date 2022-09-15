@@ -8,35 +8,34 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import FirebaseStorage
 
 struct ChatListRow: View {
-    @EnvironmentObject var chatEngine: ChatEngine
+    @EnvironmentObject var chatEngine : ChatEngine
+    @EnvironmentObject var imageManager: ImageManager
     @State var conversation: Conversation
+    @State var uiImage: UIImage? 
+    @State var imageIsLoaded: Bool = false
     @State var showDeleteAlert: Bool = false
     @State var offset = CGSize.zero
     var body: some View {
         HStack {
             HStack {
                 ZStack {
-                    // TODO: Add condition for rendering images
-                    
-                        // TODO: Load real img
+                    if let uiImage = uiImage {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 50, height: 50)
+                            .clipShape(Circle())
+                    } else {
+                        Text("")
+                            .frame(width: 50, height: 50)
+                            .background(Color("pink_primary"))
+                            .clipShape(Circle())
+                    }
 
-//                    AsyncImage(url: URL(string: "https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"), scale: 1) { image in
-//                        image
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fill)
-//                            .frame(width: 50, height: 50)
-//                            .clipShape(Circle())
-//                    } placeholder: {
-//                        Text("")
-//                            .frame(width: 50, height: 50)
-//                            .background(Color("pink_primary"))
-//                            .clipShape(Circle())
-//                    }
-                    FirebaseImage(id: Auth.auth().currentUser?.uid ?? "")
 
-                    // TODO: Handle online -> Green light
                     if chatEngine.conversationStatus[conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!] ?? false {
                         Text("") // Active status
                             .frame(width: 12, height: 12)
@@ -59,7 +58,6 @@ struct ChatListRow: View {
                 }
 
                 VStack(alignment: .leading) {
-                    // TODO: update when database has name
                     Text(conversation.name)
                         .fontWeight(.medium)
                     Spacer()
@@ -92,6 +90,10 @@ struct ChatListRow: View {
             .stroke(Color("neutral"), lineWidth: 1)
         )
         .onAppear {
+            chatEngine.imageManager = imageManager
+            chatEngine.fetchUserImage(conversation: conversation) { img in
+                self.uiImage = img
+            }
         }
         .alert(isPresented: $showDeleteAlert) { () -> Alert in
             Alert(title: Text("Delete this conversation"), message: Text("Do you want to delete the conversation with \(conversation.name)"), primaryButton: .default(Text("Cancel"), action: {
