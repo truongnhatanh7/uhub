@@ -9,12 +9,13 @@ import SwiftUI
 
 struct MatchesView: View {
     @EnvironmentObject var matchEngine: MatchEngine
+    @EnvironmentObject var imageManager: ImageManager
     @State var showMenu = false
     @State var data = [User]()
     @State var showDetailUser = false
     @State var user: User?
     private let adaptiveColumns = [
-        GridItem(.adaptive(minimum: 100))
+        GridItem(.adaptive(minimum: 140))
     ]
     
     var body: some View {
@@ -29,7 +30,7 @@ struct MatchesView: View {
                                     matchEngine.currentUser = user
                                     showDetailUser = true
                                 } label: {
-                                    Card(image: Image("User4"), width: geometry.size.width / 2.5, height: geometry.size.height / 3)
+                                    Card(image: Image("User4"), width: geometry.size.width / 2.3, height: geometry.size.height / 3, imageURL: user.id)
                                         .overlay(alignment: .bottom) {
                                             HStack {
                                                 VStack(alignment: .leading) {
@@ -47,6 +48,7 @@ struct MatchesView: View {
                             }
                         }
                     }
+                    .padding()
                 }
                 .fullScreenCover(isPresented: $showDetailUser) {
                     if let selectedUser = matchEngine.currentUser {

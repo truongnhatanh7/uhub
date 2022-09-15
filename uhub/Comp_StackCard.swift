@@ -31,7 +31,7 @@ struct StackCard: View {
                 let idx = CGFloat(homeVM.getIdx(user: user))
                 let topOffset = (idx <= 2 ? idx : 2) * 15
                 ZStack {
-                    Card(image: user.image, width: size.width - topOffset, height: size.height)
+                    Card(image: user.image, width: size.width - topOffset, height: size.height, imageURL: user.id)
                         .offset(y: -topOffset)
                         .overlay(alignment: .bottom) {
                             HStack {
