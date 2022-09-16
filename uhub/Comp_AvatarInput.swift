@@ -28,7 +28,8 @@ struct AvatarInput: View {
             
             if let image = image {
                 image
-                    .resizable()
+//                    .resizable()
+                    .scaledToFit()
                     .clipShape(Circle())
             }
         }
@@ -44,12 +45,5 @@ struct AvatarInput: View {
                     .clipShape(Circle())
             }
         }
-    }
-}
-
-struct AvatarInput_Previews: PreviewProvider {
-    static var previews: some View {
-        AvatarInput(action: {})
-        AvatarInput(image: Image("user"), action: {})
     }
 }

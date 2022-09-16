@@ -60,20 +60,20 @@ struct StackCard: View {
                         .overlay(alignment: .top) {
                             Text("Like")
                                 .font(.title.bold())
-                                .foregroundColor(Color("green"))
+                                .foregroundStyle(.ultraThickMaterial)
                                 .padding(10)
+                                .background(Color("green"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("red_danger"), lineWidth: 4))
                                 .opacity(btnSwipe ? opacity / 100.0 : offsetX / 100.0)
                                 .rotationEffect(Angle(degrees: -30))
                                 .offset(x: -100, y: 50)
                             
                             Text("Nope")
                                 .font(.title.bold())
-                                .foregroundColor(Color("pink_primary"))
+                                .foregroundStyle(.ultraThickMaterial)
                                 .padding(10)
+                                .background(Color("red_danger"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color("pink_primary"), lineWidth: 4))
                                 .opacity(btnSwipe ? opacity / -100.0 : offsetX / -100.0)
                                 .rotationEffect(Angle(degrees: 30))
                                 .offset(x: 100, y: 50)
@@ -160,11 +160,13 @@ struct StackCard: View {
     
     func endSwipeAction() {
         withAnimation { endSwipe = true }
-        
+        print("Fuck you")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             if let _ = homeVM.fetchedUsers.first {
                 let _ = withAnimation {
-                    homeVM.fetchedUsers.removeFirst()
+                    homeVM.removeUser {
+                        userAuthManager.updateProfileInfo(updatedData: ["timeLimit" : NSDate().timeIntervalSince1970 + 86400], callback: {})
+                    }
                 }
             }
         }

@@ -28,10 +28,11 @@ struct Card: View {
                     )
             } else {
                 RoundedRectangle(cornerRadius: 15)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.gray)
                     .frame(width: width, height: height)
                     .cornerRadius(15)
                 ProgressView()
+                    .scaleEffect(2)
                     .progressViewStyle(.circular)
                     .tint(Color("pink_primary"))
             }
@@ -39,7 +40,6 @@ struct Card: View {
         .onAppear {
             imageManager.fetchFromUserId(id: imageURL ?? "") { img in
                 if imageURL ==  "" {
-                    print("Hello")
                     image = Image("placeholder_avatar") // Change this to default image
                 } else {
                     image = Image(uiImage: img)

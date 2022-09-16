@@ -43,6 +43,7 @@ struct View_UserDetail: View {
                             .overlay(alignment: .trailing) {
                                 Button {
                                     withAnimation {
+                                        matchEngine.needReload = false
                                         isShowSheet.toggle()
                                     }
                                 } label: {
@@ -59,7 +60,7 @@ struct View_UserDetail: View {
                             
                             Text("Major: \(user.major)")
                                 .font(Font.system(size: 16))
-                            Text("GPA: \(GPARange(rawValue: user.gpa)?.description ?? "N/A")")
+                            Text("GPA: \(GPAFilterRange(rawValue: user.gpa)?.description ?? "N/A")")
                                 .font(Font.system(size: 16))
                             Text("Semester Learned: \(user.semesterLearned)")
                                 .font(Font.system(size: 16))
@@ -76,6 +77,7 @@ struct View_UserDetail: View {
                         Spacer()
                     }
                 }
+                .padding(.bottom)
                 .modifier(OneThirdModalStyle())
                 
                 // MARK: BUTTON GROUP
@@ -86,7 +88,8 @@ struct View_UserDetail: View {
                             if (true) {
                                 Button(action: {
                                     print("Reject this person")
-                                    matchEngine.removeMatch(id: user.id)
+                                    matchEngine.removeMatch(user: user)
+                                    isShowSheet = false
                                 }, label: {
                                     Image(systemName: "hand.thumbsdown.fill")
                                         .padding()
@@ -101,6 +104,7 @@ struct View_UserDetail: View {
                                 print("Go to chat")
                                 chatEngine.createConversation(recipientId: user.id) {
                                     pageVm.visit(page: .Chat)
+                                    isShowSheet = false
                                 }
                             }, label: {
                                 Image(systemName: "text.bubble.fill")
@@ -118,6 +122,7 @@ struct View_UserDetail: View {
 
             }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             chatEngine.imageManager = imageManager
             chatEngine.userAuthManager = userAuthManager

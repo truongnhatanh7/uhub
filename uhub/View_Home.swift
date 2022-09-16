@@ -9,11 +9,14 @@ import SwiftUI
 
 struct HomeView: View {
     @State var showMenu = false
-
+    
     @StateObject var matchEngine = MatchEngine()
     @StateObject var homeVM = HomeViewModel()
     @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var imageManager: ImageManager
+    
+    //    @State var time = Date()
+    //    let formatter = DateFormatter()
     
     var body: some View {
         VStack {
@@ -22,7 +25,8 @@ struct HomeView: View {
                 ZStack {
                     if let users = homeVM.fetchedUsers {
                         if users.isEmpty {
-                            Text("Come back later for more new friends!")
+                            let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
+                            Text("Come back after \(Formatter.specialFormat.string(from: time)) for more friends!")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         } else {
@@ -34,36 +38,43 @@ struct HomeView: View {
                     }
                 }
                 .padding()
-                .padding(.vertical)
+                .padding(.bottom, 40)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
-                HStack {
-                    Spacer()
-                    Button { doSwipe() } label: {
-                        Label("Dislike", systemImage: "xmark")
-                            .font(.system(size: 20, weight: .bold))
-                            .shadow(radius: 5)
-                            .padding(18)
-                            .background(.bar)
-                            .clipShape(Circle())
+                if !homeVM.fetchedUsers.isEmpty || !showMenu {
+                    HStack {
+                        Spacer()
+                        Button { doSwipe() } label: {
+                            Label("Nope", systemImage: "xmark")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(Color("red_danger"))
+                                .padding(18)
+                                .background(.bar)
+                                .clipShape(Circle())
+                        }
+                        .shadow(radius: 5)
+                        
+                        Spacer()
+                        Button {
+                            doSwipe(rightSwipe: true)
+                        } label: {
+                            Label("Like", systemImage: "hand.thumbsup.fill")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(Color("green"))
+                                .padding(18)
+                                .background(.bar)
+                                .clipShape(Circle())
+                        }
+                        .shadow(radius: 5)
+                        
+                        Spacer()
                     }
-                    Spacer()
-                    Button {
-                        doSwipe(rightSwipe: true)
-                    } label: {
-                        Label("Like", systemImage: "hand.thumbsup.fill")
-                            .font(.system(size: 20, weight: .bold))
-                            .shadow(radius: 5)
-                            .padding(18)
-                            .background(.bar)
-                            .clipShape(Circle())
-                    }
-                    Spacer()
+                    .padding()
+                    .foregroundStyle(Color("pink_primary"))
+                    .labelStyle(.iconOnly)
+                    .disabled(homeVM.fetchedUsers.isEmpty)
+                    .transition(.opacity)
                 }
-                .foregroundStyle(Color("pink_primary"))
-                .labelStyle(.iconOnly)
-                .disabled(homeVM.fetchedUsers.isEmpty )
-                .opacity(homeVM.fetchedUsers.isEmpty ? 0.6 : 1)
             }
             
             Spacer()
@@ -76,9 +87,11 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             withAnimation { showMenu = true }
-        }
-        .task {
+            
+            let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
+//            if time <= Date.now {
             homeVM.fetchData(userAuthManager.currentUserData, imageManager: imageManager)
+//            }
         }
     }
     

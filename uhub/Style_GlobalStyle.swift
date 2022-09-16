@@ -43,10 +43,10 @@ struct InputStyle: ViewModifier {
 struct OneThirdModalStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .frame(maxWidth: .infinity)
             .padding()
             .padding(.bottom, 10)
-            .background(.background)
+            .frame(maxWidth: .infinity)
+            .background(Color(uiColor: UIColor.tertiarySystemGroupedBackground))
             .cornerRadius(20)
             .transition(.move(edge: .bottom))
     }
