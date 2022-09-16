@@ -30,7 +30,7 @@ struct MatchesView: View {
                                     matchEngine.currentUser = user
                                     showDetailUser = true
                                 } label: {
-                                    Card(image: Image("User4"), width: geometry.size.width / 2.3, height: geometry.size.height / 3, imageURL: user.id)
+                                    Card(width: geometry.size.width / 2.3, height: geometry.size.height / 3, imageURL: user.id)
                                         .overlay(alignment: .bottom) {
                                             HStack {
                                                 VStack(alignment: .leading) {
@@ -68,7 +68,7 @@ struct MatchesView: View {
         .onAppear {
             matchEngine.fetchAllMatches {
                 self.data = matchEngine.matchesUsers.map({ element in
-                    return User(id: element.id, name: element.name, age: element.age, school: element.school, major: element.major, gpa: element.gpa, semesterLearned: element.semesterLearned, about: element.about, image: Image("User3"))
+                    return User(id: element.id, name: element.name, age: element.age, school: element.school, major: element.major, gpa: element.gpa, semesterLearned: element.semesterLearned, about: element.about)
                 })
             }
             withAnimation { showMenu = true }

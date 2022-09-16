@@ -13,6 +13,7 @@ struct HomeView: View {
     @StateObject var matchEngine = MatchEngine()
     @StateObject var homeVM = HomeViewModel()
     @EnvironmentObject var userAuthManager: UserAuthManager
+    @EnvironmentObject var imageManager: ImageManager
     
     var body: some View {
         VStack {
@@ -77,7 +78,7 @@ struct HomeView: View {
             withAnimation { showMenu = true }
         }
         .task {
-            homeVM.fetchData(userAuthManager.currentUserData)
+            homeVM.fetchData(userAuthManager.currentUserData, imageManager: imageManager)
         }
     }
     

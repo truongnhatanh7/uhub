@@ -18,9 +18,8 @@ struct User : Identifiable {
     var gpa: Int
     var semesterLearned: Int
     var about: String
-    var image: Image?
     
-    init(id: String?, name: String?, age: Int?, school: String?, major: String?, gpa: Int?, semesterLearned: Int?, about: String?, image: Image?) {
+    init(id: String?, name: String?, age: Int?, school: String?, major: String?, gpa: Int?, semesterLearned: Int?, about: String?) {
         self.id = id ?? UUID().uuidString
         self.name = name ?? "N/A"
         self.age = age ?? 18
@@ -29,7 +28,6 @@ struct User : Identifiable {
         self.gpa = gpa ?? 0
         self.semesterLearned = semesterLearned ?? 0
         self.about = about ?? "N/A"
-        self.image = image
     }
     
     func getFormattedGpa() -> String {

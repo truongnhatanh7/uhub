@@ -28,6 +28,7 @@ class ImageManager: ObservableObject {
             ref.getData(maxSize: 1 * 2140 * 2140) { data, error in
               if let error = error {
                   print(error)
+                  callback(UIImage(imageLiteralResourceName: "placeholder_avatar"))
               } else {
                   print("Retrived image")
                 let image = UIImage(data: data!)

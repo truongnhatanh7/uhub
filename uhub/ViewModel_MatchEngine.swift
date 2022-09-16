@@ -51,7 +51,7 @@ class MatchEngine: ObservableObject {
                         let gpa = element["gpa"] as? Int ?? 0
                         let semester_learned = element["semester_learned"] as? Int ?? 0
                         let about = element["about"] as? String ?? ""
-                        return User(id: id, name: fullname, age: age, school: school, major: major, gpa: gpa, semesterLearned: semester_learned, about: about, image: Image("User4"))
+                        return User(id: id, name: fullname, age: age, school: school, major: major, gpa: gpa, semesterLearned: semester_learned, about: about)
                     }
                     callback()
                 } else {

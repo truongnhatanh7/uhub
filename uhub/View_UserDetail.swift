@@ -24,7 +24,7 @@ struct View_UserDetail: View {
             // MARK: Image
             GeometryReader { proxy in
                 VStack {
-                    Card(image: image, width: proxy.size.width, height: proxy.size.height, imageURL: user.id)
+                    Card(width: proxy.size.width, height: proxy.size.height, imageURL: user.id)
                 }.edgesIgnoringSafeArea(.all)
                 
             }
