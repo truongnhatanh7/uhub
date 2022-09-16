@@ -15,6 +15,13 @@ class MatchEngine: ObservableObject {
     
     @Published var matchesUsers : [User] = []
     @Published var currentUser: User?
+    @Published var needReload: Bool = false
+    
+    private var fetchListnener: ListenerRegistration?
+    
+    deinit {
+        fetchListnener?.remove()
+    }
     
     func createMatchPackage(user: User) {
         if let currentUser = Auth.auth().currentUser {
@@ -31,13 +38,31 @@ class MatchEngine: ObservableObject {
                         "about": user.about
                     ]
                 ])
-            ])
+            ]) { err in
+                if let err = err {
+                    print(err)
+                    self.db.collection("matches").document(currentUser.uid).setData([
+                        "users": FieldValue.arrayUnion([
+                            [
+                                "id": user.id,
+                                "fullname": user.name,
+                                "age": user.age,
+                                "school": user.school,
+                                "major": user.major,
+                                "gpa": user.gpa,
+                                "semester_learned": user.semesterLearned,
+                                "about": user.about
+                            ]
+                        ])
+                    ])
+                }
+            }
         }
     }
     
     func fetchAllMatches(callback: @escaping ()->()) {
         if let currentUser = Auth.auth().currentUser {
-            db.collection("matches").document(currentUser.uid).getDocument { (document, error) in
+            fetchListnener = db.collection("matches").document(currentUser.uid).addSnapshotListener { (document, error) in
                 if let document = document, document.exists {
                     let data = document.data()
                     let matchesUsers = data?["users"] as? [[String: Any]] ?? [[:]]
@@ -76,11 +101,15 @@ class MatchEngine: ObservableObject {
                         "about": user.about
                     ]
                 ])
-            ])
+            ]) { err in
+                if let err = err {
+                    print(err)
+                }
+            }
         }
     }
     
     func removeMatch(id: String) {
-
+        
     }
 }

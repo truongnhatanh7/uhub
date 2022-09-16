@@ -24,7 +24,7 @@ struct MatchesView: View {
                 ScrollView {
                     HeaderHome(title: "Matches")
                     LazyVGrid(columns: adaptiveColumns, spacing: 20) {
-                        ForEach(data) { user in
+                        ForEach(matchEngine.matchesUsers) { user in
                             ZStack {
                                 Button {
                                     matchEngine.currentUser = user
@@ -66,12 +66,20 @@ struct MatchesView: View {
         }
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
-            matchEngine.fetchAllMatches {
-                self.data = matchEngine.matchesUsers.map({ element in
-                    return User(id: element.id, name: element.name, age: element.age, school: element.school, major: element.major, gpa: element.gpa, semesterLearned: element.semesterLearned, about: element.about)
-                })
-            }
+            matchEngine.needReload = true
             withAnimation { showMenu = true }
+        }
+        .onChange(of: matchEngine.needReload) { newValue in
+            print("Update: \(newValue)")
+            if newValue {
+                matchEngine.fetchAllMatches {
+//                    self.data = matchEngine.matchesUsers.map({ element in
+//                        return User(id: element.id, name: element.name, age: element.age, school: element.school, major: element.major, gpa: element.gpa, semesterLearned: element.semesterLearned, about: element.about)
+//                    })
+//                    print("Check length: \(self.data.count)")
+                }
+                matchEngine.needReload = false
+            }
         }
     }
 }

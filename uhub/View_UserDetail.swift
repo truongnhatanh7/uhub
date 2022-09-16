@@ -43,6 +43,7 @@ struct View_UserDetail: View {
                             .overlay(alignment: .trailing) {
                                 Button {
                                     withAnimation {
+                                        matchEngine.needReload = false
                                         isShowSheet.toggle()
                                     }
                                 } label: {
@@ -87,7 +88,8 @@ struct View_UserDetail: View {
                             if (true) {
                                 Button(action: {
                                     print("Reject this person")
-                                    matchEngine.removeMatch(id: user.id)
+                                    matchEngine.removeMatch(user: user)
+                                    isShowSheet = false
                                 }, label: {
                                     Image(systemName: "hand.thumbsdown.fill")
                                         .padding()
@@ -102,6 +104,7 @@ struct View_UserDetail: View {
                                 print("Go to chat")
                                 chatEngine.createConversation(recipientId: user.id) {
                                     pageVm.visit(page: .Chat)
+                                    isShowSheet = false
                                 }
                             }, label: {
                                 Image(systemName: "text.bubble.fill")
