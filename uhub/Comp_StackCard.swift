@@ -160,7 +160,7 @@ struct StackCard: View {
     
     func endSwipeAction() {
         withAnimation { endSwipe = true }
-        
+        print("Fuck you")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             if let _ = homeVM.fetchedUsers.first {
                 let _ = withAnimation {

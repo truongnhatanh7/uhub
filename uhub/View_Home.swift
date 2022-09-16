@@ -9,14 +9,14 @@ import SwiftUI
 
 struct HomeView: View {
     @State var showMenu = false
-
+    
     @StateObject var matchEngine = MatchEngine()
     @StateObject var homeVM = HomeViewModel()
     @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var imageManager: ImageManager
     
-//    @State var time = Date()
-//    let formatter = DateFormatter()
+    //    @State var time = Date()
+    //    let formatter = DateFormatter()
     
     var body: some View {
         VStack {
@@ -25,10 +25,8 @@ struct HomeView: View {
                 ZStack {
                     if let users = homeVM.fetchedUsers {
                         if users.isEmpty {
-//                            let formatter = DateFormatter()
-//                            formatter.timeStyle = .medium
                             let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
-                            Text("Come back at \(time) for more friends!")
+                            Text("Come back after \(Formatter.specialFormat.string(from: time)) for more friends!")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         } else {
@@ -55,7 +53,7 @@ struct HomeView: View {
                                 .clipShape(Circle())
                         }
                         .shadow(radius: 5)
-
+                        
                         Spacer()
                         Button {
                             doSwipe(rightSwipe: true)
@@ -68,7 +66,7 @@ struct HomeView: View {
                                 .clipShape(Circle())
                         }
                         .shadow(radius: 5)
-
+                        
                         Spacer()
                     }
                     .padding()
@@ -89,9 +87,11 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             withAnimation { showMenu = true }
-        }
-        .task {
+            
+            let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
+//            if time <= Date.now {
             homeVM.fetchData(userAuthManager.currentUserData, imageManager: imageManager)
+//            }
         }
     }
     
