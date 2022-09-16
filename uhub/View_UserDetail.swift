@@ -59,7 +59,7 @@ struct View_UserDetail: View {
                             
                             Text("Major: \(user.major)")
                                 .font(Font.system(size: 16))
-                            Text("GPA: \(GPARange(rawValue: user.gpa)?.description ?? "N/A")")
+                            Text("GPA: \(GPAFilterRange(rawValue: user.gpa)?.description ?? "N/A")")
                                 .font(Font.system(size: 16))
                             Text("Semester Learned: \(user.semesterLearned)")
                                 .font(Font.system(size: 16))

@@ -28,10 +28,11 @@ struct Card: View {
                     )
             } else {
                 RoundedRectangle(cornerRadius: 15)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.gray)
                     .frame(width: width, height: height)
                     .cornerRadius(15)
                 ProgressView()
+                    .scaleEffect(2)
                     .progressViewStyle(.circular)
                     .tint(Color("pink_primary"))
             }

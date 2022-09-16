@@ -39,15 +39,18 @@ class HomeViewModel: ObservableObject {
         case .GreaterThan57:
             minAge = 58
         }
+        
         usersRef
             .whereField("age", isGreaterThanOrEqualTo: minAge)
             .whereField("age", isLessThanOrEqualTo: maxAge)
+            .limit(to: 50)
+        
+        
             .getDocuments { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapshot!.documents {
-                        print("\(document.documentID) => \(document.data())")
                         let data = document.data()
                         let id = data["id"] as? String
                         let name = data["fullname"] as? String
@@ -57,6 +60,7 @@ class HomeViewModel: ObservableObject {
                         let gpa = data["gpa"] as? Int
                         let semesterLearned = data["semester_learned"] as? Int
                         let about = data["about"] as? String
+                        
                         let user = User(id: id, name: name, age: age, school: school, major: major, gpa: gpa, semesterLearned: semesterLearned, about: about)
                         self.fetchedUsers.append(user)
                     }
@@ -66,5 +70,11 @@ class HomeViewModel: ObservableObject {
     
     func getIdx(user: User) -> Int {
         fetchedUsers.firstIndex { $0.id == user.id } ?? 0
+    }
+    
+    
+    func isUserMeetRequirement(_ user: User) -> Bool {
+        
+        return false
     }
 }
