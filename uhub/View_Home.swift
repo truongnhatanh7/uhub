@@ -15,6 +15,9 @@ struct HomeView: View {
     @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var imageManager: ImageManager
     
+//    @State var time = Date()
+//    let formatter = DateFormatter()
+    
     var body: some View {
         VStack {
             HeaderHome(title: "Discovery")
@@ -22,7 +25,10 @@ struct HomeView: View {
                 ZStack {
                     if let users = homeVM.fetchedUsers {
                         if users.isEmpty {
-                            Text("Come back later for more new friends!")
+//                            let formatter = DateFormatter()
+//                            formatter.timeStyle = .medium
+                            let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
+                            Text("Come back at \(time) for more friends!")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         } else {
@@ -41,7 +47,7 @@ struct HomeView: View {
                     HStack {
                         Spacer()
                         Button { doSwipe() } label: {
-                            Label("Dislike", systemImage: "xmark")
+                            Label("Nope", systemImage: "xmark")
                                 .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(Color("red_danger"))
                                 .padding(18)

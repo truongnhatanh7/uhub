@@ -164,7 +164,9 @@ struct StackCard: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             if let _ = homeVM.fetchedUsers.first {
                 let _ = withAnimation {
-                    homeVM.fetchedUsers.removeFirst()
+                    homeVM.removeUser {
+                        userAuthManager.updateProfileInfo(updatedData: ["timeLimit" : NSDate().timeIntervalSince1970 + 86400], callback: {})
+                    }
                 }
             }
         }

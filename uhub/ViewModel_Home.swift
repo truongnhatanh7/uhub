@@ -78,6 +78,12 @@ class HomeViewModel: ObservableObject {
         fetchedUsers.firstIndex { $0.id == user.id } ?? 0
     }
     
+    func removeUser(callbackWhenReachEmpty: @escaping () -> Void) {
+        fetchedUsers.removeFirst()
+        if fetchedUsers.isEmpty {
+            callbackWhenReachEmpty()
+        }
+    }
     
     func isUserMeetRequirement(_ user: User, _ gpaFilter: GPAFilterRange, _ semesterFilter: SemesterFilterRange) -> Bool {
         print("\(gpaFilter.description) | \(semesterFilter.description)")
