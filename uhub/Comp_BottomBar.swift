@@ -19,10 +19,6 @@ struct BottomBar<T: View>: View {
             content()
         }
         .modifier(OneThirdModalStyle())
-        .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(.secondary)
-                .opacity(0.4)
-        )
+        .shadow(radius: 2)
     }
 }

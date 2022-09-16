@@ -76,6 +76,7 @@ struct View_UserDetail: View {
                         Spacer()
                     }
                 }
+                .padding(.bottom)
                 .modifier(OneThirdModalStyle())
                 
                 // MARK: BUTTON GROUP
@@ -118,6 +119,7 @@ struct View_UserDetail: View {
 
             }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             chatEngine.imageManager = imageManager
             chatEngine.userAuthManager = userAuthManager
