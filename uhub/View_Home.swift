@@ -34,7 +34,7 @@ struct HomeView: View {
                     }
                 }
                 .padding()
-                .padding(.vertical)
+                .padding(.bottom, 40)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 if !homeVM.fetchedUsers.isEmpty || !showMenu {
@@ -65,6 +65,7 @@ struct HomeView: View {
 
                         Spacer()
                     }
+                    .padding()
                     .foregroundStyle(Color("pink_primary"))
                     .labelStyle(.iconOnly)
                     .disabled(homeVM.fetchedUsers.isEmpty)

@@ -66,7 +66,7 @@ class HomeViewModel: ObservableObject {
                             user,
                             GPAFilterRange(type: filter?["friends_gpa"] as? Int ?? 0),
                             SemesterFilterRange(type: filter?["friends_semester_learned"] as? Int ?? 0)
-                        ) {
+                        ) && user.id != currentUserData["id"] as? String {
                             self.fetchedUsers.append(user)
                         }
                     }

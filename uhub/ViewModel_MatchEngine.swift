@@ -63,24 +63,26 @@ class MatchEngine: ObservableObject {
     func fetchAllMatches(callback: @escaping ()->()) {
         if let currentUser = Auth.auth().currentUser {
             fetchListnener = db.collection("matches").document(currentUser.uid).addSnapshotListener { (document, error) in
-                if let document = document, document.exists {
-                    let data = document.data()
-                    let matchesUsers = data?["users"] as? [[String: Any]] ?? [[:]]
-                    print(matchesUsers)
-                    self.matchesUsers = matchesUsers.map { element -> User in
-                        let id = element["id"] as? String ?? ""
-                        let fullname = element["fullname"] as? String ?? ""
-                        let age = element["age"] as? Int ?? 0
-                        let school = element["school"] as? String ?? ""
-                        let major = element["major"] as? String ?? ""
-                        let gpa = element["gpa"] as? Int ?? 0
-                        let semester_learned = element["semester_learned"] as? Int ?? 0
-                        let about = element["about"] as? String ?? ""
-                        return User(id: id, name: fullname, age: age, school: school, major: major, gpa: gpa, semesterLearned: semester_learned, about: about)
+                withAnimation {
+                    if let document = document, document.exists {
+                        let data = document.data()
+                        let matchesUsers = data?["users"] as? [[String: Any]] ?? [[:]]
+                        print(matchesUsers)
+                        self.matchesUsers = matchesUsers.map { element -> User in
+                            let id = element["id"] as? String ?? ""
+                            let fullname = element["fullname"] as? String ?? ""
+                            let age = element["age"] as? Int ?? 0
+                            let school = element["school"] as? String ?? ""
+                            let major = element["major"] as? String ?? ""
+                            let gpa = element["gpa"] as? Int ?? 0
+                            let semester_learned = element["semester_learned"] as? Int ?? 0
+                            let about = element["about"] as? String ?? ""
+                            return User(id: id, name: fullname, age: age, school: school, major: major, gpa: gpa, semesterLearned: semester_learned, about: about)
+                        }
+                        callback()
+                    } else {
+                        print("Document does not exist")
                     }
-                    callback()
-                } else {
-                    print("Document does not exist")
                 }
             }
         }
