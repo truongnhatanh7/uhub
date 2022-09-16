@@ -42,22 +42,26 @@ struct HomeView: View {
                     Button { doSwipe() } label: {
                         Label("Dislike", systemImage: "xmark")
                             .font(.system(size: 20, weight: .bold))
-                            .shadow(radius: 5)
+                            .foregroundColor(Color("red_danger"))
                             .padding(18)
                             .background(.bar)
                             .clipShape(Circle())
                     }
+                    .shadow(radius: 5)
+
                     Spacer()
                     Button {
                         doSwipe(rightSwipe: true)
                     } label: {
                         Label("Like", systemImage: "hand.thumbsup.fill")
                             .font(.system(size: 20, weight: .bold))
-                            .shadow(radius: 5)
+                            .foregroundColor(Color("green"))
                             .padding(18)
                             .background(.bar)
                             .clipShape(Circle())
                     }
+                    .shadow(radius: 5)
+
                     Spacer()
                 }
                 .foregroundStyle(Color("pink_primary"))
