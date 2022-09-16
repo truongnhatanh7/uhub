@@ -21,132 +21,126 @@ struct SigninScreenView: View {
     
     var body: some View {
         ZStack {
-            ScrollView {
+            VStack {
+                // hearts image
                 Spacer()
+                Image("flying_hearts")
+                    .resizable()
+                    .frame(width: 250, height: 250)
                 
-                VStack {
-                    // hearts image
-                    Spacer()
-                    Image("flying_hearts")
-                        .resizable()
-                        .frame(width: 250, height: 200)
-                        .padding(.top, 20)
-                    
-                    // sign up title
-                    Spacer()
-                    Text("Let's Sign You In")
-                        .bold()
-                        .foregroundColor(Color("black_primary"))
-                        .font(.title)
-                        .padding(.vertical, 30)
-                    
-                    // 2 text input fields
-                    VStack(spacing: 45) {
-                        VStack {
-                            TextInputComponent(
-                                label: "Email",
-                                value: $email,
-                                placeholder: "Email",
-                                isRequired: true
-                            ).onChange(of: email) { _ in
-                                if !email.isEmpty && !pwd.isEmpty {
-                                    if isButtonDisabled {
-                                        isButtonDisabled.toggle()
-                                    }
-                                } else {
-                                    if !isButtonDisabled {
-                                        isButtonDisabled.toggle()
-                                    }
+                // sign up title
+                Spacer()
+                Text("Let's Sign You In")
+                    .bold()
+                    .foregroundColor(Color("black_primary"))
+                    .font(.title)
+                    .padding(.vertical, 20)
+                
+                // 2 text input fields
+                VStack(spacing: 35) {
+                    VStack {
+                        TextInputComponent(
+                            label: "Email",
+                            value: $email,
+                            placeholder: "Email",
+                            isRequired: true
+                        ).onChange(of: email) { _ in
+                            if !email.isEmpty && !pwd.isEmpty {
+                                if isButtonDisabled {
+                                    isButtonDisabled.toggle()
                                 }
-                            }
-                            
-                            if userAuthManager.errorMsg != ""
-                                && !userAuthManager.errorMsg.lowercased().contains("password") {
-                                ErrorMsgView(msg: "Invalid email")
+                            } else {
+                                if !isButtonDisabled {
+                                    isButtonDisabled.toggle()
+                                }
                             }
                         }
                         
-                        VStack {
-                            TextInputComponent(
-                                label: "Password",
-                                value: $pwd,
-                                placeholder: "Password",
-                                isSecure: true,
-                                isRequired: true
-                            ).onChange(of: pwd) { _ in
-                                if !email.isEmpty && !pwd.isEmpty {
-                                    if isButtonDisabled {
-                                        isButtonDisabled.toggle()
-                                    }
-                                } else {
-                                    if !isButtonDisabled {
-                                        isButtonDisabled.toggle()
-                                    }
-                                }
-                            }
-                            
-                            if userAuthManager.errorMsg != ""
-                                && userAuthManager.errorMsg.lowercased().contains("password") {
-                                ErrorMsgView(msg: "Invalid password")
-                            }
+                        if userAuthManager.errorMsg != ""
+                            && !userAuthManager.errorMsg.lowercased().contains("password") {
+                            ErrorMsgView(msg: "Invalid email")
                         }
                     }
                     
-                    // remember me check box
-                    HStack {
-                        CheckBoxView(checked: $rememberedMe)
-                        Text("Remember me")
-                            .bold()
-                            .font(.caption)
-                            .foregroundColor(Color("black_primary"))
-                        Spacer()
-                    }
-                    .padding(.top, 20)
-                    .padding(.bottom, 10)
-                    .padding(.leading, 20)
-                    
-                    // sign in button
-                    ButtonBindingView(textContent: "Sign In", onTap: {
-                        // THIS LINE IS TEST ONLY
-                        //self.notiManager.generateNoti(title: "UHUB", subtitle: "Mãi mãi là anh em cột chèo!")
-                        userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
-                            if userAuthManager.errorMsg == "" {
-                                chatEngine.loadChatList {
-                                    chatEngine.fetchUserStatus()
+                    VStack {
+                        TextInputComponent(
+                            label: "Password",
+                            value: $pwd,
+                            placeholder: "Password",
+                            isSecure: true,
+                            isRequired: true
+                        ).onChange(of: pwd) { _ in
+                            if !email.isEmpty && !pwd.isEmpty {
+                                if isButtonDisabled {
+                                    isButtonDisabled.toggle()
                                 }
-                                pageVM.visit(page: .Home)
                             } else {
-                                print(userAuthManager.errorMsg)
+                                if !isButtonDisabled {
+                                    isButtonDisabled.toggle()
+                                }
                             }
-                        }, firstTime: false)
-                    }, isDisabled: $isButtonDisabled)
+                        }
+                        
+                        if userAuthManager.errorMsg != ""
+                            && userAuthManager.errorMsg.lowercased().contains("password") {
+                            ErrorMsgView(msg: "Invalid password")
+                        }
+                    }
+                }
+                
+                // remember me check box
+                HStack {
+                    CheckBoxView(checked: $rememberedMe)
+                    Text("Remember me")
+                        .bold()
+                        .font(.caption)
+                        .foregroundColor(Color("black_primary"))
+                    Spacer()
+                }
+                .padding(.top, 20)
+                .padding(.bottom, 10)
+                .padding(.leading, 20)
+                
+                // sign in button
+                ButtonBindingView(textContent: "Sign In", onTap: {
+                    // THIS LINE IS TEST ONLY
+                    //self.notiManager.generateNoti(title: "UHUB", subtitle: "Mãi mãi là anh em cột chèo!")
+                    userAuthManager.signIn(inputEmail: email, inputPwd: pwd, callback: {
+                        if userAuthManager.errorMsg == "" {
+                            chatEngine.loadChatList {
+                                chatEngine.fetchUserStatus()
+                            }
+                            pageVM.visit(page: .Home)
+                        } else {
+                            print(userAuthManager.errorMsg)
+                        }
+                    }, firstTime: false)
+                }, isDisabled: $isButtonDisabled)
+                
+                // forgot your password button
+                Button(action: {}) {
+                    Text("Forgot your password?")
+                        .bold()
+                }
+                .foregroundColor(Color("pink_primary"))
+                .padding(.top, 15)
+                
+                // dont have an account + navigate to Sign Up button
+                HStack {
+                    Text("Don't have an account?")
+                        .foregroundColor(.gray)
                     
-                    // forgot your password button
-                    Button(action: {}) {
-                        Text("Forgot your password?")
+                    Button(action: {
+                        pageVM.visit(page: .SignUp)
+                    }) {
+                        Text("Sign Up")
                             .bold()
                     }
                     .foregroundColor(Color("pink_primary"))
-                    .padding(.top, 15)
-                    
-                    // dont have an account + navigate to Sign Up button
-                    HStack {
-                        Text("Don't have an account?")
-                            .foregroundColor(.gray)
-                        
-                        Button(action: {
-                            pageVM.visit(page: .SignUp)
-                        }) {
-                            Text("Sign Up")
-                                .bold()
-                        }
-                        .foregroundColor(Color("pink_primary"))
-                    }
-                    .padding(.top, 20)
-                    .padding(.bottom, 300)
                 }
-                .padding(20)
+                .padding(.vertical, 20)
             }
+            .padding(20)
         }
         .ignoresSafeArea()
     }

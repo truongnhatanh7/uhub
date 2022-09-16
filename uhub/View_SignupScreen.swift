@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct SignupScreenView: View {
     @EnvironmentObject var pageVm: PageViewModel
     @EnvironmentObject var userAuthManager: UserAuthManager
@@ -20,125 +18,118 @@ struct SignupScreenView: View {
     
     var body: some View {
         ZStack {
-            ScrollView {
+            VStack(alignment: .center) {
+                // hearts image
                 Spacer()
+                Image("flying_hearts")
+                    .resizable()
+                    .frame(width: 250, height: 250)
                 
-                VStack {
-                    // hearts image
-                    Spacer()
-                    Image("flying_hearts")
-                        .resizable()
-                        .frame(width: 250, height: 200)
-                        .padding(.top, 20)
-                    
-                    // sign up title
-                    Spacer()
-                    Text("Create an Account")
-                        .bold()
-                        .foregroundColor(Color("black_primary"))
-                        .font(.title)
-                        .padding(.vertical, 30)
-                    
-                    // 2 text input fields
-                    VStack(spacing: 45) {
-                        VStack {
-                            TextInputComponent(
-                                label: "Email",
-                                value: $email,
-                                placeholder: "Email",
-                                isRequired: true
-                            ).onChange(of: email) { _ in
-                                if !email.isEmpty && !pwd.isEmpty {
-                                    if isButtonDisabled {
-                                        isButtonDisabled.toggle()
-                                    }
-                                } else {
-                                    if !isButtonDisabled {
-                                        isButtonDisabled.toggle()
-                                    }
+                // sign up title
+                Text("Create an Account")
+                    .bold()
+                    .foregroundColor(Color("black_primary"))
+                    .font(.title)
+                    .padding(.vertical, 20)
+                
+                // 2 text input fields
+                VStack(spacing: 35) {
+                    VStack {
+                        TextInputComponent(
+                            label: "Email",
+                            value: $email,
+                            placeholder: "Email",
+                            isRequired: true
+                        ).onChange(of: email) { _ in
+                            if !email.isEmpty && !pwd.isEmpty {
+                                if isButtonDisabled {
+                                    isButtonDisabled.toggle()
                                 }
-                            }
-                            
-                            if userAuthManager.errorMsg != ""
-                                && !userAuthManager.errorMsg.lowercased().contains("password") {
-                                if userAuthManager.errorMsg.lowercased().contains("already") {
-                                    ErrorMsgView(msg: "Email already exists")
-                                } else {
-                                    ErrorMsgView(msg: "Valid email format: abc123@mail.provider.com")
-                                }
-                            }
-                        }
-                        
-                        VStack {
-                            TextInputComponent(
-                                label: "Password",
-                                value: $pwd,
-                                placeholder: "Password",
-                                isSecure: true,
-                                isRequired: true
-                            ).onChange(of: pwd) { _ in
-                                if !email.isEmpty && !pwd.isEmpty {
-                                    if isButtonDisabled {
-                                        isButtonDisabled.toggle()
-                                    }
-                                } else {
-                                    if !isButtonDisabled {
-                                        isButtonDisabled.toggle()
-                                    }
-                                }
-                            }
-                            
-                            if userAuthManager.errorMsg != ""
-                                && userAuthManager.errorMsg.lowercased().contains("password") {
-                                ErrorMsgView(msg: "Valid password format: at least 6 characters")
-                            }
-                        }
-                    }
-                    
-                    // remember me check box
-                    HStack {
-                        CheckBoxView(checked: $rememberedMe)
-                        Text("Remember me")
-                            .bold()
-                            .font(.caption)
-                            .foregroundColor(Color("black_primary"))
-                        Spacer()
-                    }
-                    .padding(.top, 20)
-                    .padding(.bottom, 10)
-                    .padding(.leading, 20)
-                    
-                    // sign up button
-                    
-                    ButtonBindingView(textContent: "Sign Up", onTap: {
-                        userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
-                            if userAuthManager.errorMsg == "" {
-                                pageVm.isfirstFlow = true
-                                pageVm.visit(page: .EditProfile)
                             } else {
-                                print(userAuthManager.errorMsg)
+                                if !isButtonDisabled {
+                                    isButtonDisabled.toggle()
+                                }
                             }
-                        })
-                    }, isDisabled: $isButtonDisabled)
-                    
-                    // already have an account + navigate to Sign In button
-                    HStack {
-                        Text("Already have an account?")
-                            .foregroundColor(.gray)
-                        
-                        Button(action: {
-                            pageVm.visit(page: .SignIn)
-                        }) {
-                            Text("Sign In")
-                                .bold()
                         }
-                        .foregroundColor(Color("pink_primary"))
+                        
+                        if userAuthManager.errorMsg != ""
+                            && !userAuthManager.errorMsg.lowercased().contains("password") {
+                            if userAuthManager.errorMsg.lowercased().contains("already") {
+                                ErrorMsgView(msg: "Email already exists")
+                            } else {
+                                ErrorMsgView(msg: "Valid email format: abc123@mail.provider.com")
+                            }
+                        }
                     }
-                    .padding(.top, 20)
-                    .padding(.bottom, 300)
+                    
+                    VStack {
+                        TextInputComponent(
+                            label: "Password",
+                            value: $pwd,
+                            placeholder: "Password",
+                            isSecure: true,
+                            isRequired: true
+                        ).onChange(of: pwd) { _ in
+                            if !email.isEmpty && !pwd.isEmpty {
+                                if isButtonDisabled {
+                                    isButtonDisabled.toggle()
+                                }
+                            } else {
+                                if !isButtonDisabled {
+                                    isButtonDisabled.toggle()
+                                }
+                            }
+                        }
+                        
+                        if userAuthManager.errorMsg != ""
+                            && userAuthManager.errorMsg.lowercased().contains("password") {
+                            ErrorMsgView(msg: "Valid password format: at least 6 characters")
+                        }
+                    }
                 }
-                .padding(20)
+                
+                // remember me check box
+                HStack {
+                    CheckBoxView(checked: $rememberedMe)
+                    Text("Remember me")
+                        .bold()
+                        .font(.caption)
+                        .foregroundColor(Color("black_primary"))
+                    Spacer()
+                }
+                .padding(.top, 20)
+                .padding(.bottom, 10)
+                .padding(.leading, 20)
+                
+                // sign up button
+                
+                ButtonBindingView(textContent: "Sign Up", onTap: {
+                    userAuthManager.signUp(inputEmail: email, inputPwd: pwd, callback: {
+                        if userAuthManager.errorMsg == "" {
+                            pageVm.isfirstFlow = true
+                            pageVm.visit(page: .EditProfile)
+                        } else {
+                            print(userAuthManager.errorMsg)
+                        }
+                    })
+                }, isDisabled: $isButtonDisabled)
+                
+                // already have an account + navigate to Sign In button
+                HStack {
+                    Text("Already have an account?")
+                        .foregroundColor(.gray)
+                    
+                    Button(action: {
+                        pageVm.visit(page: .SignIn)
+                    }) {
+                        Text("Sign In")
+                            .bold()
+                    }
+                    .foregroundColor(Color("pink_primary"))
+                }
+                .padding(.vertical, 20)
             }
+            .padding(20)
         }
         .ignoresSafeArea()
     }
