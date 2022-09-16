@@ -37,37 +37,39 @@ struct HomeView: View {
                 .padding(.vertical)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
-                HStack {
-                    Spacer()
-                    Button { doSwipe() } label: {
-                        Label("Dislike", systemImage: "xmark")
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundColor(Color("red_danger"))
-                            .padding(18)
-                            .background(.bar)
-                            .clipShape(Circle())
-                    }
-                    .shadow(radius: 5)
+                if !homeVM.fetchedUsers.isEmpty || !showMenu {
+                    HStack {
+                        Spacer()
+                        Button { doSwipe() } label: {
+                            Label("Dislike", systemImage: "xmark")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(Color("red_danger"))
+                                .padding(18)
+                                .background(.bar)
+                                .clipShape(Circle())
+                        }
+                        .shadow(radius: 5)
 
-                    Spacer()
-                    Button {
-                        doSwipe(rightSwipe: true)
-                    } label: {
-                        Label("Like", systemImage: "hand.thumbsup.fill")
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundColor(Color("green"))
-                            .padding(18)
-                            .background(.bar)
-                            .clipShape(Circle())
-                    }
-                    .shadow(radius: 5)
+                        Spacer()
+                        Button {
+                            doSwipe(rightSwipe: true)
+                        } label: {
+                            Label("Like", systemImage: "hand.thumbsup.fill")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(Color("green"))
+                                .padding(18)
+                                .background(.bar)
+                                .clipShape(Circle())
+                        }
+                        .shadow(radius: 5)
 
-                    Spacer()
+                        Spacer()
+                    }
+                    .foregroundStyle(Color("pink_primary"))
+                    .labelStyle(.iconOnly)
+                    .disabled(homeVM.fetchedUsers.isEmpty)
+                    .transition(.opacity)
                 }
-                .foregroundStyle(Color("pink_primary"))
-                .labelStyle(.iconOnly)
-                .disabled(homeVM.fetchedUsers.isEmpty )
-                .opacity(homeVM.fetchedUsers.isEmpty ? 0.6 : 1)
             }
             
             Spacer()

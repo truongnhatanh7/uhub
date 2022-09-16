@@ -40,7 +40,6 @@ struct Card: View {
         .onAppear {
             imageManager.fetchFromUserId(id: imageURL ?? "") { img in
                 if imageURL ==  "" {
-                    print("Hello")
                     image = Image("placeholder_avatar") // Change this to default image
                 } else {
                     image = Image(uiImage: img)
