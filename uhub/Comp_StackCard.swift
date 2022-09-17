@@ -182,6 +182,7 @@ struct StackCard: View {
     }
     
     func leftSwipe() {
+        matchEngine.createDislikePackage(user)
         endSwipeAction()
     }
     

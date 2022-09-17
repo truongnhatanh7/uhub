@@ -16,7 +16,9 @@ class HomeViewModel: ObservableObject {
     @Published var showDetailUser: Bool = false
     
     func fetchData(_ currentUserData: [String: Any], imageManager: ImageManager) {
-        let usersRef = Firestore.firestore().collection("users")
+        let db = Firestore.firestore()
+        
+        let usersRef = db.collection("users")
         
         let filter = currentUserData["friends_filter"] as? [String: Any]
         var minAge: Int = 18
@@ -41,38 +43,61 @@ class HomeViewModel: ObservableObject {
             minAge = 58
         }
         
-        usersRef
-            .whereField("age", isGreaterThanOrEqualTo: minAge)
-            .whereField("age", isLessThanOrEqualTo: maxAge)
-            .limit(to: 50)
-        
-        
-            .getDocuments { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        let id = data["id"] as? String
-                        let name = data["fullname"] as? String
-                        let age = data["age"] as? Int
-                        let school = data["school"] as? String
-                        let major = data["major"] as? String
-                        let gpa = data["gpa"] as? Int
-                        let semesterLearned = data["semester_learned"] as? Int
-                        let about = data["about"] as? String
-                        
-                        let user = User(id: id, name: name, age: age, school: school, major: major, gpa: gpa, semesterLearned: semesterLearned, about: about)
-                        if self.isUserMeetRequirement(
-                            user,
-                            GPAFilterRange(type: filter?["friends_gpa"] as? Int ?? 0),
-                            SemesterFilterRange(type: filter?["friends_semester_learned"] as? Int ?? 0)
-                        ) && user.id != currentUserData["id"] as? String {
-                            self.fetchedUsers.append(user)
+        if let currentUser = Auth.auth().currentUser {
+            usersRef
+                .whereField("age", isGreaterThanOrEqualTo: minAge)
+                .whereField("age", isLessThanOrEqualTo: maxAge)
+                .limit(to: 50)
+                .getDocuments { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        db.collection("matches").document(currentUser.uid).getDocument { (document, error) in
+                            withAnimation {
+                                if let document = document, document.exists {
+                                    let data = document.data()
+                                    let dislikesUser = data?["dislikes"] as? [String] ?? [String]()
+                                    
+                                    for document in querySnapshot!.documents {
+                                        let data = document.data()
+                                        self.appendUser(data, filter, dislikesUser, currentUserData)
+                                    }
+                                } else {
+                                    print("Document does not exist")
+                                    for document in querySnapshot!.documents {
+                                        let data = document.data()
+                                        self.appendUser(data, filter, [String](), currentUserData)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            }
+        }
+    }
+    
+    func appendUser(_ data: [String: Any], _ filter: [String: Any]?, _ dislikesUser: [String], _ currentUserData: [String: Any]) {
+        let id = data["id"] as? String
+        let name = data["fullname"] as? String
+        let age = data["age"] as? Int
+        let school = data["school"] as? String
+        let major = data["major"] as? String
+        let gpa = data["gpa"] as? Int
+        let semesterLearned = data["semester_learned"] as? Int
+        let about = data["about"] as? String
+        
+        let user = User(id: id, name: name, age: age, school: school, major: major, gpa: gpa, semesterLearned: semesterLearned, about: about)
+        print(dislikesUser.contains(where: {
+            print("This is the id compare:", $0, user.id)
+            return $0 == user.id
+        }))
+        if self.isUserMeetRequirement(
+            user,
+            GPAFilterRange(type: filter?["friends_gpa"] as? Int ?? 0),
+            SemesterFilterRange(type: filter?["friends_semester_learned"] as? Int ?? 0)
+        ) && user.id != currentUserData["id"] as? String && !dislikesUser.contains(where: { $0 == user.id }) {
+            self.fetchedUsers.append(user)
+        }
     }
     
     func getIdx(user: User) -> Int {

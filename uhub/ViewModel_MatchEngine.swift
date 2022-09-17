@@ -29,7 +29,7 @@ class MatchEngine: ObservableObject {
             db.collection("matches").document(user.id).getDocument { (document, error) in
                 if let document = document, document.exists {
                     let data = document.data()
-                    var likeUsers = data?["users"] as? [[String: Any]] ?? [[:]]
+                    var likeUsers = data?["likes"] as? [[String: Any]] ?? [[:]]
                     
                     let targetIdx = likeUsers.firstIndex { element -> Bool in
                         element["id"] as? String ?? "" == currentUser.uid
@@ -38,7 +38,7 @@ class MatchEngine: ObservableObject {
                     if let targetIdx = targetIdx {
                         likeUsers[targetIdx]["isMatched"] = true
                         self.db.collection("matches").document(user.id).setData([
-                            "users": likeUsers
+                            "likes": likeUsers
                         ])
                         whenMatched()
                     } else {
@@ -55,7 +55,7 @@ class MatchEngine: ObservableObject {
     func createMatchPackage(_ user: User, isMatched: Bool) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([
-                "users": FieldValue.arrayUnion([
+                "likes": FieldValue.arrayUnion([
                     [
                         "id": user.id,
                         "fullname": user.name,
@@ -72,7 +72,7 @@ class MatchEngine: ObservableObject {
                 if let err = err {
                     print(err)
                     self.db.collection("matches").document(currentUser.uid).setData([
-                        "users": FieldValue.arrayUnion([
+                        "likes": FieldValue.arrayUnion([
                             [
                                 "id": user.id,
                                 "fullname": user.name,
@@ -98,7 +98,7 @@ class MatchEngine: ObservableObject {
                 withAnimation {
                     if let document = document, document.exists {
                         let data = document.data()
-                        var matchesUsers = data?["users"] as? [[String: Any]] ?? [[:]]
+                        var matchesUsers = data?["likes"] as? [[String: Any]] ?? [[:]]
                         matchesUsers = matchesUsers.filter { $0["isMatched"] as? Bool ?? false }
                         self.matchesUsers = matchesUsers.map { element -> User in
                             let id = element["id"] as? String ?? ""
@@ -120,10 +120,25 @@ class MatchEngine: ObservableObject {
         }
     }
     
+    func createDislikePackage(_ user: User) {
+        if let currentUser = Auth.auth().currentUser {
+            db.collection("matches").document(currentUser.uid).updateData([
+                "dislikes": FieldValue.arrayUnion([user.id])
+            ]) { err in
+                if let err = err {
+                    print(err)
+                    self.db.collection("matches").document(currentUser.uid).setData([
+                        "dislikes": FieldValue.arrayUnion([user.id])
+                    ])
+                }
+            }
+        }
+    }
+    
     func removeMatch(user: User) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([
-                "users": FieldValue.arrayRemove([
+                "likes": FieldValue.arrayRemove([
                     [
                         "id": user.id,
                         "fullname": user.name,
