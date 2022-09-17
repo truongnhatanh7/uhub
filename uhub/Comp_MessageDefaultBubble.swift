@@ -19,7 +19,7 @@ struct MessageDefaultBubble: View {
                 Text(message.timestamp.getFormattedDate())
             }
         }
-        .foregroundColor(Color("inverted_text_color"))
+        .foregroundColor(Color(.black))
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity)
         .padding()

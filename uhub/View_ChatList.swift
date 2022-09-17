@@ -25,19 +25,23 @@ struct ChatListView: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                TextField("Search", text: $searchText)
-                    .padding()
-                    .background(Color("neutral"))
-                    .clipShape(RoundedRectangle(cornerRadius: 80))
-                    .frame(maxHeight: 80)
-                    .padding(.horizontal, 8)
-                HStack {
-                    Spacer()
-                    Image(systemName: "magnifyingglass")
-                        .padding(.trailing, 28)
-                }
-            }
+//            ZStack {
+//                TextField("Search", text: $searchText)
+//                    .padding()
+//                    .background(Color("neutral"))
+//                    .clipShape(RoundedRectangle(cornerRadius: 80))
+//                    .frame(maxHeight: 80)
+//                    .padding(.horizontal, 8)
+//                HStack {
+//                    Spacer()
+//                    Image(systemName: "magnifyingglass")
+//                        .padding(.trailing, 28)
+//                }
+//            }
+            VStack {
+                TextInputComponent(value: $searchText, placeholder: "Search", isSecure: false, isRequired: false, icon: "magnifyingglass")
+            }.padding()
+            
 
             ScrollView {
                 

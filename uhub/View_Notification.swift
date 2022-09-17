@@ -90,11 +90,9 @@ struct NotificationView: View {
     var body: some View {
         VStack(spacing: 10) {
 
-            HStack {
-                Text("Notification").fontWeight(.bold).padding(.vertical, 30).font(.system(size: 30))
-
-                Spacer()
-            }.padding(.all, 24)
+            StandardHeader(title: "Notification") {
+                pageVM.visit(page: pageVM.previousPage ?? .Account)
+            }
 
 
             NotificationOption(label: "sound", toogle: $isSoundToogle, handler: handleSoundToogle)

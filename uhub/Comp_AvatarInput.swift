@@ -28,8 +28,9 @@ struct AvatarInput: View {
             
             if let image = image {
                 image
-//                    .resizable()
-                    .scaledToFit()
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+//                    .scaledToFit()
                     .clipShape(Circle())
             }
         }
