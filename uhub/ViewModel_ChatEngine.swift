@@ -1,9 +1,15 @@
-//
-//  ChatEngine.swift
-//  uhub
-//
-//  Created by Truong Nhat Anh on 03/09/2022.
-//
+/*
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 2
+ Author: Ho Le Minh Thach
+ ID: s3877980
+ Created  date: 17/09/2022
+ Last modified: 17/09/2022
+ Learning from Hacking with Swift to implement MVVM, and the usage of CoreData
+ Hudson, P. (n.d.). The 100 days of Swiftui. Hacking with Swift. Retrieved July 30, 2022, from https://www.hackingwithswift.com/100/swiftui
+*/
 
 import Foundation
 import SwiftUI
@@ -13,7 +19,7 @@ import FirebaseStorage
 
 class ChatEngine: ObservableObject {
     private let db = Firestore.firestore()
-
+    
     var imageManager : ImageManager?
     var userAuthManager : UserAuthManager?
     var notificationManager : NotiManager?
@@ -35,36 +41,44 @@ class ChatEngine: ObservableObject {
         conversationListener?.remove()
         messagesListener?.remove()
     }
-
+    
+    
+    
+    ///   This function load conversation from firebase
     func loadConversation() {
         if let currentConversation = currentConversation {
             self.isProcessing = true
             messagesListener = db.collection("messages")
                 .whereField("conversationId", isEqualTo: currentConversation.conversationId)
                 .addSnapshotListener
-                    { (querySnapshot, error) in
-                        guard (querySnapshot?.documents) != nil else {
-                            print("Error fetching documents: \(error!)")
-                            self.isProcessing = false
-                            return
-                        }
-                        
-                        self.loadMessages()
-                        withAnimation {
-                            self.isProcessing = false
-                        }
-                    }
+            { (querySnapshot, error) in
+                guard (querySnapshot?.documents) != nil else {
+                    print("Error fetching documents: \(error!)")
+                    self.isProcessing = false
+                    return
+                }
+                
+                self.loadMessages()
+                withAnimation {
+                    self.isProcessing = false
+                }
+            }
         }
     }
     
+    
+    /// This function set the current limit
+    /// - Parameter limit: limit
     func setCurrentLimit(limit: Int) {
         self.currentLimit = limit
     }
     
-     func loadMessages() {
-         if let currentConversation = currentConversation {
-             db.collection("messages").whereField("conversationId", isEqualTo: currentConversation.conversationId).order(by: "timestamp", descending: true).limit(to: self.currentLimit).getDocuments() { (querySnapshot, error) in
-                 print("[Firebase triggers new messages]")
+    
+    /// Description This function load messages from firebase
+    func loadMessages() {
+        if let currentConversation = currentConversation {
+            db.collection("messages").whereField("conversationId", isEqualTo: currentConversation.conversationId).order(by: "timestamp", descending: true).limit(to: self.currentLimit).getDocuments() { (querySnapshot, error) in
+                print("[Firebase triggers new messages]")
                 guard let documents = querySnapshot?.documents else {
                     print("Error fetching documents: \(error!)")
                     return
@@ -80,7 +94,7 @@ class ChatEngine: ObservableObject {
                         let timestamp = data["timestamp"] as? Timestamp // Timestamp is a Firebase date datatype -> convert to Date for Swift
                         return Message(id: messageId, ownerId: ownerId, conversationId: conversationId, content: content, timestamp: timestamp?.dateValue() ?? Date())
                     }
-
+                    
                     self.messages = self.messages.reversed()
                     
                     // For scolling to latest message
@@ -92,17 +106,20 @@ class ChatEngine: ObservableObject {
                     }
                 }
             }
-         }
-         
+        }
+        
     }
     
+    
+    /// <#Description#> This function load the chat list
+    /// - Parameter callback: callback for calling when function is done
     func loadChatList(callback: @escaping ()->()) {
         print("Start to load chat list") // TODO: Load chat that belongs to that user (save in user db)
         conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
-                guard let documents = querySnapshot?.documents else {
-                    print("No documents")
-                    return
-                }
+            guard let documents = querySnapshot?.documents else {
+                print("No documents")
+                return
+            }
             
             DispatchQueue.main.async {
                 self.conversations = documents.map { (queryDocumentSnapshot) -> Conversation in
@@ -121,7 +138,7 @@ class ChatEngine: ObservableObject {
                     if Auth.auth().currentUser?.uid != latestMessageSender && unread && !didNotify { // Not the send + unread msg + did NOT notify -> play sound
                         if let isShowSound = (self.userAuthManager?.currentUserData["isShowSound"]) {
                             if isShowSound as! Bool {
-            
+                                
                                 playMusic(sound: "receive_message", isLoop: false)
                             }
                         }
@@ -131,10 +148,10 @@ class ChatEngine: ObservableObject {
                                 self.notificationManager?.generateNoti(title: userNames[notThisUserId ?? ""] ?? "", subtitle: latestMessage)
                             }
                         }
-
+                        
                         self.db.collection("conversations").document(conversationId).updateData([ // Updatte latest message when sending new message from both sides
                             "didNotify": true
-                        ])
+                                                                                                ])
                     }
                     
                     return Conversation(conversationId: conversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
@@ -147,6 +164,9 @@ class ChatEngine: ObservableObject {
         }
     }
     
+    
+    /// Description This function use to send message
+    /// - Parameter content: content of the message
     func sendMessage(content: String) {
         if content == "" { return }
         
@@ -167,7 +187,7 @@ class ChatEngine: ObservableObject {
                     "unread": true,
                     "latestMessageSender": currentUser.uid,
                     "didNotify": false
-                ])
+                                                                                                       ])
             }
             
             if let isShowSound = (userAuthManager?.currentUserData["isShowSound"]) {
@@ -178,11 +198,13 @@ class ChatEngine: ObservableObject {
                 }
                 
             }
-
+            
             
         }
     }
     
+    
+    /// set the read for the conversation
     func setRead() {
         print("Enter set read")
         if let currentConversation = currentConversation {
@@ -192,7 +214,7 @@ class ChatEngine: ObservableObject {
                     let data = document.data();
                     let unread = data?["unread"] as? Bool ?? false
                     let latestMessageSender = data?["latestMessageSender"] as? String ?? ""
-
+                    
                     if Auth.auth().currentUser?.uid != latestMessageSender && unread {
                         print("Trigger db modifying")
                         self.db.collection("conversations").document(currentConversation.conversationId).updateData([
@@ -205,10 +227,15 @@ class ChatEngine: ObservableObject {
                     print("Cannot set read message")
                 }
             }
-
+            
         }
     }
     
+    
+    /// <#Description#> This function use to create the conversation
+    /// - Parameters:
+    ///   - recipientId: <#recipientId description#> id of receiver
+    ///   - callback: <#callback description#> callback for use when need to create instance
     func createConversation(recipientId: String, callback: @escaping (_ newConversationId : String, _ willFetch : Bool) -> ()) {
         var needToCreateNewInstance = true
         print("Check for already fetched conversations \(self.conversations)")
@@ -248,14 +275,16 @@ class ChatEngine: ObservableObject {
                 } else {
                     print("Document does not exist")
                 }
-
+                
             }
         } else {
             callback(self.currentConversation?.conversationId ?? "", false)
         }
-
+        
     }
     
+    
+    /// Description This function use to fetch conversation for creation
     func fetchConversationForCreation(toBeFetchedConversationId: String, callback: @escaping () -> ()) {
         
         db.collection("conversations").document(toBeFetchedConversationId).getDocument {
@@ -268,7 +297,7 @@ class ChatEngine: ObservableObject {
                 let users = data?["users"] as? [String] ?? []
                 let latestMessageSender = data?["latestMessageSender"] as? String ?? ""
                 let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
-               // let didNotify = data?["didNotify"] as? Bool ?? false
+                // let didNotify = data?["didNotify"] as? Bool ?? false
                 let userNames = data?["userNames"] as? [String: String] ?? [:]
                 let name = userNames[notThisUserId ?? ""]
                 
@@ -280,6 +309,8 @@ class ChatEngine: ObservableObject {
         }
     }
     
+    
+    /// <#Description#> This function fetch the user status
     func fetchUserStatus() {
         for conversation in conversations {
             let notThisUserId = conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!
@@ -297,6 +328,9 @@ class ChatEngine: ObservableObject {
         }
     }
     
+    
+    /// <#Description#> This function used to delete the conversation
+    /// - Parameter id: id of the conversation
     func deleteConversation(id: String) {
         db.collection("conversations").document(id).delete() { err in
             if let err = err {
@@ -307,26 +341,34 @@ class ChatEngine: ObservableObject {
         }
     }
     
+    
+    /// <#Description#> This function use to delete conversation in detail view
+    /// - Parameter id: <#id description#> id of conversation
     func deleteConversationInDetailedView(id: String) {
         db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
-                guard let documents = querySnapshot?.documents else {
-                    print("No documents")
-                    return
-                }
+            guard let documents = querySnapshot?.documents else {
+                print("No documents")
+                return
+            }
             
-                for doc in documents {
-                    let data = doc.data()
-                    let conversationId = doc.documentID
-                    let users = data["users"] as? [String] ?? []
-                    let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
-                    if notThisUserId == id {
-                        self.deleteConversation(id: conversationId)
-                        break
-                    }
+            for doc in documents {
+                let data = doc.data()
+                let conversationId = doc.documentID
+                let users = data["users"] as? [String] ?? []
+                let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+                if notThisUserId == id {
+                    self.deleteConversation(id: conversationId)
+                    break
                 }
+            }
         }
     }
     
+    
+    /// <#Description#> This function used to fetch user image
+    /// - Parameters:
+    ///   - conversation: <#conversation description#> conversation
+    ///   - callback: <#callback description#> callback for get image
     func fetchUserImage(conversation: Conversation, callback: @escaping (_ img: UIImage) -> ()) {
         let notThisUserId = conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!
         if let val = imageManager?.memoizedImages[notThisUserId] {
@@ -336,7 +378,7 @@ class ChatEngine: ObservableObject {
                 callback(img)
             }
         }
-
-
+        
+        
     }
 }

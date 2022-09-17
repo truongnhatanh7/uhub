@@ -1,9 +1,15 @@
-//
-//  EditProfileViewModel.swift
-//  uhub
-//
-//  Created by Ho Le Minh Thach on 05/09/2022.
-//
+/*
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 2
+ Author: Ho Le Minh Thach
+ ID: s3877980
+ Created  date: 17/09/2022
+ Last modified: 17/09/2022
+ Learning from Hacking with Swift to implement MVVM, and the usage of CoreData
+ Hudson, P. (n.d.). The 100 days of Swiftui. Hacking with Swift. Retrieved July 30, 2022, from https://www.hackingwithswift.com/100/swiftui
+*/
 
 import Foundation
 import UIKit
@@ -28,7 +34,7 @@ import FirebaseStorage
     @Published var showSemesterLearned = false
     
     let ageRange = (18...100).map { $0 }
-//    let GPARange = ["Less than 50%", "50% - 59%", "60% - 69%", "70% - 79%", "80% - 100%"]
+    //    let GPARange = ["Less than 50%", "50% - 59%", "60% - 69%", "70% - 79%", "80% - 100%"]
     let semesterLearnedRange = (0...20).map { $0 }
     
     var isDisabled: Bool {
@@ -46,6 +52,8 @@ import FirebaseStorage
         retrieveImage(userId: currentUserData["id"] as? String ?? "", callback: {})
     }
     
+    
+    /// <#Description#> This function used to submit data
     func submitData(_ manager: UserAuthManager, callback: @escaping () -> ()) {
         uploadImage(userId: manager.currentUserData["id"] as? String ?? UUID().uuidString, callback: {})
         manager.updateProfileInfo(updatedData: [

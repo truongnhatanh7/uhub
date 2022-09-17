@@ -1,9 +1,15 @@
-//
-//  ViewModel_MatchEngine.swift
-//  uhub
-//
-//  Created by Truong Nhat Anh on 15/09/2022.
-//
+/*
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 2
+ Author: Ho Le Minh Thach
+ ID: s3877980
+ Created  date: 17/09/2022
+ Last modified: 17/09/2022
+ Learning from Hacking with Swift to implement MVVM, and the usage of CoreData
+ Hudson, P. (n.d.). The 100 days of Swiftui. Hacking with Swift. Retrieved July 30, 2022, from https://www.hackingwithswift.com/100/swiftui
+*/
 
 import Foundation
 import Firebase
@@ -24,6 +30,12 @@ class MatchEngine: ObservableObject {
         fetchListnener?.remove()
     }
     
+    
+    /// Description This function used to check if a user is match with other
+    /// - Parameters:
+    ///   - user: <#user description#> user
+    ///   - whenMatched: <#whenMatched description#> a callback
+    ///   - whenNotMatched: <#whenNotMatched description#> a callback
     func isMatchWithOtherPerson(_ user: User, whenMatched: @escaping ()->Void, whenNotMatched: @escaping ()->Void) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(user.id).getDocument { (document, error) in
@@ -52,6 +64,11 @@ class MatchEngine: ObservableObject {
         }
     }
     
+    
+    /// <#Description#> This function create match pakage
+    /// - Parameters:
+    ///   - user: <#user description#> user
+    ///   - isMatched: <#isMatched description#> boolean is match
     func createMatchPackage(_ user: User, isMatched: Bool) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([
@@ -91,35 +108,41 @@ class MatchEngine: ObservableObject {
         }
     }
     
+    
+    /// <#Description#> This function use to fetch all matches
+    /// - Parameter callback: callback
     func fetchAllMatches(callback: @escaping ()->()) {
         if let currentUser = Auth.auth().currentUser {
             fetchListnener = db.collection("matches").document(currentUser.uid)
                 .addSnapshotListener { (document, error) in
-                withAnimation {
-                    if let document = document, document.exists {
-                        let data = document.data()
-                        var matchesUsers = data?["likes"] as? [[String: Any]] ?? [[:]]
-                        matchesUsers = matchesUsers.filter { $0["isMatched"] as? Bool ?? false }
-                        self.matchesUsers = matchesUsers.map { element -> User in
-                            let id = element["id"] as? String ?? ""
-                            let fullname = element["fullname"] as? String ?? ""
-                            let age = element["age"] as? Int ?? 0
-                            let school = element["school"] as? String ?? ""
-                            let major = element["major"] as? String ?? ""
-                            let gpa = element["gpa"] as? Int ?? 0
-                            let semester_learned = element["semester_learned"] as? Int ?? 0
-                            let about = element["about"] as? String ?? ""
-                            return User(id: id, name: fullname, age: age, school: school, major: major, gpa: gpa, semesterLearned: semester_learned, about: about)
+                    withAnimation {
+                        if let document = document, document.exists {
+                            let data = document.data()
+                            var matchesUsers = data?["likes"] as? [[String: Any]] ?? [[:]]
+                            matchesUsers = matchesUsers.filter { $0["isMatched"] as? Bool ?? false }
+                            self.matchesUsers = matchesUsers.map { element -> User in
+                                let id = element["id"] as? String ?? ""
+                                let fullname = element["fullname"] as? String ?? ""
+                                let age = element["age"] as? Int ?? 0
+                                let school = element["school"] as? String ?? ""
+                                let major = element["major"] as? String ?? ""
+                                let gpa = element["gpa"] as? Int ?? 0
+                                let semester_learned = element["semester_learned"] as? Int ?? 0
+                                let about = element["about"] as? String ?? ""
+                                return User(id: id, name: fullname, age: age, school: school, major: major, gpa: gpa, semesterLearned: semester_learned, about: about)
+                            }
+                            callback()
+                        } else {
+                            print("Document does not exist")
                         }
-                        callback()
-                    } else {
-                        print("Document does not exist")
                     }
                 }
-            }
         }
     }
     
+    
+    /// <#Description#> This function is used to create dislike package
+    /// - Parameter user: user
     func createDislikePackage(_ user: User) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([
@@ -135,6 +158,11 @@ class MatchEngine: ObservableObject {
         }
     }
     
+    
+    /// <#Description#> This function used to remove match
+    /// - Parameters:
+    ///   - user: <#user description#> user
+    ///   - userDevice: <#userDevice description#> user device
     func removeMatch(user: User, userDevice: [String: Any]) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([

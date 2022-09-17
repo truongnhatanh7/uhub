@@ -1,9 +1,15 @@
-//
-//  ViewModel_SoundManager.swift
-//  uhub
-//
-//  Created by Truong Nhat Anh on 08/09/2022.
-//
+/*
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 2
+ Author: Ho Le Minh Thach
+ ID: s3877980
+ Created  date: 17/09/2022
+ Last modified: 17/09/2022
+ Learning from Hacking with Swift to implement MVVM, and the usage of CoreData
+ Hudson, P. (n.d.). The 100 days of Swiftui. Hacking with Swift. Retrieved July 30, 2022, from https://www.hackingwithswift.com/100/swiftui
+*/
 
 import Foundation
 
@@ -14,7 +20,11 @@ var music: AVAudioPlayer?
 // List of sounds
 var sounds = [AVAudioPlayer]()
 
-// Play music function
+
+/// <#Description#> This function used tio play music
+/// - Parameters:
+///   - sound: <#sound description#> music to play
+///   - isLoop: <#isLoop description#> if play infinitely
 func playMusic(sound:String, isLoop:Bool) {
     
     let path = Bundle.main.path(forResource: sound, ofType: "mp3")!
@@ -53,9 +63,10 @@ func playMusic(sound:String, isLoop:Bool) {
     
 }
 
-// Mute all the sound
-func emptyMusic() {
 
+/// <#Description#> This function used to stop all sound
+func emptyMusic() {
+    
     // Loop through sounds and stop each sound
     for music in sounds {
         music.stop()
