@@ -93,6 +93,7 @@ struct View_UserDetail: View {
                             if (true) {
                                 Button(action: {
                                     print("Reject this person")
+                                    chatEngine.deleteConversationInDetailedView(id: user.id)
                                     matchEngine.removeMatch(user: user)
                                     isShowSheet = false
                                 }, label: {
