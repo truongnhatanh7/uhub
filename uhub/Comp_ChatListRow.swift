@@ -103,9 +103,9 @@ struct ChatListRow: View {
                 }
             }))
         }
-        .onLongPressGesture {
-            showDeleteAlert = true
-        }
+//        .onLongPressGesture {
+//            showDeleteAlert = true
+//        }
     }
         
         
