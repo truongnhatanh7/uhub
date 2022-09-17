@@ -14,7 +14,8 @@ struct SettingView: View {
     var body: some View {
         VStack {
             HeaderHome(title: "Setting")
-            List {
+//            List {
+            VStack {
                 ListRow(icon: "square.and.pencil", label: "Edit Profile") {
                     pageVM.visit(page: .EditProfile)
                 }
@@ -28,7 +29,9 @@ struct SettingView: View {
                 ListRow(icon: "slider.horizontal.3", label: "Filter People") {
                     pageVM.visit(page: .FilterProfile)
                 }
-            }.background(Color("background")).listStyle(.plain)
+            }.padding()
+               
+//            }.background(Color("background")).listStyle(.plain)
             
             Spacer()
             if showMenu {

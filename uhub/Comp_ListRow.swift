@@ -15,20 +15,32 @@ struct ListRow: View {
 
     var body: some View {
         Button(action: action) {
-            HStack {
-                Image(systemName: icon)
-                    .padding()
-                    .foregroundColor(Color("pink_primary"))
-                    .background(Color("pink_secondary"))
-                    .clipShape(Circle())
-                Text(label)
-                Spacer()
-                if showNavigationIcon {
-                    Image(systemName: "chevron.forward")
+            
+            VStack {
+                HStack {
+                    Image(systemName: icon)
+                        .padding()
                         .foregroundColor(Color("pink_primary"))
-                }
-            }.background(Color("background"))
-            .padding(.vertical)
+                        .background(Color("pink_secondary"))
+                        .clipShape(Circle())
+                    Text(label)
+                    Spacer()
+                    if showNavigationIcon {
+                        Image(systemName: "chevron.forward")
+                            .foregroundColor(Color("pink_primary"))
+                    }
+                }.background(Color("background"))
+                .padding(.vertical)
+                
+                Divider()
+                 .frame(height: 1)
+                 .padding(.horizontal, 30)
+                 .background(Color("DarkGray"))
+            }
+            
+            
+       
+            
         }.background(Color("background"))
     }
 }

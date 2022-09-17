@@ -91,7 +91,7 @@ struct PickerInputComponentForInt: View {
                             .font(.body.bold())
                             .padding(.trailing, 20)
                     }
-                }
+                }.background(Color("background"))
             }.background(Color("background"))
         }.onTapGesture {
             withAnimation {

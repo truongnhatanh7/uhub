@@ -15,21 +15,28 @@ struct ManageAccountView: View {
     @State var showDeleteModal = false
     
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack(alignment: .top) {
             VStack {
-                StandardHeader(title: "Manage Account") {
-                    pageVM.visit(page: pageVM.previousPage ?? .Account)
-                }
-                List {
+//                VStack {
+                    StandardHeader(title: "Manage Account") {
+                        pageVM.visit(page: pageVM.previousPage ?? .Account)
+                    }
+//                }
+                
+//                VStack {
                     ListRow(icon: "person.fill.badge.minus", label: "Delete Account", showNavigationIcon: false) {
                         withAnimation { showDeleteModal = true }
                     }
                     ListRow(icon: "ipad.and.arrow.forward", label: "Logout", showNavigationIcon: false) {
                         withAnimation { showLogoutModal = true }
                     }
-                }
-                .listStyle(.plain)
-            }
+                
+                Spacer()
+                    
+//                }.background(Color("background")).padding()
+//                .listStyle(.plain)
+              
+            }.padding()
             OneThirdModal(label: "Confirmation", showModal: $showDeleteModal) {
                 VStack {
                     Text("Are you sure you want to delete account?")
