@@ -11,6 +11,7 @@ struct Comp_Course: View {
     
     var name:String
     
+    /// View body
     var body: some View {
         Button(action: {}, label: {
             Text(name).modifier(CourseText())

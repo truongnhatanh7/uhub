@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HeaderHome: View {
     let title: String
+    
+    /// View body
     var body: some View {
         HStack {
             Image("Icon")

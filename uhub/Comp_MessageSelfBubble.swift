@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Message style for currently logged in user
 struct MessageSelfBubble: View {
     var message: Message
     var body: some View {
@@ -29,9 +30,3 @@ struct MessageSelfBubble: View {
         
     }
 }
-
-//struct MessageSelfBubble_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MessageSelfBubble(message: Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()))
-//    }
-//}

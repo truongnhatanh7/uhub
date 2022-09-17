@@ -14,6 +14,7 @@ struct BottomBar<T: View>: View {
         self.content = content
     }
     
+    /// View body
     var body: some View {
         VStack {
             content()

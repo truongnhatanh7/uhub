@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+/// Picker input modal
 struct PickerInputModal<T: Description & PickerEnum>: View {
     let label: String
     @Binding var showPicker: Bool
     @Binding var value: T
     
+    /// View body
     var body: some View {
         OneThirdModal(label: label, showModal: $showPicker) {
             Picker("", selection: $value) {
@@ -24,12 +26,15 @@ struct PickerInputModal<T: Description & PickerEnum>: View {
     }
 }
 
+
+/// Picker input modal int
 struct PickerInputModalInt: View {
     let label: String
     @Binding var showPicker: Bool
     @Binding var value: Int
     let items: [Int]
     
+    /// View body
     var body: some View {
         OneThirdModal(label: label, showModal: $showPicker) {
             Picker("", selection: $value) {

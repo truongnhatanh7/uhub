@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// One Third Modal
 struct OneThirdModal<T: View>: View {
     let label: String
     @Binding var showModal: Bool
@@ -18,9 +19,9 @@ struct OneThirdModal<T: View>: View {
         self.content = content
     }
     
+    /// View body
     var body: some View {
         ZStack(alignment: .bottom) {
-            
             if showModal {
                 Rectangle()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)

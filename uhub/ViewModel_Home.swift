@@ -1,9 +1,15 @@
-//
-//  ViewModel_Home.swift
-//  uhub
-//
-//  Created by Ho Le Minh Thach on 09/09/2022.
-//
+/*
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 2
+ Author: Ho Le Minh Thach
+ ID: s3877980
+ Created  date: 17/09/2022
+ Last modified: 17/09/2022
+ Learning from Hacking with Swift to implement MVVM, and the usage of CoreData
+ Hudson, P. (n.d.). The 100 days of Swiftui. Hacking with Swift. Retrieved July 30, 2022, from https://www.hackingwithswift.com/100/swiftui
+*/
 
 import Foundation
 import Firebase
@@ -15,6 +21,11 @@ class HomeViewModel: ObservableObject {
     @Published var fetchedUsers: [User] = []
     @Published var showDetailUser: Bool = false
     
+    
+    /// <#Description#> This function used to fetch data
+    /// - Parameters:
+    ///   - currentUserData: <#currentUserData description#> current user data
+    ///   - imageManager: <#imageManager description#> image manager
     func fetchData(_ currentUserData: [String: Any], imageManager: ImageManager) {
         let db = Firestore.firestore()
         
@@ -76,6 +87,13 @@ class HomeViewModel: ObservableObject {
         }
     }
     
+    
+    /// <#Description#> This function used to append user to list
+    /// - Parameters:
+    ///   - data: <#data description#> data
+    ///   - filter: <#filter description#> filter
+    ///   - dislikesUser: <#dislikesUser description#> dislike user
+    ///   - currentUserData: <#currentUserData description#> current user data
     func appendUser(_ data: [String: Any], _ filter: [String: Any]?, _ dislikesUser: [String], _ currentUserData: [String: Any]) {
         let id = data["id"] as? String
         let name = data["fullname"] as? String
@@ -104,6 +122,8 @@ class HomeViewModel: ObservableObject {
         fetchedUsers.firstIndex { $0.id == user.id } ?? 0
     }
     
+    
+    /// <#Description#> This function used to remove user
     func removeUser(callbackWhenReachEmpty: @escaping () -> Void) {
         fetchedUsers.removeFirst()
         if fetchedUsers.isEmpty {
@@ -111,6 +131,13 @@ class HomeViewModel: ObservableObject {
         }
     }
     
+    
+    /// <#Description#> This function used to check if user is meet requirements
+    /// - Parameters:
+    ///   - user: <#user description#> user
+    ///   - gpaFilter: <#gpaFilter description#> gpa
+    ///   - semesterFilter: <#semesterFilter description#> semester
+    /// - Returns: <#description#> true or false
     func isUserMeetRequirement(_ user: User, _ gpaFilter: GPAFilterRange, _ semesterFilter: SemesterFilterRange) -> Bool {
         print("\(gpaFilter.description) | \(semesterFilter.description)")
         print("gpa: \(user.gpa) | sem: \(user.semesterLearned)")

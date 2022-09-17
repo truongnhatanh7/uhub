@@ -14,6 +14,7 @@ struct Card: View {
     let imageURL: String?
     @State var image: Image? = nil
     
+    /// View body
     var body: some View {
         ZStack {
             if let image = image {

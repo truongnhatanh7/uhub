@@ -8,25 +8,28 @@
 import SwiftUI
 
 struct StackCard: View {
+    /// Environment objects
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var matchEngine: MatchEngine
     
-    var user: User
+    var user: User /// store user for this component
     
+    /// Variables
     @State var offsetX: CGFloat = 0
     @State var offsetY: CGFloat = 0
     @GestureState var isDragging: Bool = false
     @State var endSwipe: Bool = false
-    
     @State var btnSwipe = false
     @State var opacity: CGFloat = 0
     @State var startYPosition: CGFloat = 0
     @State var showDetailUser = false
     @State var showIsMatchUser = false
     
+    /// View body
     var body: some View {
         ZStack {
+            /// Geometry reader
             GeometryReader { proxy in
                 let size = proxy.size
                 let idx = CGFloat(homeVM.getIdx(user: user))

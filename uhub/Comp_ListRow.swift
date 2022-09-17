@@ -11,11 +11,11 @@ struct ListRow: View {
     let icon: String
     let label: String
     var showNavigationIcon: Bool = true
-    let action: () -> Void
+    let action: () -> Void /// handle action
 
+    /// View body
     var body: some View {
         Button(action: action) {
-            
             VStack {
                 HStack {
                     Image(systemName: icon)
