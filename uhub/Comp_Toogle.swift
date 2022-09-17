@@ -13,7 +13,6 @@ struct Toogle: View {
     @Binding var toogle:Bool
     var handler: (_ isOn:Bool) -> Void
     
-    
     var body: some View {
         Toggle(isOn: $toogle, label: {
             Text(label.capitalized).fontWeight(.semibold).font(.system(size: 16))
