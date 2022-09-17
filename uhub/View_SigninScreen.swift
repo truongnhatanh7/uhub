@@ -21,6 +21,7 @@ struct SigninScreenView: View {
     
     @State private var isSigningIn = false
     
+    /// This function will render the sign in view
     var body: some View {
         ZStack {
             if isSigningIn {
@@ -136,11 +137,5 @@ struct SigninScreenView: View {
             }
         }
         .ignoresSafeArea()
-    }
-}
-
-struct SigninScreenView_Previews: PreviewProvider {
-    static var previews: some View {
-        SigninScreenView()
     }
 }

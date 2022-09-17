@@ -17,9 +17,7 @@ struct HomeView: View {
     
     @State private var isLoading = true
     
-    //    @State var time = Date()
-    //    let formatter = DateFormatter()
-    
+    /// This will render the swiping home view
     var body: some View {
         VStack {
             HeaderHome(title: "Discovery")
@@ -112,6 +110,8 @@ struct HomeView: View {
         }
     }
     
+    /// This function will execute the action of swipe left or right
+    /// - Parameter rightSwipe: true mean swipe right else swipe left
     func doSwipe(rightSwipe: Bool = false) {
         guard let first = homeVM.fetchedUsers.first else { return }
         NotificationCenter.default.post(name: NSNotification.Name("ACTIONFROMBUTTON"), object: nil, userInfo: [

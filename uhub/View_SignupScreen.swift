@@ -18,6 +18,7 @@ struct SignupScreenView: View {
     
     @State private var isSigningUp = false
     
+    /// This function will render the sign up view
     var body: some View {
         ZStack {
             if isSigningUp {
@@ -137,10 +138,3 @@ struct SignupScreenView: View {
         .ignoresSafeArea()
     }
 }
-
-struct SignupScreenView_Previews: PreviewProvider {
-    static var previews: some View {
-        Text("Sign Up Screen")
-    }
-}
-

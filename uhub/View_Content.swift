@@ -15,8 +15,8 @@ struct ContentView: View {
     @StateObject private var matchEngine = MatchEngine()
     @StateObject private var imageManager = ImageManager()
     
+    /// It will render the main content of the app
     var body: some View {
-        
         ZStack {
             Color("background").edgesIgnoringSafeArea(.all)
             
@@ -71,7 +71,8 @@ struct ContentView: View {
                         .transition(.opacity.combined(with: .offset(y: -40)).animation(.linear(duration: 0.1)))
                 }
                 
-            }.environmentObject(pageVM)
+            }
+            .environmentObject(pageVM)
             .environmentObject(userAuthManager)
             .environmentObject(chatEngine)
             .environmentObject(notificationManager)
@@ -80,7 +81,7 @@ struct ContentView: View {
             .environmentObject(NotificationSettings(isVibarate: true, isShowChat: true, isShowNewMatch: true))
             .onAppear {
                 notificationManager.requestNotiAuth()
-        }
+            }
         }
     }
 }

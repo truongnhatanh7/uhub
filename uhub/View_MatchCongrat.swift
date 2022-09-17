@@ -13,16 +13,15 @@ struct MatchCongrat: View {
     @EnvironmentObject var pageVm: PageViewModel
     @EnvironmentObject var userAuthManager: UserAuthManager
     @State var userId: String
+    
+    /// This function will render the the match congrat when you swipe right and match with another person
     var body: some View {
         ZStack {
             Color(.black).edgesIgnoringSafeArea(.all).opacity(0.7)
             
             // MARK: Modal
             VStack(spacing: 24) {
-                
                 Image("CongratsIcon").resizable().modifier(CongratsLogoStyle())
-                
-                
                 Text("Great! It's a match.")
                     .fontWeight(.bold)
                     .font(.system(size: 24))
@@ -43,9 +42,7 @@ struct MatchCongrat: View {
                             showIsMatchUser = false
                             pageVm.visit(page: .Inbox)
                         }
-                        
                     }
-                    
                 } label: {
                     VStack {
                         Text("Go to Chat")
@@ -65,7 +62,6 @@ struct MatchCongrat: View {
                     }
                     
                 }
-                //playMusic(sound: "match", isLoop: false)
             }
         }
     }

@@ -14,6 +14,7 @@ struct EditProfileView: View {
     
     @StateObject var editProfileVM = EditProfileViewModel()
     
+    /// This render will render the edit profile
     var body: some View {
         ZStack(alignment: .bottom) {
             ZStack(alignment: .top) {
@@ -63,6 +64,7 @@ struct EditProfileView: View {
         }
     }
     
+    /// This function will swithc the page when submit the button is done the task
     private func switchPageForBtn() {
         if userAuthManager.errorMsg == "" {
             if pageVM.isfirstFlow {
@@ -76,12 +78,14 @@ struct EditProfileView: View {
     }
 }
 
+/// This part will render the text field
 struct TextInputSubView: View {
     @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var pageVM: PageViewModel
     @EnvironmentObject var editProfileVM: EditProfileViewModel
     @FocusState private var isFocusKeyboard: Field?
     
+    /// Render the text field
     var body: some View {
         VStack(spacing: 30) {
             TextInputComponent(label: "Full Name", value: $editProfileVM.fullname, placeholder: "Full Name", isSecure: false, isRequired: true, icon: "person")

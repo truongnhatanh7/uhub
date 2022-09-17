@@ -16,6 +16,8 @@ struct ChatListView: View {
     @State var searchText = ""
     @State var showAlert = false
     
+    
+    /// This function will filter the conversation
     var searchResults: [Conversation] {
         if searchText == ""  {
             return chatEngine.conversations
@@ -23,28 +25,14 @@ struct ChatListView: View {
         return chatEngine.conversations.filter({ $0.name.contains(searchText) })
     }
     
+    /// Render the view for chat list
     var body: some View {
         VStack {
-//            ZStack {
-//                TextField("Search", text: $searchText)
-//                    .padding()
-//                    .background(Color("neutral"))
-//                    .clipShape(RoundedRectangle(cornerRadius: 80))
-//                    .frame(maxHeight: 80)
-//                    .padding(.horizontal, 8)
-//                HStack {
-//                    Spacer()
-//                    Image(systemName: "magnifyingglass")
-//                        .padding(.trailing, 28)
-//                }
-//            }
             VStack {
                 TextInputComponent(value: $searchText, placeholder: "Search", isSecure: false, isRequired: false, icon: "magnifyingglass")
             }.padding()
             
-
             ScrollView {
-                
                 ForEach(searchResults, id: \.self) { conversation in
                     Button {
                         chatEngine.currentConversation = conversation
@@ -57,7 +45,7 @@ struct ChatListView: View {
                 }
                 .padding(.vertical, 2)
                 .padding(.horizontal, 8)
-
+                
             }
             
             if showMenu {
@@ -76,9 +64,3 @@ struct ChatListView: View {
         }
     }
 }
-
-//struct ChatList_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChatList(conversations:)
-//    }
-//}

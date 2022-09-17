@@ -18,6 +18,7 @@ struct MatchesView: View {
         GridItem(.adaptive(minimum: 140))
     ]
     
+    /// This function will render a list of matches people
     var body: some View {
         VStack {
             GeometryReader  { geometry in
@@ -57,7 +58,7 @@ struct MatchesView: View {
                     }
                 }
             }
-
+            
             Spacer()
             if showMenu {
                 BottomBar {
@@ -71,16 +72,10 @@ struct MatchesView: View {
             withAnimation { showMenu = true }
         }
         .onChange(of: matchEngine.needReload) { newValue in
-            print("Update: \(newValue)")
             if newValue {
                 matchEngine.fetchAllMatches {
-//                    self.data = matchEngine.matchesUsers.map({ element in
-//                        return User(id: element.id, name: element.name, age: element.age, school: element.school, major: element.major, gpa: element.gpa, semesterLearned: element.semesterLearned, about: element.about)
-//                    })
-//                    print("Check length: \(self.data.count)")
+                    matchEngine.needReload = false
                 }
-                matchEngine.needReload = false
             }
         }
     }
-}

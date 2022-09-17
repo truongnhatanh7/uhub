@@ -17,31 +17,24 @@ struct ManageAccountView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack {
-//                VStack {
-                    StandardHeader(title: "Manage Account") {
-                        pageVM.visit(page: pageVM.previousPage ?? .Account)
-                    }
-//                }
+                StandardHeader(title: "Manage Account") {
+                    pageVM.visit(page: pageVM.previousPage ?? .Account)
+                }
                 
-//                VStack {
-                    ListRow(icon: "person.fill.badge.minus", label: "Delete Account", showNavigationIcon: false) {
-                        withAnimation { showDeleteModal = true }
-                    }
-                    ListRow(icon: "ipad.and.arrow.forward", label: "Logout", showNavigationIcon: false) {
-                        withAnimation { showLogoutModal = true }
-                    }
+                ListRow(icon: "person.fill.badge.minus", label: "Delete Account", showNavigationIcon: false) {
+                    withAnimation { showDeleteModal = true }
+                }
+                ListRow(icon: "ipad.and.arrow.forward", label: "Logout", showNavigationIcon: false) {
+                    withAnimation { showLogoutModal = true }
+                }
                 
                 Spacer()
-                    
-//                }.background(Color("background")).padding()
-//                .listStyle(.plain)
-              
             }
             OneThirdModal(label: "Confirmation", showModal: $showDeleteModal) {
                 VStack {
                     Text("Are you sure you want to delete account?")
                         .padding(.vertical)
-
+                    
                     Text("Once you delete, all the data will be removed!")
                         .font(.callout)
                     

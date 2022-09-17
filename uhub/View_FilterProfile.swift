@@ -12,6 +12,7 @@ struct FilterProfileView: View {
     @StateObject var filterProfileVM = FilterProfileViewModel()
     @EnvironmentObject var userAuthManager: UserAuthManager
     
+    /// This will render the filter profile
     var body: some View {
         ZStack(alignment: .bottom) {
             ZStack(alignment: .top) {
@@ -52,6 +53,7 @@ struct FilterProfileView: View {
         }
     }
     
+    /// This function will switch the page after click the button
     private func switchPageForBtn() {
         if userAuthManager.errorMsg == "" {
             if pageVM.isfirstFlow {
