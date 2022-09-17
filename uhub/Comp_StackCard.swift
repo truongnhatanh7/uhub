@@ -107,8 +107,6 @@ struct StackCard: View {
                         withAnimation {
                             if checkingStatusX > width / 2 {
                                 offsetX = (translationX > 0 ? width + 80 : -width - 80) * 2
-                                endSwipeAction()
-                                
                                 if translationX > 0 {
                                     rightSwipe()
                                 } else {
