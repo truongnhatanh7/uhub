@@ -23,19 +23,20 @@ class ImageManager: ObservableObject {
         if let val = memoizedImages[id] {
             callback(val)
         } else {
-            let storage = Storage.storage().reference()
-            let ref = storage.child("images/\(id).jpg")
-            ref.getData(maxSize: 1 * 2140 * 2140) { data, error in
-              if let error = error {
-                  print(error)
-                  callback(UIImage(imageLiteralResourceName: "placeholder_avatar"))
-              } else {
-                  print("Retrived image")
-                let image = UIImage(data: data!)
-                  self.memoizedImages[id] = image
-                  callback(image!)
-              }
-            }
+            callback(UIImage(imageLiteralResourceName: "placeholder_avatar"))
+//            let storage = Storage.storage().reference()
+//            let ref = storage.child("images/\(id).jpg")
+//            ref.getData(maxSize: 1 * 2140 * 2140) { data, error in
+//              if let error = error {
+//                  print(error)
+//                  callback(UIImage(imageLiteralResourceName: "placeholder_avatar"))
+//              } else {
+//                  print("Retrived image")
+//                let image = UIImage(data: data!)
+//                  self.memoizedImages[id] = image
+//                  callback(image!)
+//              }
+//            }
         }
     }
 }

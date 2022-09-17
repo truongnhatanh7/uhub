@@ -176,28 +176,71 @@ class ChatEngine: ObservableObject {
         }
     }
     
-    func createConversation(recipientId: String, callback: @escaping () -> ()) {
-        // lay current user + fetch user recipient -> conversation
-        db.collection("users").document(recipientId).getDocument { (document, error) in
-            if let document = document, document.exists {
-                let data = document.data()
-                let fullname = data?["fullname"] as? String ?? ""
-                // TODO: take avatar
-                if let currentUser = Auth.auth().currentUser {
-                    let docData: [String: Any] = [
-                        "users": [currentUser.uid, recipientId],
-                        "userNames": [currentUser.uid: self.userAuthManager?.currentUserData["fullname"],
-                                          recipientId: fullname
-                                     ]
-                    ]
-                    
-                    self.db.collection("conversations").addDocument(data: docData)
-                    callback()
-                }
-            } else {
-                print("Document does not exist")
+    func createConversation(recipientId: String, callback: @escaping (_ newConversationId : String, _ willFetch : Bool) -> ()) {
+        var needToCreateNewInstance = true
+        print("Check for already fetched conversations \(self.conversations)")
+        for conversation in self.conversations {
+            let notThisUserId = conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+            if (notThisUserId == recipientId) {
+                print("Already fetched")
+                self.currentConversation = conversation
+                needToCreateNewInstance = false
+                break;
             }
+        }
+        
+        if needToCreateNewInstance {
+            db.collection("users").document(recipientId).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let data = document.data()
+                    let fullname = data?["fullname"] as? String ?? ""
+                    if let currentUser = Auth.auth().currentUser {
+                        let docData: [String: Any] = [
+                            "users": [currentUser.uid, recipientId],
+                            "userNames": [currentUser.uid: self.userAuthManager?.currentUserData["fullname"],
+                                              recipientId: fullname
+                                         ]
+                        ]
+                        
+                        let createRef = self.db.collection("conversations").addDocument(data: docData)
+                        callback(createRef.documentID, true)
+                    }
+                } else {
+                    print("Document does not exist")
+                }
 
+            }
+        } else {
+            callback(self.currentConversation?.conversationId ?? "", false)
+        }
+
+    }
+    
+    func fetchConversationForCreation(toBeFetchedConversationId: String, callback: @escaping () -> ()) {
+        
+        db.collection("conversations").document(toBeFetchedConversationId).getDocument {
+            (document, err) in
+            if let document = document, document.exists {
+                let data = document.data();
+                let latestMessage = data?["latestMessage"] as? String ?? ""
+                let timestamp = data?["timestamp"] as? Timestamp
+                let unread = data?["unread"] as? Bool ?? false
+                let users = data?["users"] as? [String] ?? []
+                let latestMessageSender = data?["latestMessageSender"] as? String ?? ""
+                let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+               // let didNotify = data?["didNotify"] as? Bool ?? false
+                let userNames = data?["userNames"] as? [String: String] ?? [:]
+                let name = userNames[notThisUserId ?? ""]
+                
+                self.currentConversation =  Conversation(conversationId: toBeFetchedConversationId, latestMessage: latestMessage, timestamp: timestamp?.dateValue() ?? Date(), unread: unread, users: users, userNames: userNames, latestMessageSender: latestMessageSender, name: name ?? "")
+                callback()
+            } else {
+                
+            }
+            
+
+            
+            
         }
     }
     

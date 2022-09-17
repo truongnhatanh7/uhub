@@ -16,6 +16,7 @@ class MatchEngine: ObservableObject {
     @Published var matchesUsers : [User] = []
     @Published var currentUser: User?
     @Published var needReload: Bool = false
+    @Published var showIsMatched: Bool = false
     
     private var fetchListnener: ListenerRegistration?
     
@@ -23,10 +24,38 @@ class MatchEngine: ObservableObject {
         fetchListnener?.remove()
     }
     
-    func createMatchPackage(user: User) {
+    func isMatchWithOtherPerson(_ user: User, whenMatched: @escaping ()->Void, whenNotMatched: @escaping ()->Void) {
+        if let currentUser = Auth.auth().currentUser {
+            db.collection("matches").document(user.id).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let data = document.data()
+                    var likeUsers = data?["likes"] as? [[String: Any]] ?? [[:]]
+                    
+                    let targetIdx = likeUsers.firstIndex { element -> Bool in
+                        element["id"] as? String ?? "" == currentUser.uid
+                    }
+                    
+                    if let targetIdx = targetIdx {
+                        likeUsers[targetIdx]["isMatched"] = true
+                        self.db.collection("matches").document(user.id).setData([
+                            "likes": likeUsers
+                        ])
+                        whenMatched()
+                    } else {
+                        whenNotMatched()
+                    }
+                } else {
+                    print("Document does not exist")
+                    whenNotMatched()
+                }
+            }
+        }
+    }
+    
+    func createMatchPackage(_ user: User, isMatched: Bool) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([
-                "users": FieldValue.arrayUnion([
+                "likes": FieldValue.arrayUnion([
                     [
                         "id": user.id,
                         "fullname": user.name,
@@ -35,14 +64,15 @@ class MatchEngine: ObservableObject {
                         "major": user.major,
                         "gpa": user.gpa,
                         "semester_learned": user.semesterLearned,
-                        "about": user.about
+                        "about": user.about,
+                        "isMatched": isMatched
                     ]
                 ])
             ]) { err in
                 if let err = err {
                     print(err)
                     self.db.collection("matches").document(currentUser.uid).setData([
-                        "users": FieldValue.arrayUnion([
+                        "likes": FieldValue.arrayUnion([
                             [
                                 "id": user.id,
                                 "fullname": user.name,
@@ -51,7 +81,8 @@ class MatchEngine: ObservableObject {
                                 "major": user.major,
                                 "gpa": user.gpa,
                                 "semester_learned": user.semesterLearned,
-                                "about": user.about
+                                "about": user.about,
+                                "isMatched": isMatched
                             ]
                         ])
                     ])
@@ -62,12 +93,13 @@ class MatchEngine: ObservableObject {
     
     func fetchAllMatches(callback: @escaping ()->()) {
         if let currentUser = Auth.auth().currentUser {
-            fetchListnener = db.collection("matches").document(currentUser.uid).addSnapshotListener { (document, error) in
+            fetchListnener = db.collection("matches").document(currentUser.uid)
+                .addSnapshotListener { (document, error) in
                 withAnimation {
                     if let document = document, document.exists {
                         let data = document.data()
-                        let matchesUsers = data?["users"] as? [[String: Any]] ?? [[:]]
-                        print(matchesUsers)
+                        var matchesUsers = data?["likes"] as? [[String: Any]] ?? [[:]]
+                        matchesUsers = matchesUsers.filter { $0["isMatched"] as? Bool ?? false }
                         self.matchesUsers = matchesUsers.map { element -> User in
                             let id = element["id"] as? String ?? ""
                             let fullname = element["fullname"] as? String ?? ""
@@ -88,10 +120,25 @@ class MatchEngine: ObservableObject {
         }
     }
     
+    func createDislikePackage(_ user: User) {
+        if let currentUser = Auth.auth().currentUser {
+            db.collection("matches").document(currentUser.uid).updateData([
+                "dislikes": FieldValue.arrayUnion([user.id])
+            ]) { err in
+                if let err = err {
+                    print(err)
+                    self.db.collection("matches").document(currentUser.uid).setData([
+                        "dislikes": FieldValue.arrayUnion([user.id])
+                    ])
+                }
+            }
+        }
+    }
+    
     func removeMatch(user: User) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([
-                "users": FieldValue.arrayRemove([
+                "likes": FieldValue.arrayRemove([
                     [
                         "id": user.id,
                         "fullname": user.name,
@@ -100,7 +147,8 @@ class MatchEngine: ObservableObject {
                         "major": user.major,
                         "gpa": user.gpa,
                         "semester_learned": user.semesterLearned,
-                        "about": user.about
+                        "about": user.about,
+                        "isMatched": true
                     ]
                 ])
             ]) { err in
@@ -109,9 +157,5 @@ class MatchEngine: ObservableObject {
                 }
             }
         }
-    }
-    
-    func removeMatch(id: String) {
-        
     }
 }

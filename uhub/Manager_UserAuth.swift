@@ -27,8 +27,7 @@ class UserAuthManager: ObservableObject {
             "friends_gpa": 0,
             "friends_semester_learned": 0
         ],
-        "isActive": true,
-        "timeLimit": 0.0
+        "isActive": true
     ]
     
     private let db = Firestore.firestore()
@@ -205,8 +204,7 @@ class UserAuthManager: ObservableObject {
                     "friends_gpa": 0,
                     "friends_semester_learned": 0
                 ],
-                "isActive": false,
-                "timeLimit": 0.0
+                "isActive": false
             ]
         } catch {
             // update error msg
@@ -248,8 +246,7 @@ class UserAuthManager: ObservableObject {
                     "friends_gpa": 0,
                     "friends_semester_learned": 0
                 ],
-                "isActive": false,
-                "timeLimit": 0.0
+                "isActive": false
               ]
           }
         }

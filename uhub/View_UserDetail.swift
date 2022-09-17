@@ -107,10 +107,18 @@ struct View_UserDetail: View {
                             
                             Button(action: {
                                 print("Go to chat")
-                                chatEngine.createConversation(recipientId: user.id) {
-                                    pageVm.visit(page: .Chat)
-                                    isShowSheet = false
+                                chatEngine.createConversation(recipientId: user.id) { newConversationId, willFetch in
+                                    if willFetch {
+                                        chatEngine.fetchConversationForCreation(toBeFetchedConversationId: newConversationId) {
+                                            pageVm.visit(page: .Inbox)
+                                        }
+                                    } else {
+                                        pageVm.visit(page: .Inbox)
+                                    }
+//                                    pageVm.visit(page: .Chat)
+                                    
                                 }
+                                isShowSheet = false
                             }, label: {
                                 Image(systemName: "text.bubble.fill")
                                     .padding()

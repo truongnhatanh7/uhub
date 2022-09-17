@@ -30,8 +30,7 @@ struct HomeView: View {
                             ZStack {
                                 if let users = homeVM.fetchedUsers {
                                     if users.isEmpty {
-                                        let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
-                                        Text("Come back after \(Formatter.specialFormat.string(from: time)) for more friends!")
+                                        Text("Come back for more friends!")
                                             .font(.caption)
                                             .foregroundColor(.secondary)
                                     } else {
@@ -109,11 +108,7 @@ struct HomeView: View {
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             withAnimation { showMenu = true }
-            
-            //            let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
-            //            if time <= Date.now {
             homeVM.fetchData(userAuthManager.currentUserData, imageManager: imageManager)
-            //            }
         }
     }
     

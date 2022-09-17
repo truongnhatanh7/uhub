@@ -39,9 +39,10 @@ struct MatchesView: View {
                                                     Text("\(user.major)")
                                                         .font(.title3)
                                                 }
+                                                Spacer()
                                             }
                                             .padding(.bottom, 12)
-                                            .padding(.horizontal, 4)
+                                            .padding(.horizontal)
                                             .foregroundColor(.white)
                                         }
                                 }
