@@ -165,14 +165,32 @@ class ChatEngine: ObservableObject {
     }
     
     func setRead() {
+        print("Enter set read")
         if let currentConversation = currentConversation {
-            if Auth.auth().currentUser?.uid != currentConversation.latestMessageSender && currentConversation.unread { // If unread == false, do not call this
-                db.collection("conversations").document(currentConversation.conversationId).updateData([
-                    "timestamp": Date(),
-                    "unread": false,
-                    "didNotify": true
-                ])
+            db.collection("conversations").document(currentConversation.conversationId).getDocument {
+                (document, err) in
+                if let document = document, document.exists {
+                    let data = document.data();
+                    let unread = data?["unread"] as? Bool ?? false
+                    let latestMessageSender = data?["latestMessageSender"] as? String ?? ""
+
+                    if Auth.auth().currentUser?.uid != latestMessageSender && unread {
+                        print("Trigger db modifying")
+                        self.db.collection("conversations").document(currentConversation.conversationId).updateData([
+                            "timestamp": Date(),
+                            "unread": false,
+                            "didNotify": true
+                        ])
+                    }
+                } else {
+                    
+                }
+                
+
+                
+                
             }
+
         }
     }
     
