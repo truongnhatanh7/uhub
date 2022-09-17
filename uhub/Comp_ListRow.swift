@@ -41,6 +41,6 @@ struct ListRow: View {
             
        
             
-        }.background(Color("background"))
+        }.background(Color("background")).padding(.horizontal)
     }
 }

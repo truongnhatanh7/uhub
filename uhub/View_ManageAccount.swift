@@ -15,7 +15,7 @@ struct ManageAccountView: View {
     @State var showDeleteModal = false
     
     var body: some View {
-        ZStack(alignment: .top) {
+        ZStack(alignment: .topLeading) {
             VStack {
 //                VStack {
                     StandardHeader(title: "Manage Account") {
@@ -36,7 +36,7 @@ struct ManageAccountView: View {
 //                }.background(Color("background")).padding()
 //                .listStyle(.plain)
               
-            }.padding()
+            }
             OneThirdModal(label: "Confirmation", showModal: $showDeleteModal) {
                 VStack {
                     Text("Are you sure you want to delete account?")
