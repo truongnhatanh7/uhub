@@ -15,6 +15,8 @@ struct HomeView: View {
     @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var imageManager: ImageManager
     
+    @State private var isLoading = true
+    
     //    @State var time = Date()
     //    let formatter = DateFormatter()
     
@@ -22,58 +24,78 @@ struct HomeView: View {
         VStack {
             HeaderHome(title: "Discovery")
             ZStack(alignment: .bottom) {
-                ZStack {
-                    if let users = homeVM.fetchedUsers {
-                        if users.isEmpty {
-                            let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
-                            Text("Come back after \(Formatter.specialFormat.string(from: time)) for more friends!")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        } else {
-                            ForEach(users.reversed()) { user in
-                                StackCard(user: user)
-                                    .environmentObject(homeVM)
+                if !isLoading {
+                    Group {
+                        ZStack(alignment: .bottom) {
+                            ZStack {
+                                if let users = homeVM.fetchedUsers {
+                                    if users.isEmpty {
+                                        let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
+                                        Text("Come back after \(Formatter.specialFormat.string(from: time)) for more friends!")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    } else {
+                                        ForEach(users.reversed()) { user in
+                                            StackCard(user: user)
+                                                .environmentObject(homeVM)
+                                        }
+                                    }
+                                }
                             }
-                        }
+                            .padding()
+                            .padding(.bottom, 40)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            
+                            if !homeVM.fetchedUsers.isEmpty || !showMenu {
+                                HStack {
+                                    Spacer()
+                                    Button { doSwipe() } label: {
+                                        Label("Nope", systemImage: "xmark")
+                                            .font(.system(size: 20, weight: .bold))
+                                            .foregroundColor(Color("red_danger"))
+                                            .padding(18)
+                                            .background(.bar)
+                                            .clipShape(Circle())
+                                    }
+                                    .shadow(radius: 5)
+                                    
+                                    Spacer()
+                                    Button {
+                                        doSwipe(rightSwipe: true)
+                                    } label: {
+                                        Label("Like", systemImage: "hand.thumbsup.fill")
+                                            .font(.system(size: 20, weight: .bold))
+                                            .foregroundColor(Color("green"))
+                                            .padding(18)
+                                            .background(.bar)
+                                            .clipShape(Circle())
+                                    }
+                                    .shadow(radius: 5)
+                                    
+                                    Spacer()
+                                }
+                                .padding()
+                                .foregroundStyle(Color("pink_primary"))
+                                .labelStyle(.iconOnly)
+                                .disabled(homeVM.fetchedUsers.isEmpty)
+                                .transition(.opacity)
+                            }
+                        }                    }
+                } else {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        ProgressView("Loading users ...")
+                            .progressViewStyle(.circular)
+                            .tint(Color("pink_primary"))
+                            .foregroundColor(Color("pink_primary"))
+                            .task {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    self.isLoading.toggle()
+                                }
+                            }
+                        Spacer()
                     }
-                }
-                .padding()
-                .padding(.bottom, 40)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-                if !homeVM.fetchedUsers.isEmpty || !showMenu {
-                    HStack {
-                        Spacer()
-                        Button { doSwipe() } label: {
-                            Label("Nope", systemImage: "xmark")
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(Color("red_danger"))
-                                .padding(18)
-                                .background(.bar)
-                                .clipShape(Circle())
-                        }
-                        .shadow(radius: 5)
-                        
-                        Spacer()
-                        Button {
-                            doSwipe(rightSwipe: true)
-                        } label: {
-                            Label("Like", systemImage: "hand.thumbsup.fill")
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(Color("green"))
-                                .padding(18)
-                                .background(.bar)
-                                .clipShape(Circle())
-                        }
-                        .shadow(radius: 5)
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    .foregroundStyle(Color("pink_primary"))
-                    .labelStyle(.iconOnly)
-                    .disabled(homeVM.fetchedUsers.isEmpty)
-                    .transition(.opacity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
             
@@ -88,10 +110,10 @@ struct HomeView: View {
         .onAppear {
             withAnimation { showMenu = true }
             
-            let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
-//            if time <= Date.now {
+            //            let time = Date(timeIntervalSince1970: userAuthManager.currentUserData["timeLimit"] as? Double ?? 0.0)
+            //            if time <= Date.now {
             homeVM.fetchData(userAuthManager.currentUserData, imageManager: imageManager)
-//            }
+            //            }
         }
     }
     
