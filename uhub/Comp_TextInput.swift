@@ -35,7 +35,7 @@ struct TextInputComponent: View {
             }
             ZStack {
                 RoundedRectangle(cornerRadius: 25)
-                    .stroke(isFocused ? Color("pink_primary") : Color.gray.opacity(0.4), lineWidth: 2)
+                    .stroke(isFocused ? Color("pink_primary") : Color("black_primary"), lineWidth: 2)
                     .frame(height: 50)
                 HStack {
                     if isTextHidden {

@@ -33,7 +33,7 @@ struct PickerInputComponent<T: Description>: View {
                 }
                 ZStack {
                     RoundedRectangle(cornerRadius: 25)
-                        .stroke(showPicker ? Color("pink_primary") : Color.gray.opacity(0.4), lineWidth: 2)
+                        .stroke(showPicker ? Color("pink_primary") : Color("black_primary"), lineWidth: 2)
                         .frame(height: 50)
                     HStack {
                         Text(value.description)
@@ -81,7 +81,7 @@ struct PickerInputComponentForInt: View {
                 }
                 ZStack {
                     RoundedRectangle(cornerRadius: 25)
-                        .stroke(showPicker ? Color("pink_primary") : Color.gray.opacity(0.4), lineWidth: 2)
+                        .stroke(showPicker ? Color("pink_primary") : Color("black_primary"), lineWidth: 2)
                         .frame(height: 50)
                     HStack {
                         Text("\(value)")

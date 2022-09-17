@@ -29,7 +29,7 @@ struct TextBox: View {
             }
             ZStack {
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(isFocused ? Color("pink_primary") : Color.gray.opacity(0.4), lineWidth: 2)
+                    .stroke(isFocused ? Color("pink_primary") : Color("black_primary"), lineWidth: 2)
                     .frame(minHeight: dynamicHeight + 20, maxHeight: dynamicHeight + 20)
 
                 UITExtViewWrapper(text: $value, calculatedHeight: $dynamicHeight) {
