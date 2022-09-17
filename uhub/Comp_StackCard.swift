@@ -62,6 +62,7 @@ struct StackCard: View {
                             .foregroundColor(.white)
                         }
                         .overlay(alignment: .top) {
+                            // View for having Like and Nope stamp
                             Text("Like")
                                 .font(.title.bold())
                                 .foregroundStyle(.ultraThickMaterial)
@@ -95,6 +96,7 @@ struct StackCard: View {
                     }
                     .onChanged { value in
                         withAnimation(.linear(duration: 0.1)) {
+                            // Dragging cards around
                             let startYPosition = value.startLocation.y
                             self.startYPosition = isDragging ? startYPosition : .zero
                             let translationX = value.translation.width
@@ -104,6 +106,7 @@ struct StackCard: View {
                         }
                     }
                     .onEnded { value in
+                        // Dragging cards after user release their hand
                         let width = getRect().width - 100
                         let translationX = value.translation.width
                         let checkingStatusX = translationX > 0 ? translationX : -translationX
@@ -111,11 +114,14 @@ struct StackCard: View {
                             if checkingStatusX > width / 2 {
                                 offsetX = (translationX > 0 ? width + 80 : -width - 80) * 2
                                 if translationX > 0 {
+                                    // perform right swipe animation
                                     rightSwipe()
                                 } else {
+                                    // perform left swipe animation
                                     leftSwipe()
                                 }
                             } else {
+                                // resume position to center
                                 offsetX = .zero
                                 offsetY = .zero
                                 startYPosition = .zero
