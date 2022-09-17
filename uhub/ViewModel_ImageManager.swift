@@ -12,7 +12,7 @@
  Last modified: 17/09/2022
  Acknowledgements: Learning from Hacking with Swift to implement MVVM, and the usage of CoreData
  Hudson, P. (n.d.). The 100 days of Swiftui. Hacking with Swift. Retrieved July 30, 2022, from https://www.hackingwithswift.com/100/swiftui
-*/
+ */
 
 import Foundation
 import Firebase
@@ -37,20 +37,19 @@ class ImageManager: ObservableObject {
         if let val = memoizedImages[id] {
             callback(val)
         } else {
-            callback(UIImage(imageLiteralResourceName: "placeholder_avatar"))
-            //            let storage = Storage.storage().reference()
-            //            let ref = storage.child("images/\(id).jpg")
-            //            ref.getData(maxSize: 1 * 2140 * 2140) { data, error in
-            //              if let error = error {
-            //                  print(error)
-            //                  callback(UIImage(imageLiteralResourceName: "placeholder_avatar"))
-            //              } else {
-            //                  print("Retrived image")
-            //                let image = UIImage(data: data!)
-            //                  self.memoizedImages[id] = image
-            //                  callback(image!)
-            //              }
-            //            }
+            let storage = Storage.storage().reference()
+            let ref = storage.child("images/\(id).jpg")
+            ref.getData(maxSize: 1 * 2140 * 2140) { data, error in
+                if let error = error {
+                    print(error)
+                    callback(UIImage(imageLiteralResourceName: "placeholder_avatar"))
+                } else {
+                    print("Retrived image")
+                    let image = UIImage(data: data!)
+                    self.memoizedImages[id] = image
+                    callback(image!)
+                }
+            }
         }
     }
 }

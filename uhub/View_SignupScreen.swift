@@ -12,7 +12,7 @@
  Last modified: 17/09/2022
  Acknowledgements: Learning from Hacking with Swift to implement MVVM, and the usage of CoreData
  Hudson, P. (n.d.). The 100 days of Swiftui. Hacking with Swift. Retrieved July 30, 2022, from https://www.hackingwithswift.com/100/swiftui
-*/
+ */
 
 import SwiftUI
 
@@ -117,6 +117,7 @@ struct SignupScreenView: View {
                                 ErrorMsgView(msg: "Valid password format: at least 6 characters")
                             }
                         }
+                        Spacer()
                     }
                     
                     // sign up button
