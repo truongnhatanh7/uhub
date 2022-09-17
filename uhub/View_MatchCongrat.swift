@@ -11,6 +11,7 @@ struct MatchCongrat: View {
     @Binding var showIsMatchUser: Bool
     @EnvironmentObject var chatEngine: ChatEngine
     @EnvironmentObject var pageVm: PageViewModel
+    @EnvironmentObject var userAuthManager: UserAuthManager
     @State var userId: String
     var body: some View {
         ZStack {
@@ -54,6 +55,7 @@ struct MatchCongrat: View {
             }
             .modifier(ModalStyle())
             .onAppear {
+                chatEngine.userAuthManager = self.userAuthManager
                 playMusic(sound: "match", isLoop: false)
             }
         }
