@@ -20,6 +20,7 @@ struct OneThirdModal<T: View>: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
+            
             if showModal {
                 Rectangle()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)

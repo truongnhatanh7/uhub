@@ -25,16 +25,15 @@ struct PickerInputComponent<T: Description>: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .foregroundStyle(.background)
+                .foregroundStyle(.background).background(Color("background"))
             
             VStack(alignment: .leading, spacing: 10) {
                 if let label = label {
                     Text(label).modifier(LabelStyle(isRequired: isRequired))
                 }
                 ZStack {
-                    RoundedRectangle(cornerRadius: 25)
-                        .stroke(showPicker ? Color("pink_primary") : Color("black_primary"), lineWidth: 2)
-                        .frame(height: 50)
+                    RoundedRectangle(cornerRadius: 25).stroke(showPicker ? Color("pink_primary") : Color("black_primary"), lineWidth: 2)
+                        .frame(height: 50).background(Color("background"))
                     HStack {
                         Text(value.description)
                             .modifier(InputStyle(isFocused: $isFocused))
@@ -45,7 +44,7 @@ struct PickerInputComponent<T: Description>: View {
                             .padding(.trailing, 20)
                     }
                 }
-            }
+            }.background(Color("background"))
         }
         .onTapGesture {
             withAnimation {
@@ -73,7 +72,7 @@ struct PickerInputComponentForInt: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .foregroundStyle(.background)
+                .foregroundStyle(.background).background(Color("background"))
             
             VStack(alignment: .leading, spacing: 10) {
                 if let label = label {
@@ -82,7 +81,7 @@ struct PickerInputComponentForInt: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 25)
                         .stroke(showPicker ? Color("pink_primary") : Color("black_primary"), lineWidth: 2)
-                        .frame(height: 50)
+                        .frame(height: 50).background(Color("background"))
                     HStack {
                         Text("\(value)")
                             .modifier(InputStyle(isFocused: $isFocused))
@@ -93,9 +92,8 @@ struct PickerInputComponentForInt: View {
                             .padding(.trailing, 20)
                     }
                 }
-            }
-        }
-        .onTapGesture {
+            }.background(Color("background"))
+        }.onTapGesture {
             withAnimation {
                 showPicker.toggle()
             }

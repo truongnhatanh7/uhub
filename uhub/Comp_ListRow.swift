@@ -27,8 +27,8 @@ struct ListRow: View {
                     Image(systemName: "chevron.forward")
                         .foregroundColor(Color("pink_primary"))
                 }
-            }
+            }.background(Color("background"))
             .padding(.vertical)
-        }
+        }.background(Color("background"))
     }
 }

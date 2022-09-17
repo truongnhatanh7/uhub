@@ -22,13 +22,13 @@ struct SettingView: View {
                     pageVM.visit(page: .Account)
                 }
                 ListRow(icon: "bell.fill", label: "Notification") {
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    pageVM.visit(page: .Notification)
+//                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 }
                 ListRow(icon: "slider.horizontal.3", label: "Filter People") {
                     pageVM.visit(page: .FilterProfile)
                 }
-            }
-            .listStyle(.plain)
+            }.background(Color("background")).listStyle(.plain)
             
             Spacer()
             if showMenu {
