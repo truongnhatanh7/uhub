@@ -192,6 +192,7 @@ struct StackCard: View {
             matchEngine.createMatchPackage(user, isMatched: false)
             endSwipeAction()
         }
+        matchEngine.createDislikePackage(user)
     }
 }
 
