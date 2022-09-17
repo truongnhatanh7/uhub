@@ -119,11 +119,19 @@ class ChatEngine: ObservableObject {
                     let name = userNames[notThisUserId ?? ""]
                     
                     if Auth.auth().currentUser?.uid != latestMessageSender && unread && !didNotify { // Not the send + unread msg + did NOT notify -> play sound
-                        //playMusic(sound: "receive_message", isLoop: false)
-//                        if ((self.userAuthManager?.currentUserData["isShowSound"]) != nil) {
-//                            playMusic(sound: "receive_message", isLoop: false)
-//                        }
-                        self.notificationManager?.generateNoti(title: userNames[notThisUserId ?? ""] ?? "", subtitle: latestMessage)
+                        if let isShowSound = (self.userAuthManager?.currentUserData["isShowSound"]) {
+                            if isShowSound as! Bool {
+            
+                                playMusic(sound: "receive_message", isLoop: false)
+                            }
+                        }
+                        
+                        if let isShowChatNoti = (self.userAuthManager?.currentUserData["isShowChatNoti"]) {
+                            if isShowChatNoti as! Bool {
+                                self.notificationManager?.generateNoti(title: userNames[notThisUserId ?? ""] ?? "", subtitle: latestMessage)
+                            }
+                        }
+
                         self.db.collection("conversations").document(conversationId).updateData([ // Updatte latest message when sending new message from both sides
                             "didNotify": true
                         ])

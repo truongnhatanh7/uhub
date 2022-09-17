@@ -59,8 +59,11 @@ struct MatchCongrat: View {
             .modifier(ModalStyle())
             .onAppear {
                 chatEngine.userAuthManager = self.userAuthManager
-                if ((userAuthManager.currentUserData["isShowSound"]) != nil) {
-                    playMusic(sound: "match", isLoop: false)
+                if let isShowNewMatchNoti = (userAuthManager.currentUserData["isShowNewMatchNoti"]) {
+                    if isShowNewMatchNoti as! Bool {
+                        playMusic(sound: "match", isLoop: false)
+                    }
+                    
                 }
                 //playMusic(sound: "match", isLoop: false)
             }
