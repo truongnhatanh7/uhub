@@ -92,20 +92,6 @@ struct ChatListRow: View {
                 self.uiImage = img
             }
         }
-        .alert(isPresented: $showDeleteAlert) { () -> Alert in
-            Alert(title: Text("Delete this conversation"), message: Text("Do you want to delete the conversation with \(conversation.name)"), primaryButton: .default(Text("Cancel"), action: {
-                withAnimation {
-                    offset = .zero
-                }
-            }), secondaryButton: .destructive(Text("Delete"), action: {
-                withAnimation {
-                    chatEngine.deleteConversation(id: conversation.conversationId)
-                }
-            }))
-        }
-        .onLongPressGesture {
-            showDeleteAlert = true
-        }
     }
         
         

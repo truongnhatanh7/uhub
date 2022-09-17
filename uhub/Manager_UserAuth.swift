@@ -72,7 +72,7 @@ class UserAuthManager: ObservableObject {
                     self.currentUserData = self.currentUserData.merging(data!) { (_, new) in new }
                     
                     // update active status
-                    self.updateProfileInfo(updatedData: ["isActive": "true"], callback: {})
+                    self.updateProfileInfo(updatedData: ["isActive": true], callback: {})
                     
                     // logs
                     print("[SUCCESS - Get User By Id]: Retrieved User Data = \(dataDescription)")

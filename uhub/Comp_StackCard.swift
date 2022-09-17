@@ -107,8 +107,6 @@ struct StackCard: View {
                         withAnimation {
                             if checkingStatusX > width / 2 {
                                 offsetX = (translationX > 0 ? width + 80 : -width - 80) * 2
-                                endSwipeAction()
-                                
                                 if translationX > 0 {
                                     rightSwipe()
                                 } else {
@@ -187,6 +185,7 @@ struct StackCard: View {
     }
     
     func rightSwipe() {
+        matchEngine.createDislikePackage(user)
         matchEngine.isMatchWithOtherPerson(user) {
             showIsMatchUser = true
             matchEngine.createMatchPackage(user, isMatched: true)

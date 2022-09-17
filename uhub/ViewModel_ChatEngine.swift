@@ -165,14 +165,28 @@ class ChatEngine: ObservableObject {
     }
     
     func setRead() {
+        print("Enter set read")
         if let currentConversation = currentConversation {
-            if Auth.auth().currentUser?.uid != currentConversation.latestMessageSender && currentConversation.unread { // If unread == false, do not call this
-                db.collection("conversations").document(currentConversation.conversationId).updateData([
-                    "timestamp": Date(),
-                    "unread": false,
-                    "didNotify": true
-                ])
+            db.collection("conversations").document(currentConversation.conversationId).getDocument {
+                (document, err) in
+                if let document = document, document.exists {
+                    let data = document.data();
+                    let unread = data?["unread"] as? Bool ?? false
+                    let latestMessageSender = data?["latestMessageSender"] as? String ?? ""
+
+                    if Auth.auth().currentUser?.uid != latestMessageSender && unread {
+                        print("Trigger db modifying")
+                        self.db.collection("conversations").document(currentConversation.conversationId).updateData([
+                            "timestamp": Date(),
+                            "unread": false,
+                            "didNotify": true
+                        ])
+                    }
+                } else {
+                    print("Cannot set read message")
+                }
             }
+
         }
     }
     
@@ -197,7 +211,7 @@ class ChatEngine: ObservableObject {
                     if let currentUser = Auth.auth().currentUser {
                         let docData: [String: Any] = [
                             "users": [currentUser.uid, recipientId],
-                            "userNames": [currentUser.uid: self.userAuthManager?.currentUserData["fullname"],
+                            "userNames": [currentUser.uid: self.userAuthManager?.currentUserData["fullname"] ?? "test",
                                               recipientId: fullname
                                          ]
                         ]
@@ -268,6 +282,26 @@ class ChatEngine: ObservableObject {
             } else {
                 print("Document successfully removed!")
             }
+        }
+    }
+    
+    func deleteConversationInDetailedView(id: String) {
+        db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents")
+                    return
+                }
+            
+                for doc in documents {
+                    let data = doc.data()
+                    let conversationId = doc.documentID
+                    let users = data["users"] as? [String] ?? []
+                    let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+                    if notThisUserId == id {
+                        self.deleteConversation(id: conversationId)
+                        break
+                    }
+                }
         }
     }
     
