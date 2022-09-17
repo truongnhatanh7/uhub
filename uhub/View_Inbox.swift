@@ -16,12 +16,10 @@ struct InboxView: View {
     @State var currentLoadLimit: Int = 14;
     var newMessagesToBeLoaded: Int = 14
     
+    /// This function will render the view inbox where you will have coversation
     var body: some View {
-  
         ZStack {
-            
             Color("black").edgesIgnoringSafeArea(.all)
-            
             VStack {
                 StandardHeader(title: "\(chatEngine.currentConversation?.name ?? "")") {
                     chatEngine.setRead()
@@ -47,28 +45,24 @@ struct InboxView: View {
                                 }
                             }
                         }.background(Color("black"))
-                        .listStyle(PlainListStyle())
-                        .onChange(of: chatEngine.lastMessageId) { id in
-                            withAnimation {
-                                proxy.scrollTo(id, anchor: .bottom)
+                            .listStyle(PlainListStyle())
+                            .onChange(of: chatEngine.lastMessageId) { id in
+                                withAnimation {
+                                    proxy.scrollTo(id, anchor: .bottom)
+                                }
                             }
-                        }
-                        .onAppear {
-                            proxy.scrollTo(chatEngine.lastMessageId, anchor: .bottom)
-                        }
-                        .refreshable {
-                            print("Refreshing...")
-                            currentLoadLimit += newMessagesToBeLoaded
-                            chatEngine.setCurrentLimit(limit: currentLoadLimit)
-                            chatEngine.loadMessages()
-                            
-                        }
+                            .onAppear {
+                                proxy.scrollTo(chatEngine.lastMessageId, anchor: .bottom)
+                            }
+                            .refreshable {
+                                print("Refreshing...")
+                                currentLoadLimit += newMessagesToBeLoaded
+                                chatEngine.setCurrentLimit(limit: currentLoadLimit)
+                                chatEngine.loadMessages()
+                            }
                     }
-
                 } else {
-                    VStack {
-                        // Render blank space
-                    }
+                    VStack {}
                 }
                 
                 HStack {
@@ -93,29 +87,10 @@ struct InboxView: View {
             .onAppear {
                 chatEngine.loadConversation()
             }
-
-//            .overlay(RoundedRectangle(cornerRadius: 18)
-//                .stroke(Color("neutral"), lineWidth: 2)
-//            )
-//            .padding(.horizontal)
         }
         .onAppear {
             chatEngine.userAuthManager = self.userAuthManager
             chatEngine.loadConversation()
         }
-        
     }
 }
-
-//struct InboxView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        InboxView(messages: [
-//            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()),
-//            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #1 text is from other user", timestamp: Date()),
-//            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #2 text is from other user", timestamp: Date()),
-//            Message(messageId: 1, ownerId: 2, conversationId: 1, content: "This #3 text is from other user", timestamp: Date()),
-//            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()),
-//            Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date())
-//        ])
-//    }
-//}

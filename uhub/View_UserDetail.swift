@@ -24,6 +24,7 @@ struct View_UserDetail: View {
     var user: User
     @State var image = Image("User3")
     
+    /// This function will render the user details
     var body: some View {
         ZStack(alignment: .bottom) {
             // MARK: Image
@@ -31,7 +32,6 @@ struct View_UserDetail: View {
                 VStack {
                     Card(width: proxy.size.width, height: proxy.size.height, imageURL: user.id)
                 }.edgesIgnoringSafeArea(.all)
-                
             }
             if isShowSheet {
                 VStack(spacing: 20) {

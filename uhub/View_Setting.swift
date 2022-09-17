@@ -10,11 +10,11 @@ import SwiftUI
 struct SettingView: View {
     @EnvironmentObject var pageVM: PageViewModel
     @State var showMenu = false
-
+    
+    /// Render the navigation view for setting
     var body: some View {
         VStack {
             HeaderHome(title: "Setting")
-//            List {
             VStack {
                 ListRow(icon: "square.and.pencil", label: "Edit Profile") {
                     pageVM.visit(page: .EditProfile)
@@ -24,14 +24,11 @@ struct SettingView: View {
                 }
                 ListRow(icon: "bell.fill", label: "Notification") {
                     pageVM.visit(page: .Notification)
-//                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 }
                 ListRow(icon: "slider.horizontal.3", label: "Filter People") {
                     pageVM.visit(page: .FilterProfile)
                 }
             }.padding()
-               
-//            }.background(Color("background")).listStyle(.plain)
             
             Spacer()
             if showMenu {
