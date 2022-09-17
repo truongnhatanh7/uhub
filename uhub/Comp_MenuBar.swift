@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+/// Menubar
 struct MenuBar: View {
     @EnvironmentObject var pageVM: PageViewModel
     @EnvironmentObject var chatEngine: ChatEngine
     let menuInPage: Page
-    @Binding var showMenu: Bool
+    @Binding var showMenu: Bool /// Control menu show status
     
     var isCurrentPageHome: Bool {
         pageVM.currentPage == .Home
@@ -29,6 +30,7 @@ struct MenuBar: View {
         pageVM.currentPage == .Setting
     }
     
+    /// View body
     var body: some View {
         HStack {
             MenuButton(action: {
@@ -63,12 +65,14 @@ struct MenuBar: View {
     }
 }
 
+/// Menu button
 struct MenuButton: View {
-    let action: () -> Void
+    let action: () -> Void /// handle action
     let imageStr: String
     let labelStr: String
     var isSelect: Bool = false
     
+    /// View body
     var body: some View {
         Button(action: action) {
             VStack {
@@ -80,6 +84,7 @@ struct MenuButton: View {
     }
 }
 
+/// MenuButtonStyle
 struct MenuButtonStyle: ButtonStyle {
     var isSelect: Bool = false
     func makeBody(configuration: Configuration) -> some View {

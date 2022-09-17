@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-
+/// Message for user that is not this current user
 struct MessageDefaultBubble: View {
     var message: Message
     var body: some View {
@@ -29,9 +29,3 @@ struct MessageDefaultBubble: View {
 
     }
 }
-
-//struct MessageDefaultBubble_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MessageDefaultBubble(message: Message(messageId: 1, ownerId: 1, conversationId: 1, content: "This is a test message with a very very very very very very very very very very very very very very long long long long long long long long long long long long long long long  text", timestamp: Date()))
-//    }
-//}

@@ -22,6 +22,7 @@ struct PickerInputComponent<T: Description>: View {
         _showPicker = showPicker
     }
     
+    /// View body
     var body: some View {
         ZStack {
             Rectangle()
@@ -54,6 +55,7 @@ struct PickerInputComponent<T: Description>: View {
     }
 }
 
+/// Picker input component for int
 struct PickerInputComponentForInt: View {
     @State var label: String?
     @Binding var value: Int
@@ -69,6 +71,7 @@ struct PickerInputComponentForInt: View {
         _showPicker = showPicker
     }
     
+    /// View body
     var body: some View {
         ZStack {
             Rectangle()
@@ -94,6 +97,7 @@ struct PickerInputComponentForInt: View {
                 }.background(Color("background"))
             }.background(Color("background"))
         }.onTapGesture {
+            /// animation
             withAnimation {
                 showPicker.toggle()
             }

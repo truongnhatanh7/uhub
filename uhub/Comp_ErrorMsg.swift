@@ -10,6 +10,7 @@ import SwiftUI
 struct ErrorMsgView: View {
     @State var msg: String
     
+    /// View body
     var body: some View {
         HStack {
             SideIcon(
@@ -33,6 +34,7 @@ struct ErrorMsgView: View {
     }
 }
 
+/// SideIcon
 struct SideIcon: View {
     private var iconName: String
     private var iconColor: Color
@@ -47,10 +49,3 @@ struct SideIcon: View {
             .foregroundColor(iconColor)
     }
 }
-
-struct ErrorMsgView_Previews: PreviewProvider {
-    static var previews: some View {
-        ErrorMsgView(msg: "Invalid email")
-    }
-}
-

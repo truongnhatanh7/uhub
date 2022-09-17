@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55D881ED28D03D50006C990F /* Comp_FirebaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881EC28D03D4F006C990F /* Comp_FirebaseImage.swift */; };
-		55D881EF28D03DAD006C990F /* Helper_Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881EE28D03DAD006C990F /* Helper_Loader.swift */; };
 		55D881F328D2C3F5006C990F /* ViewModel_MatchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */; };
 		55D881F528D2F42E006C990F /* ViewModel_ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */; };
 		55D881F728D5A07A006C990F /* match.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 55D881F628D5A07A006C990F /* match.mp3 */; };
@@ -25,7 +23,6 @@
 		8F932B8028C751EE00FAC04B /* Comp_ErrorMsg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5428C751EC00FAC04B /* Comp_ErrorMsg.swift */; };
 		8F932B8128C751EE00FAC04B /* View_Inbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5528C751EC00FAC04B /* View_Inbox.swift */; };
 		8F932B8228C751EE00FAC04B /* ViewModel_FilterProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5628C751EC00FAC04B /* ViewModel_FilterProfile.swift */; };
-		8F932B8328C751EE00FAC04B /* Comp_AdaptiveSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5728C751EC00FAC04B /* Comp_AdaptiveSheet.swift */; };
 		8F932B8628C751EE00FAC04B /* Comp_TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5A28C751ED00FAC04B /* Comp_TextInput.swift */; };
 		8F932B8728C751EE00FAC04B /* Comp_Toogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5B28C751ED00FAC04B /* Comp_Toogle.swift */; };
 		8F932B8928C751EE00FAC04B /* Comp_ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F932B5D28C751ED00FAC04B /* Comp_ImagePicker.swift */; };
@@ -86,8 +83,6 @@
 /* Begin PBXFileReference section */
 		0303D244B030A28212EDB559 /* Comp_HeaderHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_HeaderHome.swift; sourceTree = "<group>"; };
 		23F0EC11FF3454662C95E7AF /* receive_message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = receive_message.mp3; sourceTree = "<group>"; };
-		55D881EC28D03D4F006C990F /* Comp_FirebaseImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comp_FirebaseImage.swift; sourceTree = "<group>"; };
-		55D881EE28D03DAD006C990F /* Helper_Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper_Loader.swift; sourceTree = "<group>"; };
 		55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_MatchEngine.swift; sourceTree = "<group>"; };
 		55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_ImageManager.swift; sourceTree = "<group>"; };
 		55D881F628D5A07A006C990F /* match.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = match.mp3; sourceTree = "<group>"; };
@@ -105,7 +100,6 @@
 		8F932B5428C751EC00FAC04B /* Comp_ErrorMsg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comp_ErrorMsg.swift; sourceTree = "<group>"; };
 		8F932B5528C751EC00FAC04B /* View_Inbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View_Inbox.swift; sourceTree = "<group>"; };
 		8F932B5628C751EC00FAC04B /* ViewModel_FilterProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel_FilterProfile.swift; sourceTree = "<group>"; };
-		8F932B5728C751EC00FAC04B /* Comp_AdaptiveSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comp_AdaptiveSheet.swift; sourceTree = "<group>"; };
 		8F932B5A28C751ED00FAC04B /* Comp_TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comp_TextInput.swift; sourceTree = "<group>"; };
 		8F932B5B28C751ED00FAC04B /* Comp_Toogle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comp_Toogle.swift; sourceTree = "<group>"; };
 		8F932B5D28C751ED00FAC04B /* Comp_ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comp_ImagePicker.swift; sourceTree = "<group>"; };
@@ -198,7 +192,6 @@
 				23F0EC11FF3454662C95E7AF /* receive_message.mp3 */,
 				72EB29FAEE120BDE0D3550D3 /* send_message.mp3 */,
 				8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */,
-				8F932B5728C751EC00FAC04B /* Comp_AdaptiveSheet.swift */,
 				8F932B7728C751EE00FAC04B /* Comp_AvatarInput.swift */,
 				8F932B6428C751ED00FAC04B /* Comp_BottomBar.swift */,
 				8F932B7428C751EE00FAC04B /* Comp_Button.swift */,
@@ -209,7 +202,6 @@
 				8F932B6028C751ED00FAC04B /* Comp_CongratsModal.swift */,
 				D5AAA9B328C89E50007603DD /* Comp_Course.swift */,
 				8F932B5428C751EC00FAC04B /* Comp_ErrorMsg.swift */,
-				55D881EC28D03D4F006C990F /* Comp_FirebaseImage.swift */,
 				0303D244B030A28212EDB559 /* Comp_HeaderHome.swift */,
 				8F932B5D28C751ED00FAC04B /* Comp_ImagePicker.swift */,
 				C133E48328CB4F19002FFA9E /* Comp_ListRow.swift */,
@@ -225,7 +217,6 @@
 				8F932B6A28C751ED00FAC04B /* Comp_TextBox.swift */,
 				8F932B5A28C751ED00FAC04B /* Comp_TextInput.swift */,
 				8F932B5B28C751ED00FAC04B /* Comp_Toogle.swift */,
-				55D881EE28D03DAD006C990F /* Helper_Loader.swift */,
 				8F6E1CDA28CB82810098711E /* Manager_Notification.swift */,
 				8F932B7A28C751EE00FAC04B /* Manager_UserAuth.swift */,
 				8F932B6528C751ED00FAC04B /* Model_Conversation.swift */,
@@ -402,12 +393,10 @@
 				8F932B7E28C751EE00FAC04B /* Comp_MessageDefaultBubble.swift in Sources */,
 				C133E47C28CA4C3F002FFA9E /* View_Setting.swift in Sources */,
 				8F932BA628C751EE00FAC04B /* Manager_UserAuth.swift in Sources */,
-				55D881EF28D03DAD006C990F /* Helper_Loader.swift in Sources */,
 				C1EBAD6628D5817600AC69C6 /* View_MatchCongrat.swift in Sources */,
 				8F932BA428C751EE00FAC04B /* Model_Message.swift in Sources */,
 				D548B06E28D58BA600A5EFF5 /* View_Notification.swift in Sources */,
 				8F932B8C28C751EE00FAC04B /* Comp_CongratsModal.swift in Sources */,
-				8F932B8328C751EE00FAC04B /* Comp_AdaptiveSheet.swift in Sources */,
 				C133E47A28CA4C31002FFA9E /* View_Matches.swift in Sources */,
 				8F932B8028C751EE00FAC04B /* Comp_ErrorMsg.swift in Sources */,
 				8F932B8E28C751EE00FAC04B /* ViewModel_Navigation.swift in Sources */,
@@ -419,7 +408,6 @@
 				8F932B9228C751EE00FAC04B /* Style_CornerRadiusStyle.swift in Sources */,
 				8F932BA128C751EE00FAC04B /* Comp_ChatListRow.swift in Sources */,
 				C133E48428CB4F19002FFA9E /* Comp_ListRow.swift in Sources */,
-				55D881ED28D03D50006C990F /* Comp_FirebaseImage.swift in Sources */,
 				C1EBAD6428D42FC500AC69C6 /* Util_Filter.swift in Sources */,
 				C133E48028CADD92002FFA9E /* Comp_StackCard.swift in Sources */,
 				D548B07028D5A34800A5EFF5 /* ViewModel_Notification.swift in Sources */,

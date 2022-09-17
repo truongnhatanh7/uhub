@@ -1,20 +1,21 @@
 /*
-  RMIT University Vietnam
-  Course: COSC2659 iOS Development
-  Semester: 2022B
-  Assessment: Assignment 3
-  Author: Nguyen Luu Quoc Bao
-  ID: s3877698
-  Created  date: 01/09/2022
-  Last modified: 01/09/2022
-  Acknowledgement: None
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Nguyen Luu Quoc Bao
+ ID: s3877698
+ Created  date: 01/09/2022
+ Last modified: 01/09/2022
+ Acknowledgement: None
+ */
 
 import SwiftUI
 
 struct CongratsModal: View {
     @Binding var isGoToHome:Bool
     
+    /// View body
     var body: some View {
         ZStack {
             Color(.black).edgesIgnoringSafeArea(.all).opacity(0.7)

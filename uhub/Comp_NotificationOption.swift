@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Notification Option
 struct NotificationOption: View {
     
     var label:String

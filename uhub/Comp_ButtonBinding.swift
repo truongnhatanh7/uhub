@@ -12,10 +12,11 @@ struct ButtonBindingView: View {
     @State var onTap: () -> ()
     @Binding var isDisabled: Bool
     
+    /// View body
     var body: some View {
         if isDisabled {
             Button(action: {
-                // action
+                // action handle
                 onTap()
             }, label:  {
                 Text("\(textContent)").bold()
@@ -24,7 +25,7 @@ struct ButtonBindingView: View {
             .disabled(true)
         } else {
             Button(action: {
-                // action
+                // action handle
                 onTap()
             }, label:  {
                 Text("\(textContent)").bold()
@@ -34,10 +35,3 @@ struct ButtonBindingView: View {
         }
     }
 }
-
-struct ButtonBindingView_Previews: PreviewProvider {
-    static var previews: some View {
-        Text("Button Binding View")
-    }
-}
-

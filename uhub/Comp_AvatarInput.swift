@@ -11,11 +11,16 @@ struct AvatarInput: View {
     let image: Image?
     let action: () -> Void
     
+    /// init
+    /// - Parameters:
+    ///   - image: Image
+    ///   - action: func
     init(image: Image? = nil, action: @escaping () -> Void) {
         self.image = image
         self.action = action
     }
     
+    ///  View body
     var body: some View {
         ZStack {
             Circle()
@@ -30,7 +35,6 @@ struct AvatarInput: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-//                    .scaledToFit()
                     .clipShape(Circle())
             }
         }

@@ -49,10 +49,10 @@ struct ImagePicker: UIViewControllerRepresentable {
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             // dismiss the sheet
             picker.dismiss(animated: true)
-
+            
             // exist if no selection from user
             guard let provider = results.first?.itemProvider else { return }
-
+            
             // if there is images try to load it
             if provider.canLoadObject(ofClass: UIImage.self) {
                 provider.loadObject(ofClass: UIImage.self) { image, _ in

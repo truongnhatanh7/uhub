@@ -20,6 +20,7 @@ struct ChatListRow: View {
         HStack {
             HStack {
                 ZStack {
+                    /// Avatar
                     if let uiImage = uiImage {
                         Image(uiImage: uiImage)
                             .resizable()
@@ -27,12 +28,15 @@ struct ChatListRow: View {
                             .frame(width: 50, height: 50)
                             .clipShape(Circle())
                     } else {
+                        /// Placeholder
                         Text("")
                             .frame(width: 50, height: 50)
                             .background(Color("pink_primary"))
                             .clipShape(Circle())
                     }
-
+                    
+                    
+                    /// Online status
                     if chatEngine.conversationStatus[conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!] ?? false {
                         Text("") // Active status
                             .frame(width: 12, height: 12)
@@ -40,7 +44,7 @@ struct ChatListRow: View {
                             .clipShape(Circle())
                             .padding(.leading, 36)
                             .padding(.top, 36)
-
+                        
                     } else {
                         Text("") // Inactive status
                             .frame(width: 12, height: 12)
@@ -50,7 +54,8 @@ struct ChatListRow: View {
                             .padding(.top, 36)
                     }
                 }
-
+                
+                /// Chat information
                 VStack(alignment: .leading) {
                     Text(conversation.name)
                         .fontWeight(.medium)
@@ -66,6 +71,7 @@ struct ChatListRow: View {
                 
             }
             Spacer()
+            /// New message indicator
             VStack {
                 if Auth.auth().currentUser?.uid != conversation.latestMessageSender && conversation.unread {
                     Text("")
@@ -75,6 +81,7 @@ struct ChatListRow: View {
                         .clipShape(Circle())
                 }
                 Spacer()
+                /// Timestamp
                 Text(conversation.timestamp.getFormattedDate())
             }
         }
@@ -85,19 +92,14 @@ struct ChatListRow: View {
             .stroke(Color("neutral"), lineWidth: 1)
         )
         .onAppear {
+            /// Handle chat engine logic
             chatEngine.imageManager = imageManager
             chatEngine.fetchUserImage(conversation: conversation) { img in
                 self.uiImage = img
             }
         }
     }
-        
-        
-        
+    
+    
+    
 }
-
-//struct ChatListRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChatListRow(conversation: Conversation(conversationId: 1, imageURL: "", name: "Credence Nguyen", latestMessage: "How are you doing lorem ipsum lorem rem", timestamp: Date(), unread: true))
-//    }
-//}

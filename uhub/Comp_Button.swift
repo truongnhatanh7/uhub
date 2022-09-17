@@ -14,6 +14,7 @@ struct ButtonView: View {
     @State var onTap: () -> ()
 
     
+    /// View body
     var body: some View {
         if isDisabled {
             Button(action: {
@@ -37,6 +38,7 @@ struct ButtonView: View {
     }
 }
 
+/// Primary Button Style
 struct PrimaryButtonStyle: ButtonStyle {
     var isSecondaryBtn: Bool = false
     
@@ -59,6 +61,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     }
 }
 
+/// Disable Button Style
 struct DisabledButtonStyle: ButtonStyle {
     var isSecondaryBtn: Bool = false
 

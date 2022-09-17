@@ -7,12 +7,14 @@
 
 import SwiftUI
 
+/// Standard Header
 struct StandardHeader: View {
     @EnvironmentObject var pageMV: PageViewModel
     let title: String
     var showReturn: Bool = true
     let action: () -> Void
     
+    /// View body
     var body: some View {
         HStack {
             if showReturn {
@@ -27,13 +29,5 @@ struct StandardHeader: View {
         }
         .padding()
         .background(Color("background"))
-    }
-}
-
-struct StandardHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        StandardHeader(title: "Fill Your Profile", action: {})
-            .environmentObject(PageViewModel())
-            .previewLayout(.sizeThatFits)
     }
 }
