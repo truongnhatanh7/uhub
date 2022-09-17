@@ -185,6 +185,7 @@ struct StackCard: View {
     }
     
     func rightSwipe() {
+        matchEngine.createDislikePackage(user)
         matchEngine.isMatchWithOtherPerson(user) {
             showIsMatchUser = true
             matchEngine.createMatchPackage(user, isMatched: true)
@@ -192,7 +193,6 @@ struct StackCard: View {
             matchEngine.createMatchPackage(user, isMatched: false)
             endSwipeAction()
         }
-        matchEngine.createDislikePackage(user)
     }
 }
 

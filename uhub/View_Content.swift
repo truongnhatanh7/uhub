@@ -68,7 +68,7 @@ struct ContentView: View {
                         .transition(.opacity.combined(with: .offset(y: -40)).animation(.linear(duration: 0.1)))
                 case .Inbox:
                     InboxView()
-                        .transition(.move(edge: .trailing).combined(with: .opacity))
+                        .transition(.opacity.combined(with: .offset(y: -40)).animation(.linear(duration: 0.1)))
                 }
                 
             }.environmentObject(pageVM)
