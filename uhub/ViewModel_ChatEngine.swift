@@ -197,7 +197,7 @@ class ChatEngine: ObservableObject {
                     if let currentUser = Auth.auth().currentUser {
                         let docData: [String: Any] = [
                             "users": [currentUser.uid, recipientId],
-                            "userNames": [currentUser.uid: self.userAuthManager?.currentUserData["fullname"],
+                            "userNames": [currentUser.uid: self.userAuthManager?.currentUserData["fullname"] ?? "test",
                                               recipientId: fullname
                                          ]
                         ]
