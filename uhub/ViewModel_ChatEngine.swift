@@ -183,12 +183,8 @@ class ChatEngine: ObservableObject {
                         ])
                     }
                 } else {
-                    
+                    print("Cannot set read message")
                 }
-                
-
-                
-                
             }
 
         }
@@ -286,6 +282,26 @@ class ChatEngine: ObservableObject {
             } else {
                 print("Document successfully removed!")
             }
+        }
+    }
+    
+    func deleteConversationInDetailedView(id: String) {
+        db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents")
+                    return
+                }
+            
+                for doc in documents {
+                    let data = doc.data()
+                    let conversationId = doc.documentID
+                    let users = data["users"] as? [String] ?? []
+                    let notThisUserId = users.filter({ $0 != Auth.auth().currentUser?.uid }).first
+                    if notThisUserId == id {
+                        self.deleteConversation(id: conversationId)
+                        break
+                    }
+                }
         }
     }
     
