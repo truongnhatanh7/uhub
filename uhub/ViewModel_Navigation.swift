@@ -13,7 +13,7 @@ enum Page {
 }
 
 final class PageViewModel: ObservableObject {
-    @Published private(set) var currentPage: Page = .SignUp
+    @Published private(set) var currentPage: Page = .Splash
     @Published var previousPage: Page? = nil
     @Published var isfirstFlow: Bool = false
     
