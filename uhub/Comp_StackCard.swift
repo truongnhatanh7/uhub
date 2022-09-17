@@ -23,6 +23,7 @@ struct StackCard: View {
     @State var opacity: CGFloat = 0
     @State var startYPosition: CGFloat = 0
     @State var showDetailUser = false
+    @State var showIsMatchUser = false
     
     var body: some View {
         ZStack {
@@ -136,7 +137,6 @@ struct StackCard: View {
                             offsetX = (rightSwipe ? width : -width) * 2
                             offsetY = .zero
                             startYPosition = .zero
-                            endSwipeAction()
                             
                             if rightSwipe {
                                 self.rightSwipe()
@@ -150,6 +150,14 @@ struct StackCard: View {
             .fullScreenCover(isPresented: $showDetailUser) {
                 View_UserDetail(isShowSheet: $showDetailUser, isFromMatchPage: false, user: user)
             }
+            .fullScreenCover(isPresented: $showIsMatchUser) {
+                MatchCongrat(showIsMatchUser: $showIsMatchUser)
+            }
+            .onChange(of: showIsMatchUser) { newValue in
+                if !newValue {
+                    endSwipeAction()
+                }
+            }
         }
     }
     
@@ -160,12 +168,13 @@ struct StackCard: View {
     
     func endSwipeAction() {
         withAnimation { endSwipe = true }
-        print("Fuck you")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            if let _ = homeVM.fetchedUsers.first {
-                let _ = withAnimation {
-                    homeVM.removeUser {
-                        userAuthManager.updateProfileInfo(updatedData: ["timeLimit" : NSDate().timeIntervalSince1970 + 86400], callback: {})
+        if !showIsMatchUser {
+            print("This is match user", showIsMatchUser)
+            print("Remove card")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                if let _ = homeVM.fetchedUsers.first {
+                    let _ = withAnimation {
+                        homeVM.removeUser {}
                     }
                 }
             }
@@ -173,11 +182,17 @@ struct StackCard: View {
     }
     
     func leftSwipe() {
-        
+        endSwipeAction()
     }
     
     func rightSwipe() {
-       matchEngine.createMatchPackage(user: user)
+        matchEngine.isMatchWithOtherPerson(user) {
+            showIsMatchUser = true
+            matchEngine.createMatchPackage(user, isMatched: true)
+        } whenNotMatched: {
+            matchEngine.createMatchPackage(user, isMatched: false)
+            endSwipeAction()
+        }
     }
 }
 

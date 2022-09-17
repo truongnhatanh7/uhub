@@ -33,9 +33,3 @@ struct CongratsModal: View {
         }
     }
 }
-
-struct CongratsModal_Previews: PreviewProvider {
-    static var previews: some View {
-        CongratsModal(isGoToHome: .constant(false))
-    }
-}
