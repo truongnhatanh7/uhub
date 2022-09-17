@@ -11,6 +11,7 @@
 		55D881EF28D03DAD006C990F /* Helper_Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881EE28D03DAD006C990F /* Helper_Loader.swift */; };
 		55D881F328D2C3F5006C990F /* ViewModel_MatchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */; };
 		55D881F528D2F42E006C990F /* ViewModel_ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */; };
+		55D881F728D5A07A006C990F /* match.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 55D881F628D5A07A006C990F /* match.mp3 */; };
 		55FA436C28BE26C4006AC2F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436B28BE26C4006AC2F8 /* Assets.xcassets */; };
 		55FA436F28BE26C4006AC2F8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */; };
 		5818C7CDB9C288843EA797FE /* send_message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72EB29FAEE120BDE0D3550D3 /* send_message.mp3 */; };
@@ -86,6 +87,7 @@
 		55D881EE28D03DAD006C990F /* Helper_Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper_Loader.swift; sourceTree = "<group>"; };
 		55D881F228D2C3F5006C990F /* ViewModel_MatchEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_MatchEngine.swift; sourceTree = "<group>"; };
 		55D881F428D2F42E006C990F /* ViewModel_ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel_ImageManager.swift; sourceTree = "<group>"; };
+		55D881F628D5A07A006C990F /* match.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = match.mp3; sourceTree = "<group>"; };
 		55FA436428BE26BD006AC2F8 /* uhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = uhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FA436B28BE26C4006AC2F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55FA436E28BE26C4006AC2F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			children = (
 				8F932B4E28C751EC00FAC04B /* uhub-Bridging-Header.h */,
 				23F0EC11FF3454662C95E7AF /* receive_message.mp3 */,
+				55D881F628D5A07A006C990F /* match.mp3 */,
 				72EB29FAEE120BDE0D3550D3 /* send_message.mp3 */,
 				8FDB54B628BF2B4A0013816E /* GoogleService-Info.plist */,
 				8F932B5728C751EC00FAC04B /* Comp_AdaptiveSheet.swift */,
@@ -344,6 +347,7 @@
 				8FDB54B728BF2B4A0013816E /* GoogleService-Info.plist in Resources */,
 				5818C7CDB9C288843EA797FE /* send_message.mp3 in Resources */,
 				A1D3E2FE85D0AA2D08E752FF /* receive_message.mp3 in Resources */,
+				55D881F728D5A07A006C990F /* match.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
