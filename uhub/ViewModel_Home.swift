@@ -88,12 +88,12 @@ class HomeViewModel: ObservableObject {
     }
     
     
-    /// <#Description#> This function used to append user to list
+    /// This function used to append user to list
     /// - Parameters:
-    ///   - data: <#data description#> data
-    ///   - filter: <#filter description#> filter
-    ///   - dislikesUser: <#dislikesUser description#> dislike user
-    ///   - currentUserData: <#currentUserData description#> current user data
+    ///   - data: data
+    ///   - filter: filter
+    ///   - dislikesUser: dislike user
+    ///   - currentUserData: current user data
     func appendUser(_ data: [String: Any], _ filter: [String: Any]?, _ dislikesUser: [String], _ currentUserData: [String: Any]) {
         let id = data["id"] as? String
         let name = data["fullname"] as? String
@@ -123,7 +123,7 @@ class HomeViewModel: ObservableObject {
     }
     
     
-    /// <#Description#> This function used to remove user
+    /// This function used to remove user
     func removeUser(callbackWhenReachEmpty: @escaping () -> Void) {
         fetchedUsers.removeFirst()
         if fetchedUsers.isEmpty {
@@ -132,12 +132,12 @@ class HomeViewModel: ObservableObject {
     }
     
     
-    /// <#Description#> This function used to check if user is meet requirements
+    /// This function used to check if user is meet requirements
     /// - Parameters:
-    ///   - user: <#user description#> user
-    ///   - gpaFilter: <#gpaFilter description#> gpa
-    ///   - semesterFilter: <#semesterFilter description#> semester
-    /// - Returns: <#description#> true or false
+    ///   - user: user
+    ///   - gpaFilter: gpa
+    ///   - semesterFilter: semester
+    /// - Returns: true or false
     func isUserMeetRequirement(_ user: User, _ gpaFilter: GPAFilterRange, _ semesterFilter: SemesterFilterRange) -> Bool {
         print("\(gpaFilter.description) | \(semesterFilter.description)")
         print("gpa: \(user.gpa) | sem: \(user.semesterLearned)")

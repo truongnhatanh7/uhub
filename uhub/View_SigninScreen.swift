@@ -123,8 +123,8 @@ struct SigninScreenView: View {
                             .foregroundColor(.gray)
                         
                         Button(action: {
-                            pageVM.visit(page: .SignUp)
                             userAuthManager.errorMsg = ""
+                            pageVM.visit(page: .SignUp)
                         }) {
                             Text("Sign Up")
                                 .bold()

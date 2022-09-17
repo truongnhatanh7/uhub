@@ -27,12 +27,3 @@ struct CornerRadiusStyle: ViewModifier {
             .clipShape(CornerRadiusShape(radius: radius, corners: corners))
     }
 }
-
-struct CornerRadiusStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        Text("Test")
-            .padding()
-            .background(.green)
-            .modifier(CornerRadiusStyle(radius: 8, corners: [.topRight, .topLeft]))
-    }
-}

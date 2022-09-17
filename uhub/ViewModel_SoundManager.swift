@@ -21,10 +21,10 @@ var music: AVAudioPlayer?
 var sounds = [AVAudioPlayer]()
 
 
-/// <#Description#> This function used tio play music
+/// This function used tio play music
 /// - Parameters:
-///   - sound: <#sound description#> music to play
-///   - isLoop: <#isLoop description#> if play infinitely
+///   - sound: music to play
+///   - isLoop: if play infinitely
 func playMusic(sound:String, isLoop:Bool) {
     
     let path = Bundle.main.path(forResource: sound, ofType: "mp3")!
@@ -64,7 +64,7 @@ func playMusic(sound:String, isLoop:Bool) {
 }
 
 
-/// <#Description#> This function used to stop all sound
+/// This function used to stop all sound
 func emptyMusic() {
     
     // Loop through sounds and stop each sound

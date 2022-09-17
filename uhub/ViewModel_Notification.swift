@@ -22,10 +22,7 @@ import FirebaseStorage
     @Published var isShowNewMatchNoti: Bool = false
     
     
-    /// <#Description#> This function used to submit data
-    /// - Parameters:
-    ///   - manager: <#manager description#>
-    ///   - callback: <#callback description#>
+    /// This function used to submit data
     func submitData(_ manager: UserAuthManager, callback: @escaping () -> ()) {
         manager.updateProfileInfo(updatedData: [
             "isShowSound": isShowSound,

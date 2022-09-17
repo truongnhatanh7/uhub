@@ -159,10 +159,10 @@ class MatchEngine: ObservableObject {
     }
     
     
-    /// <#Description#> This function used to remove match
+    /// This function used to remove match
     /// - Parameters:
-    ///   - user: <#user description#> user
-    ///   - userDevice: <#userDevice description#> user device
+    ///   - user: user
+    ///   - userDevice: user device
     func removeMatch(user: User, userDevice: [String: Any]) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([

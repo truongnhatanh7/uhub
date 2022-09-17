@@ -15,7 +15,6 @@ struct MatchCongrat: View {
     @State var userId: String
     
     /// This function will render the the match congrat when you swipe right and match with another person
-    /// <#Description#>
     var body: some View {
         ZStack {
             Color(.black).edgesIgnoringSafeArea(.all).opacity(0.7)

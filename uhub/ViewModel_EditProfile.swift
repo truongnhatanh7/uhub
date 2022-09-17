@@ -34,7 +34,6 @@ import FirebaseStorage
     @Published var showSemesterLearned = false
     
     let ageRange = (18...100).map { $0 }
-    //    let GPARange = ["Less than 50%", "50% - 59%", "60% - 69%", "70% - 79%", "80% - 100%"]
     let semesterLearnedRange = (0...20).map { $0 }
     
     var isDisabled: Bool {
@@ -53,7 +52,7 @@ import FirebaseStorage
     }
     
     
-    /// <#Description#> This function used to submit data
+    /// This function used to submit data
     func submitData(_ manager: UserAuthManager, callback: @escaping () -> ()) {
         uploadImage(userId: manager.currentUserData["id"] as? String ?? UUID().uuidString, callback: {})
         manager.updateProfileInfo(updatedData: [

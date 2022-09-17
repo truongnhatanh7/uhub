@@ -26,10 +26,10 @@ class ImageManager: ObservableObject {
     }
     
     
-    /// <#Description#> This function used to fetch user by id
+    /// This function used to fetch user by id
     /// - Parameters:
-    ///   - id: <#id description#> id
-    ///   - callback: <#callback description#> callback
+    ///   - id: id
+    ///   - callback: callback
     func fetchFromUserId(id: String, callback: @escaping (_ img: UIImage) -> ()) {
         if let val = memoizedImages[id] {
             callback(val)

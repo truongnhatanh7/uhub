@@ -37,8 +37,8 @@ struct User : Identifiable {
     }
     
     
-    /// <#Description#> This function get the formatted gpa
-    /// - Returns: <#description#> formatted gpa
+    ///  This function get the formatted gpa
+    /// - Returns: formatted gpa
     func getFormattedGpa() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal

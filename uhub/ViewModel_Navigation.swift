@@ -23,8 +23,8 @@ final class PageViewModel: ObservableObject {
     @Published var isfirstFlow: Bool = false
     
     
-    /// <#Description#> this function used to visit a page
-    /// - Parameter page: <#page description#> page to visit
+    /// this function used to visit a page
+    /// - Parameter page: page to visit
     func visit(page: Page) {
         withAnimation {
             previousPage = currentPage

@@ -24,8 +24,8 @@ import SwiftUI
     @Published var filterSemester = SemesterFilterRange.All
     
     
-    /// <#Description#> This function used to update info
-    /// - Parameter currentUserData: <#currentUserData description#> current data
+    /// This function used to update info
+    /// - Parameter currentUserData: current data
     func updateInfo(_ currentUserData: [String: Any]) {
         let filter = currentUserData["friends_filter"] as? [String: Any]
         self.filterAge = AgeRange(type: filter?["friends_age"] as? Int ?? 0)
@@ -38,8 +38,8 @@ import SwiftUI
     
     /// Description This function used to submit data
     /// - Parameters:
-    ///   - manager: <#manager description#> manager
-    ///   - callback: <#callback description#> callback
+    ///   - manager: manager
+    ///   - callback: callback
     func submitData(_ manager: UserAuthManager, callback: @escaping () -> ()) {
         manager.updateProfileInfo(updatedData: [
             "friends_filter": [

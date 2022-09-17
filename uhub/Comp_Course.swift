@@ -18,9 +18,3 @@ struct Comp_Course: View {
         }).modifier(CourseButton())
     }
 }
-
-struct Comp_Course_Previews: PreviewProvider {
-    static var previews: some View {
-        Comp_Course(name: "iOS Development")
-    }
-}
