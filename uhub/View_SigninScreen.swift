@@ -52,7 +52,6 @@ struct SigninScreenView: View {
                         .frame(width: 250, height: 250)
                     
                     // sign up title
-                    Spacer()
                     Text("Let's Sign You In")
                         .bold()
                         .foregroundColor(Color("black_primary"))
@@ -116,13 +115,6 @@ struct SigninScreenView: View {
                         self.isSigningIn.toggle()
                     }, isDisabled: $isButtonDisabled)
                     .padding(.top, 45)
-                    
-                    // forgot your password button
-                    Button(action: {}) {
-                        Text("Forgot your password?")
-                            .bold()
-                    }
-                    .foregroundColor(Color("pink_primary"))
                     
                     // dont have an account + navigate to Sign Up button
                     HStack {

@@ -55,7 +55,10 @@ struct FilterProfileView: View {
     private func switchPageForBtn() {
         if userAuthManager.errorMsg == "" {
             if pageVM.isfirstFlow {
-                pageVM.visit(page: .Notification)
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    pageVM.visit(page: .Congrat)
+                }
             } else {
                 pageVM.visit(page: pageVM.previousPage ?? .FilterProfile)
             }

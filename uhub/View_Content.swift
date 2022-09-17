@@ -36,9 +36,6 @@ struct ContentView: View {
             case .FilterProfile:
                 FilterProfileView()
                     .transition(.move(edge: .trailing).combined(with: .opacity).animation(.linear(duration: 0.1)))
-            case .Notification:
-                NotificationView()
-                    .transition(.move(edge: .trailing).combined(with: .opacity).animation(.linear(duration: 0.1)))
             case .Security:
                 EmptyView()
             case .Congrat:
