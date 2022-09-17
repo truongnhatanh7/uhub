@@ -135,7 +135,7 @@ class MatchEngine: ObservableObject {
         }
     }
     
-    func removeMatch(user: User) {
+    func removeMatch(user: User, userDevice: [String: Any]) {
         if let currentUser = Auth.auth().currentUser {
             db.collection("matches").document(currentUser.uid).updateData([
                 "likes": FieldValue.arrayRemove([
@@ -148,6 +148,26 @@ class MatchEngine: ObservableObject {
                         "gpa": user.gpa,
                         "semester_learned": user.semesterLearned,
                         "about": user.about,
+                        "isMatched": true
+                    ]
+                ])
+            ]) { err in
+                if let err = err {
+                    print(err)
+                }
+            }
+            
+            db.collection("matches").document(user.id).updateData([
+                "likes": FieldValue.arrayRemove([
+                    [
+                        "id": userDevice["id"],
+                        "fullname": userDevice["fullname"],
+                        "age": userDevice["age"],
+                        "school": userDevice["school"],
+                        "major": userDevice["major"],
+                        "gpa": userDevice["gpa"],
+                        "semester_learned": userDevice["semester_learned"],
+                        "about": userDevice["about"],
                         "isMatched": true
                     ]
                 ])

@@ -94,7 +94,7 @@ struct View_UserDetail: View {
                                 Button(action: {
                                     print("Reject this person")
                                     chatEngine.deleteConversationInDetailedView(id: user.id)
-                                    matchEngine.removeMatch(user: user)
+                                    matchEngine.removeMatch(user: user, userDevice: userAuthManager.currentUserData)
                                     isShowSheet = false
                                 }, label: {
                                     Image(systemName: "hand.thumbsdown.fill")
