@@ -226,9 +226,16 @@ class ChatEngine: ObservableObject {
                                               recipientId: fullname
                                          ]
                         ]
-                        print("Start to save shit")
-                        let createRef = self.db.collection("conversations").addDocument(data: docData)
-                        callback(createRef.documentID, true)
+                        var ref: DocumentReference? = nil
+                        ref = self.db.collection("conversations").addDocument(data: docData) { err in
+                            if let err = err {
+                                print("Error adding document: \(err)")
+                            } else {
+                                print("Document added with ID: \(ref!.documentID)")
+                                callback(ref!.documentID, true)
+                            }
+                        }
+                        
                     }
                 } else {
                     print("Document does not exist")
@@ -262,10 +269,6 @@ class ChatEngine: ObservableObject {
             } else {
                 
             }
-            
-
-            
-            
         }
     }
     
