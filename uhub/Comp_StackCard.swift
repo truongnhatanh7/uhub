@@ -167,8 +167,6 @@ struct StackCard: View {
     func endSwipeAction() {
         withAnimation { endSwipe = true }
         if !showIsMatchUser {
-            print("This is match user", showIsMatchUser)
-            print("Remove card")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 if let _ = homeVM.fetchedUsers.first {
                     let _ = withAnimation {

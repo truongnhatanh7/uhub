@@ -31,7 +31,6 @@ class ChatEngine: ObservableObject {
     private var currentLimit = 14
     
     deinit {
-        print("Deinit listeners")
         conversationListener?.remove()
         messagesListener?.remove()
     }
@@ -97,10 +96,8 @@ class ChatEngine: ObservableObject {
     }
     
     func loadChatList(callback: @escaping ()->()) {
-        print("Start to load chat list") // TODO: Load chat that belongs to that user (save in user db)
         conversationListener = db.collection("conversations").whereField("users", arrayContains: Auth.auth().currentUser?.uid ?? "").addSnapshotListener { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else {
-                    print("No documents")
                     return
                 }
             

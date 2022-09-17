@@ -78,7 +78,6 @@ struct NotificationView: View {
                 notificationVM.submitData(userAuthManager, callback: switchPageForBtn)
             }).padding()
         }.onAppear {
-            print("render")
             print("sound: \((userAuthManager.currentUserData["isShowSound"] as? Bool ?? false))")
             print("chat: \((userAuthManager.currentUserData["isShowChatNoti"] as? Bool ?? false))")
             print("match: \((userAuthManager.currentUserData["isShowNewMatchNoti"] as? Bool ?? false))")

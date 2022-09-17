@@ -92,7 +92,6 @@ struct View_UserDetail: View {
                         VStack(spacing: 20) {
                             if (true) {
                                 Button(action: {
-                                    print("Reject this person")
                                     chatEngine.deleteConversationInDetailedView(id: user.id)
                                     matchEngine.removeMatch(user: user, userDevice: userAuthManager.currentUserData)
                                     isShowSheet = false
@@ -107,7 +106,6 @@ struct View_UserDetail: View {
                             }
                             
                             Button(action: {
-                                print("Go to chat")
                                 chatEngine.createConversation(recipientId: user.id) { newConversationId, willFetch in
                                     if willFetch {
                                         chatEngine.fetchConversationForCreation(toBeFetchedConversationId: newConversationId) {
@@ -119,7 +117,6 @@ struct View_UserDetail: View {
                                         pageVm.visit(page: .Inbox)
                                     }                                    
                                 }
-                                
                             }, label: {
                                 Image(systemName: "text.bubble.fill")
                                     .padding()

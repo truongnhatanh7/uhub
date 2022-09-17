@@ -55,7 +55,6 @@ struct InboxView: View {
                                 proxy.scrollTo(chatEngine.lastMessageId, anchor: .bottom)
                             }
                             .refreshable {
-                                print("Refreshing...")
                                 currentLoadLimit += newMessagesToBeLoaded
                                 chatEngine.setCurrentLimit(limit: currentLoadLimit)
                                 chatEngine.loadMessages()

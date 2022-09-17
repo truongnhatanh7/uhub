@@ -33,7 +33,6 @@ struct TextBox: View {
                     .frame(minHeight: dynamicHeight + 20, maxHeight: dynamicHeight + 20)
 
                 UITExtViewWrapper(text: $value, calculatedHeight: $dynamicHeight) {
-                    print(value)
                 }
                 .padding(.horizontal, 20)
                 .focused($isFocused)
