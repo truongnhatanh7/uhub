@@ -16,8 +16,6 @@ struct ChatListRow: View {
     @State var conversation: Conversation
     @State var uiImage: UIImage? 
     @State var imageIsLoaded: Bool = false
-    @State var showDeleteAlert: Bool = false
-    @State var offset = CGSize.zero
     var body: some View {
         HStack {
             HStack {

@@ -36,13 +36,16 @@ struct MatchCongrat: View {
                     chatEngine.createConversation(recipientId: userId) { newConversationId, willFetch in
                         if willFetch {
                             chatEngine.fetchConversationForCreation(toBeFetchedConversationId: newConversationId) {
+                                showIsMatchUser = false
                                 pageVm.visit(page: .Inbox)
                             }
                         } else {
+                            showIsMatchUser = false
                             pageVm.visit(page: .Inbox)
-                        }                        
+                        }
+                        
                     }
-                    showIsMatchUser = false
+                    
                 } label: {
                     VStack {
                         Text("Go to Chat")
@@ -56,7 +59,10 @@ struct MatchCongrat: View {
             .modifier(ModalStyle())
             .onAppear {
                 chatEngine.userAuthManager = self.userAuthManager
-                playMusic(sound: "match", isLoop: false)
+                if ((userAuthManager.currentUserData["isShowSound"]) != nil) {
+                    playMusic(sound: "match", isLoop: false)
+                }
+                //playMusic(sound: "match", isLoop: false)
             }
         }
     }

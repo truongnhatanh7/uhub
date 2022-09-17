@@ -111,15 +111,15 @@ struct View_UserDetail: View {
                                 chatEngine.createConversation(recipientId: user.id) { newConversationId, willFetch in
                                     if willFetch {
                                         chatEngine.fetchConversationForCreation(toBeFetchedConversationId: newConversationId) {
+                                            isShowSheet = false
                                             pageVm.visit(page: .Inbox)
                                         }
                                     } else {
+                                        isShowSheet = false
                                         pageVm.visit(page: .Inbox)
-                                    }
-//                                    pageVm.visit(page: .Chat)
-                                    
+                                    }                                    
                                 }
-                                isShowSheet = false
+                                
                             }, label: {
                                 Image(systemName: "text.bubble.fill")
                                     .padding()

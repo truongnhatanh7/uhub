@@ -10,6 +10,7 @@ import Firebase
 
 struct InboxView: View {
     @EnvironmentObject var chatEngine: ChatEngine
+    @EnvironmentObject var userAuthManager: UserAuthManager
     @EnvironmentObject var pageVM: PageViewModel
     @State var textBoxContent: String = ""
     @State var currentLoadLimit: Int = 14;
@@ -92,6 +93,15 @@ struct InboxView: View {
             .onAppear {
                 chatEngine.loadConversation()
             }
+
+//            .overlay(RoundedRectangle(cornerRadius: 18)
+//                .stroke(Color("neutral"), lineWidth: 2)
+//            )
+//            .padding(.horizontal)
+        }
+        .onAppear {
+            chatEngine.userAuthManager = self.userAuthManager
+            chatEngine.loadConversation()
         }
         
     }

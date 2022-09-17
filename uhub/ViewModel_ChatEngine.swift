@@ -119,7 +119,10 @@ class ChatEngine: ObservableObject {
                     let name = userNames[notThisUserId ?? ""]
                     
                     if Auth.auth().currentUser?.uid != latestMessageSender && unread && !didNotify { // Not the send + unread msg + did NOT notify -> play sound
-                        playMusic(sound: "receive_message", isLoop: false)
+                        //playMusic(sound: "receive_message", isLoop: false)
+//                        if ((self.userAuthManager?.currentUserData["isShowSound"]) != nil) {
+//                            playMusic(sound: "receive_message", isLoop: false)
+//                        }
                         self.notificationManager?.generateNoti(title: userNames[notThisUserId ?? ""] ?? "", subtitle: latestMessage)
                         self.db.collection("conversations").document(conversationId).updateData([ // Updatte latest message when sending new message from both sides
                             "didNotify": true
@@ -159,7 +162,15 @@ class ChatEngine: ObservableObject {
                 ])
             }
             
-            playMusic(sound: "send_message", isLoop: false)
+            if let isShowSound = (userAuthManager?.currentUserData["isShowSound"]) {
+                print("1 \(isShowSound)")
+                if isShowSound as! Bool {
+                    
+                    playMusic(sound: "send_message", isLoop: false)
+                }
+                
+            }
+
             
         }
     }
@@ -193,7 +204,7 @@ class ChatEngine: ObservableObject {
     func createConversation(recipientId: String, callback: @escaping (_ newConversationId : String, _ willFetch : Bool) -> ()) {
         var needToCreateNewInstance = true
         print("Check for already fetched conversations \(self.conversations)")
-        for conversation in self.conversations {
+        for conversation in self.conversations { // Exist in local
             let notThisUserId = conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first
             if (notThisUserId == recipientId) {
                 print("Already fetched")
@@ -203,7 +214,7 @@ class ChatEngine: ObservableObject {
             }
         }
         
-        if needToCreateNewInstance {
+        if needToCreateNewInstance { // create new in firebase
             db.collection("users").document(recipientId).getDocument { (document, error) in
                 if let document = document, document.exists {
                     let data = document.data()
@@ -215,7 +226,7 @@ class ChatEngine: ObservableObject {
                                               recipientId: fullname
                                          ]
                         ]
-                        
+                        print("Start to save shit")
                         let createRef = self.db.collection("conversations").addDocument(data: docData)
                         callback(createRef.documentID, true)
                     }
