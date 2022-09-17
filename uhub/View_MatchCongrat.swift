@@ -53,6 +53,9 @@ struct MatchCongrat: View {
                 
             }
             .modifier(ModalStyle())
+            .onAppear {
+                playMusic(sound: "match", isLoop: false)
+            }
         }
     }
 }

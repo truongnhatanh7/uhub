@@ -18,13 +18,14 @@ struct MessageSelfBubble: View {
                 Text(message.timestamp.getFormattedDate())
             }
         }
+        .foregroundColor(Color("inverted_text_color"))
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity)
         .padding()
         .background(Color("pink_primary"))
-        .foregroundColor(Color(.white))
         .modifier(CornerRadiusStyle(radius: 18, corners: [.topLeft, .bottomLeft, .bottomRight]))
         .padding(.leading, 24)
+
         
     }
 }

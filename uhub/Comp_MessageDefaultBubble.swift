@@ -19,12 +19,14 @@ struct MessageDefaultBubble: View {
                 Text(message.timestamp.getFormattedDate())
             }
         }
+        .foregroundColor(Color("inverted_text_color"))
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity)
         .padding()
         .background(Color("neutral"))
         .modifier(CornerRadiusStyle(radius: 18, corners: [.topRight, .bottomLeft, .bottomRight]))
         .padding(.trailing, 24)
+
     }
 }
 
