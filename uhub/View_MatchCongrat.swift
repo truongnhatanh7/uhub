@@ -9,6 +9,9 @@ import SwiftUI
 
 struct MatchCongrat: View {
     @Binding var showIsMatchUser: Bool
+    @EnvironmentObject var chatEngine: ChatEngine
+    @EnvironmentObject var pageVm: PageViewModel
+    @State var userId: String
     var body: some View {
         ZStack {
             Color(.black).edgesIgnoringSafeArea(.all).opacity(0.7)
@@ -29,6 +32,15 @@ struct MatchCongrat: View {
                     .modifier(CongratsTextStyle())
                 
                 Button {
+                    chatEngine.createConversation(recipientId: userId) { newConversationId, willFetch in
+                        if willFetch {
+                            chatEngine.fetchConversationForCreation(toBeFetchedConversationId: newConversationId) {
+                                pageVm.visit(page: .Inbox)
+                            }
+                        } else {
+                            pageVm.visit(page: .Inbox)
+                        }                        
+                    }
                     showIsMatchUser = false
                 } label: {
                     VStack {

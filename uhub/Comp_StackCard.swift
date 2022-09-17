@@ -151,7 +151,7 @@ struct StackCard: View {
                 View_UserDetail(isShowSheet: $showDetailUser, isFromMatchPage: false, user: user)
             }
             .fullScreenCover(isPresented: $showIsMatchUser) {
-                MatchCongrat(showIsMatchUser: $showIsMatchUser)
+                MatchCongrat(showIsMatchUser: $showIsMatchUser, userId: user.id)
             }
             .onChange(of: showIsMatchUser) { newValue in
                 if !newValue {

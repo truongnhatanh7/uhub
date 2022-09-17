@@ -116,8 +116,9 @@ struct View_UserDetail: View {
                                         pageVm.visit(page: .Inbox)
                                     }
 //                                    pageVm.visit(page: .Chat)
-                                    isShowSheet = false
+                                    
                                 }
+                                isShowSheet = false
                             }, label: {
                                 Image(systemName: "text.bubble.fill")
                                     .padding()
