@@ -1,9 +1,14 @@
-//
-//  View_UserDetail.swift
-//  uhub
-//
-//  Created by Quoc Bao Nguyen Luu on 07/09/2022.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 3
+  Author: Nguyen Luu Quoc Bao
+  ID: s3877698
+  Created  date: 07/09/2022
+  Last modified: 07/09/2022
+  Acknowledgement: None
+*/
 
 import SwiftUI
 
