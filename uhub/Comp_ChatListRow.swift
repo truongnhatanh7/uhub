@@ -35,7 +35,6 @@ struct ChatListRow: View {
                             .clipShape(Circle())
                     }
 
-
                     if chatEngine.conversationStatus[conversation.users.filter({ $0 != Auth.auth().currentUser?.uid }).first!] ?? false {
                         Text("") // Active status
                             .frame(width: 12, height: 12)
@@ -52,9 +51,6 @@ struct ChatListRow: View {
                             .padding(.leading, 36)
                             .padding(.top, 36)
                     }
-
-
-                    
                 }
 
                 VStack(alignment: .leading) {
@@ -84,6 +80,7 @@ struct ChatListRow: View {
                 Text(conversation.timestamp.getFormattedDate())
             }
         }
+        .foregroundColor(Color("black_primary"))
         .padding()
         .frame(maxHeight: 80)
         .overlay(RoundedRectangle(cornerRadius: 18)
@@ -106,26 +103,12 @@ struct ChatListRow: View {
                 }
             }))
         }
-        .offset(x: offset.width * 1.2, y: 0)
-        .opacity(2 - Double(abs(offset.width / 50)))
-        .gesture(
-            DragGesture()
-                .onChanged { gesture in
-                    offset = gesture.translation
-                }
-                .onEnded { _ in
-                    if offset.width < 100 {
-                        // remove the card
-                        showDeleteAlert = true
-                    } else {
-                        withAnimation {
-                            offset = .zero
-                        }
-
-                    }
-                }
-        )
+        .onLongPressGesture {
+            showDeleteAlert = true
+        }
     }
+        
+        
         
 }
 
